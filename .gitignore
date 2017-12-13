@@ -3,7 +3,9 @@
 ### Example user template
 
 # IntelliJ project files
-.gradle
 .idea
 *.iml
-build/
+.gradle
+gradle
+out
+gen
