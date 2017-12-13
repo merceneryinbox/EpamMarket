@@ -1,5 +1,7 @@
-package main.java.entities;
+package entities;
+import lombok.Data;
 
+@Data
 public class User {
     private Integer id;
     private String login;

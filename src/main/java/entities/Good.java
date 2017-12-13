@@ -1,8 +1,11 @@
-package main.java.entities;
+package entities;
 
+import lombok.Data;
+
+@Data
 public class Good {
-    Integer id;
-    String name;
-    Integer amount;
-    String description;
+    private Integer id;
+    private String name;
+    private Integer amount;
+    private String description;
 }
