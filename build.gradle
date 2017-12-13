@@ -29,5 +29,8 @@ dependencies {
     compile group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '9.0.2'
 // https://mvnrepository.com/artifact/joda-time/joda-time
     compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    provided group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
 
 }
