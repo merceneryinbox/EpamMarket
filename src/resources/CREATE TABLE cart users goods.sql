@@ -29,4 +29,4 @@ CREATE TABLE users
 CREATE UNIQUE INDEX users_login_uindex ON users (login);
 CREATE UNIQUE INDEX users_email_uindex ON users (email);
 CREATE UNIQUE INDEX users_phone_number_uindex ON users (phone);
-CREATE UNIQUE INDEX users_id_user_uindex ON users (id);
+CREATE UNIQUE INDEX users_id_user_uindex ON users (id); 
