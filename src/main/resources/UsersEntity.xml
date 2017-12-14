@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="main.resources.UsersEntity">
+        <table name="users" schema="public" catalog="postgres"/>
+        <attributes>
+            <id name="login">
+                <column name="login" length="32"/>
+            </id>
+            <basic name="email">
+                <column name="email" length="256"/>
+            </basic>
+            <basic name="phoneNumber">
+                <column name="phone_number" precision="19"/>
+            </basic>
+            <basic name="password">
+                <column name="password" length="128"/>
+            </basic>
+            <basic name="adminPermis">
+                <column name="admin_permis" precision="1"/>
+            </basic>
+            <basic name="blocked">
+                <column name="blocked" precision="1"/>
+            </basic>
+            <one-to-one name="cartByLogin" optional="true" mapped-by="usersByLogin"
+                        target-entity="main.resources.CartEntity"/>
+        </attributes>
+    </entity>
+</entity-mappings>
