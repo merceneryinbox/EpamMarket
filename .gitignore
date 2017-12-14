@@ -9,3 +9,4 @@
 gradle
 out
 gen
+.settings
