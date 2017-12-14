@@ -48,14 +48,23 @@
         <servlet-name>PriceList</servlet-name>
         <url-pattern>/price_list</url-pattern>
     </servlet-mapping>
-
+    
     <servlet>
-        <servlet-name>PriceListWithoutLog</servlet-name>
-        <jsp-file>/jsp/PriceListWithoutLog.jsp</jsp-file>
+        <servlet-name>Admin</servlet-name>
+        <jsp-file>/jsp/AdminPage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PriceListWithoutLog</servlet-name>
-        <url-pattern>/price_without_log</url-pattern>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Cart</servlet-name>
+        <jsp-file>/jsp/Cart.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Cart</servlet-name>
+        <url-pattern>/cart</url-pattern>
     </servlet-mapping>
 </web-app>
 

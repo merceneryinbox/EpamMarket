@@ -9,3 +9,6 @@
 gradle
 out
 gen
+.gitignore
+Readme.md
+classes
