@@ -12,5 +12,6 @@ public class RegistrationServlet extends HttpServlet {
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		super.doPost(req, resp);
+		req.getRequestDispatcher("/sign_up").forward(req,resp);
 	}
 }

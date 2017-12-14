@@ -12,5 +12,6 @@ public class LogInServlet extends HttpServlet {
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		super.doPost(req, resp);
+		req.getRequestDispatcher("sign_in").forward(req,resp);
 	}
 }
