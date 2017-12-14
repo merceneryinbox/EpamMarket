@@ -1,6 +1,5 @@
 group 'com.market.epam.learn'
 version '1.0-SNAPSHOT'
-//apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
@@ -13,24 +12,10 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
-// https://mvnrepository.com/artifact/org.springframework/spring-jdbc
-    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.0.2.RELEASE'
-// https://mvnrepository.com/artifact/org.springframework/spring-core
-    compile group: 'org.springframework', name: 'spring-core', version: '5.0.2.RELEASE'
-// https://mvnrepository.com/artifact/org.springframework/spring-web
-    compile group: 'org.springframework', name: 'spring-web', version: '5.0.2.RELEASE'
-// https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.2.RELEASE'
-// https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jdbc
-    compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '9.0.2'
-// https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina
-    compile group: 'org.apache.tomcat', name: 'tomcat-catalina', version: '9.0.2'
-// https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api
-    compile group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '9.0.2'
-// https://mvnrepository.com/artifact/joda-time/joda-time
-    compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
-
+    compile 'org.apache.logging.log4j:log4j-core:2.10.0',
+            'org.springframework:spring-jdbc:5.0.2.RELEASE',
+            'org.springframework:spring-core:5.0.2.RELEASE',
+            'org.apache.tomcat:tomcat-catalina:9.0.2',
+            'org.apache.tomcat:tomcat-servlet-api:9.0.2'
 }
 
