@@ -21,28 +21,19 @@ public class CartServlet extends HttpServlet {
 	
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if (session != null) {
-			req.getRequestDispatcher("cart.jsp")
-					.forward(req, resp);
-		}
+		req.getRequestDispatcher("cart.jsp")
+				.forward(req, resp);
 	}
 	
 	@Override protected void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if (session != null) {
-			req.getRequestDispatcher("cart.jsp")
-					.forward(req, resp);
-		}
+		req.getRequestDispatcher("cart.jsp")
+				.forward(req, resp);
 	}
 	
 	@Override protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if (session != null) {
-			req.getRequestDispatcher("cart.jsp")
-					.forward(req, resp);
-		}
+		req.getRequestDispatcher("cart.jsp")
+				.forward(req, resp);
 	}
 }
