@@ -4,27 +4,9 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!--<servlet>-->
-        <!--<servlet-name>controller</servlet-name>-->
-        <!--<servlet-class>Controller</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>controller</servlet-name>-->
-        <!--<url-pattern>/shop</url-pattern>-->
-    <!--</servlet-mapping>-->
-    
-    <servlet>
-        <servlet-name>shoppingBasket</servlet-name>
-        <jsp-file>/jsp/shoppingBasket.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>shoppingBasket</servlet-name>
-        <url-pattern>/shopping_basket</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>SignIn</servlet-name>
-        <jsp-file>/jsp/SignIn.jsp</jsp-file>
+        <jsp-file>SignIn.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignIn</servlet-name>
@@ -33,7 +15,7 @@
 
     <servlet>
         <servlet-name>SignUp</servlet-name>
-        <jsp-file>/jsp/SignUp.jsp</jsp-file>
+        <jsp-file>SignUp.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
@@ -42,7 +24,7 @@
 
     <servlet>
         <servlet-name>PriceList</servlet-name>
-        <jsp-file>/jsp/PriceList.jsp</jsp-file>
+        <jsp-file>PriceList.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>PriceList</servlet-name>
@@ -51,7 +33,7 @@
     
     <servlet>
         <servlet-name>Admin</servlet-name>
-        <jsp-file>/jsp/AdminPage.jsp</jsp-file>
+        <jsp-file>AdminPage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>Admin</servlet-name>
@@ -60,11 +42,10 @@
     
     <servlet>
         <servlet-name>Cart</servlet-name>
-        <jsp-file>/jsp/Cart.jsp</jsp-file>
+        <jsp-file>Cart.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>Cart</servlet-name>
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
 </web-app>
-
