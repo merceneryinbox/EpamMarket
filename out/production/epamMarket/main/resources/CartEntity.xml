@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="main.resources.CartEntity">
+        <table name="cart" schema="public" catalog="postgres"/>
+        <attributes>
+            <id name="login">
+                <column name="login" length="32"/>
+            </id>
+            <basic name="amount">
+                <column name="amount" precision="10"/>
+            </basic>
+            <basic name="reserveTime">
+                <column name="reserve_time" precision="6"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -9,4 +9,8 @@
 gradle
 out
 gen
+<<<<<<< HEAD
 .settings
+=======
+build
+>>>>>>> dev
