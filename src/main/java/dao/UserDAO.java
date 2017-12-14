@@ -8,9 +8,9 @@ public interface UserDAO {
 
     boolean createNew(User user);
 
-    Optional<User> getUser(User user);
+    Optional<User> getUserByLogin(String login);
 
     boolean updateUser(User newUser, User oldUser);
 
-    boolean deleteUser(User user);
+    boolean deleteUserByLogin(String login);
 }

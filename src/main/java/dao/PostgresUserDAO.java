@@ -11,7 +11,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public Optional<User> getUser(User user) {
+    public Optional<User> getUserByLogin(String login) {
         throw new UnsupportedOperationException("implement me");
     }
 
@@ -21,7 +21,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean deleteUser(User user) {
+    public boolean deleteUserByLogin(String login) {
         throw new UnsupportedOperationException("implement me");
     }
 }
