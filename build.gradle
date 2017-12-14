@@ -14,7 +14,8 @@ dependencies {
             'org.springframework:spring-core:5.0.2.RELEASE',
             'org.apache.tomcat:tomcat-catalina:9.0.2',
             'org.apache.tomcat:tomcat-servlet-api:9.0.2'
-
+    compile group: 'c3p0', name: 'c3p0', version: '0.9.0.4'
     compileOnly 'org.projectlombok:lombok:1.16.18'
     testCompile 'junit:junit:4.12'
+
 }

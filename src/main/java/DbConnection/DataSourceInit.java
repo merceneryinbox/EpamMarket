@@ -1,4 +1,7 @@
+package DbConnection;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import temp.Market;
 
 import java.beans.PropertyVetoException;
 import java.io.IOException;
@@ -6,14 +9,15 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-public class DataSourceInit {
+public final class DataSourceInit {
     private static ComboPooledDataSource instance;
 
     public static ComboPooledDataSource getDataSource() {
         if (instance == null) {
-            synchronized (JdbcConnector.class) {
+            synchronized (DataSourceInit.class) {
                 final Properties properties = new Properties();
-                try (InputStream resourceAsStream = JdbcConnector.class.getResourceAsStream("/jdbc.properties")) {
+                try (InputStream resourceAsStream = DataSourceInit.class.getResourceAsStream("/jdbc/jdbc.properties")) {
+                    resourceAsStream.read();
                     properties.load(resourceAsStream);
                     final String url = properties.getProperty("url");
                     final String userName = properties.getProperty("userName");
