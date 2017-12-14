@@ -5,7 +5,7 @@ gradle/
 out/
 gen/
 build/
-gradlew/
+gradlew
 gradlew.bat
 *.iml
 *.ipr
