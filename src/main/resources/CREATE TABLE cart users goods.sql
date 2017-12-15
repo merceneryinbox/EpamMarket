@@ -1,3 +1,12 @@
+CREATE TABLE users
+(
+    login VARCHAR(32) NOT NULL,
+    email VARCHAR(256) NOT NULL,
+    phone VARCHAR(32) NOT NULL,
+    password VARCHAR(128) NOT NULL,
+    status VARCHAR(32) DEFAULT false NOT NULL,
+    id INTEGER DEFAULT nextval('users_id_user_seq'::regclass) PRIMARY KEY NOT NULL
+);
 CREATE TABLE cart
 (
     id INTEGER DEFAULT nextval('cart_id_seq'::regclass) PRIMARY KEY NOT NULL,
@@ -17,15 +26,7 @@ CREATE TABLE goods
     image VARCHAR(256)
 );
 CREATE UNIQUE INDEX goods_id_uindex ON goods (id);
-CREATE TABLE users
-(
-    login VARCHAR(32) NOT NULL,
-    email VARCHAR(256) NOT NULL,
-    phone VARCHAR(32) NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    status VARCHAR(32) DEFAULT false NOT NULL,
-    id INTEGER DEFAULT nextval('users_id_user_seq'::regclass) PRIMARY KEY NOT NULL
-);
+
 CREATE UNIQUE INDEX users_login_uindex ON users (login);
 CREATE UNIQUE INDEX users_email_uindex ON users (email);
 CREATE UNIQUE INDEX users_phone_number_uindex ON users (phone);
