@@ -7,46 +7,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
-@WebServlet("/cart")
+@WebServlet(name = "Cart", value = "/cart")
 public class CartServlet extends HttpServlet {
-	String login    = null;
-	String password = null;
-	long   cartId   = 0;
+	
 	
 	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if (req != null) {
-			login = (String) req.getAttribute("name");
-			password = (String) req.getAttribute("password");
-			cartId = (Long) req.getAttribute("id_cart");
-			HttpSession cartSession = req.getSession();
-			if (cartSession == null) {
-				cartSession.setAttribute("name", login);
-				cartSession.setAttribute("password", password);
-			} else {
-				req.getRequestDispatcher("/cart")
-						.forward(req, resp);
-			}
-		}
+		doPost(req, resp);
 	}
 	
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("cart.jsp")
-				.forward(req, resp);
-	}
-	
-	@Override protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		req.getRequestDispatcher("cart.jsp")
-				.forward(req, resp);
-	}
-	
-	@Override protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		req.getRequestDispatcher("cart.jsp")
-				.forward(req, resp);
+		//		String        login;
+//		String        password;
+		Integer       id_cart;
+		Integer       id_user;
+		Integer       id_good;
+		Integer       amount_cart;
+		LocalDateTime reserve_time;
+		
+		if (req != null) {
+//			login = (String) req.getAttribute("login");
+			id_user = (Integer) req.getAttribute("id_user");
+//			password = (String) req.getAttribute("password");
+			id_cart = (Integer) req.getAttribute("id_cart");
+			id_good = (Integer) req.getAttribute("id_good");
+			amount_cart = (Integer) req.getAttribute("amount_cart");
+			reserve_time = (LocalDateTime) req.getAttribute("reserve_time");
+			
+			HttpSession cartSession = req.getSession();
+			
+			if (cartSession != null) {
+				cartSession.setAttribute("id_cart", id_cart);
+				cartSession.setAttribute("id_good", id_good);
+				cartSession.setAttribute("id_user", id_user);
+				cartSession.setAttribute("amount_cart", amount_cart);
+				cartSession.setAttribute("reserve_time", reserve_time);
+			}
+			
+			try {
+				req.getRequestDispatcher("cart.jsp")
+						.forward(req, resp);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }
