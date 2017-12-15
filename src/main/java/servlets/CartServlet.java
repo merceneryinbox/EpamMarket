@@ -16,19 +16,18 @@ public class CartServlet extends HttpServlet {
 	
 	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
 		if (req != null) {
 			login = (String) req.getAttribute("name");
 			password = (String) req.getAttribute("password");
 			cartId = (Long) req.getAttribute("id_cart");
 			HttpSession cartSession = req.getSession();
-			if (cartSession == null) {
+			if (login != null && password != null && cartId != 0) {
 				cartSession.setAttribute("name", login);
 				cartSession.setAttribute("password", password);
-			} else {
-				req.getRequestDispatcher("/cart")
-						.forward(req, resp);
+				
 			}
+			req.getRequestDispatcher("cart.jsp")
+					.forward(req, resp);
 		}
 	}
 	

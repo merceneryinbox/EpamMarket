@@ -10,22 +10,28 @@ import java.io.IOException;
 
 @WebServlet("/sign_up")
 public class RegistrationServlet extends HttpServlet {
-	String userName = null;
-	String userPass = null;
+	
 	
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+		String userName;
+		String userPass;
 		if (req != null) {
 			userName = (String) req.getAttribute("name");
 			userPass = (String) req.getAttribute("password");
-			HttpSession cartSession = req.getSession();
-			if (cartSession == null) {
-				cartSession.setAttribute("name", userName);
-				cartSession.setAttribute("password", userPass);
+			HttpSession registrationSession = req.getSession();
+			if (userName != null && userPass != null) {
+				registrationSession.setAttribute("name", userName);
+				registrationSession.setAttribute("password", userPass);
 			} else {
-				req.getRequestDispatcher("/sign_up")
-						.forward(req, resp);
+				
+				try {
+					req.getRequestDispatcher("sign_up.jsp")
+							.forward(req, resp);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 		}
 	}
