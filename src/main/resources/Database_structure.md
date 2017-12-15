@@ -5,14 +5,14 @@
 ```
   "id = 3186":{
     "login" : "michael",
-    "passhash" : "defA45EabcF16780BC9D23",
+    "password" : "defA45EabcF16780BC9D23",
     "email" : "michael@email.com",
     "phone" : "79990000000",
     "status" : "admin | active | banned"
   },
   "id = 3946":{
     "login" : "leonid",
-    "passhash" : "9D216fA4C35Eab780BdecF",
+    "password" : "9D216fA4C35Eab780BdecF",
     "email" : "leonid@email.com",
     "phone" : "79631111111",
     "status" : "admin | active | banned"
