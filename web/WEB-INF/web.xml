@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>SignIn</servlet-name>
-        <jsp-file>SignIn.jsp</jsp-file>
+        <jsp-file>/SignIn.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignIn</servlet-name>
@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>SignUp</servlet-name>
-        <jsp-file>SignUp.jsp</jsp-file>
+        <jsp-file>/SignUp.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
@@ -24,25 +24,25 @@
 
     <servlet>
         <servlet-name>PriceList</servlet-name>
-        <jsp-file>PriceList.jsp</jsp-file>
+        <jsp-file>/PriceList.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>PriceList</servlet-name>
         <url-pattern>/price_list</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>Admin</servlet-name>
-        <jsp-file>AdminPage.jsp</jsp-file>
+        <jsp-file>/AdminPage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>Admin</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>Cart</servlet-name>
-        <jsp-file>Cart.jsp</jsp-file>
+        <jsp-file>/Cart.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>Cart</servlet-name>

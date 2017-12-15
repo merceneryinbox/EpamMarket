@@ -32,7 +32,5 @@
 <form action="cart" method="post">
     <input type="submit" value="Go to cart"/>
 </form>
-
-
 </body>
 </html>
