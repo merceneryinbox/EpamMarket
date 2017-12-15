@@ -9,7 +9,7 @@
 </h1>
 <br><br>
 
-<form action="" method="post">
+<form action="/" method="post">
     <input type="submit" value="Go to welcome-page"/>
 </form>
 
