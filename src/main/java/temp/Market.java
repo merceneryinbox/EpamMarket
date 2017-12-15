@@ -1,8 +1,8 @@
 package temp;
 
 import DbConnection.DataSourceInit;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ public class Market {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            ComboPooledDataSource instance = DataSourceInit.getDataSource();
+            DataSource instance = DataSourceInit.getDataSource();
             connection = instance.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO users (login,email,phone_number, password) VALUES (?, ?, ?, ?)");
             resultSet = preparedStatement.executeQuery("SELECT * FROM users");
