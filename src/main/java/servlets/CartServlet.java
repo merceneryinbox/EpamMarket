@@ -10,12 +10,25 @@ import java.io.IOException;
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
+	String login    = null;
+	String password = null;
+	long   cartId   = 0;
+	
 	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		if (session != null) {
-			req.getRequestDispatcher("cart.jsp")
-					.forward(req, resp);
+		if (req != null) {
+			login = (String) req.getAttribute("name");
+			password = (String) req.getAttribute("password");
+			cartId = (Long) req.getAttribute("id_cart");
+			HttpSession cartSession = req.getSession();
+			if (cartSession == null) {
+				cartSession.setAttribute("name", login);
+				cartSession.setAttribute("password", password);
+			} else {
+				req.getRequestDispatcher("/cart")
+						.forward(req, resp);
+			}
 		}
 	}
 	

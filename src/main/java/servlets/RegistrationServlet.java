@@ -16,16 +16,16 @@ public class RegistrationServlet extends HttpServlet {
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		req.getRequestDispatcher("sign_up.jsp")
-				.forward(req, resp);
 		if (req != null) {
-			
 			userName = (String) req.getAttribute("name");
 			userPass = (String) req.getAttribute("password");
 			HttpSession cartSession = req.getSession();
 			if (cartSession == null) {
 				cartSession.setAttribute("name", userName);
 				cartSession.setAttribute("password", userPass);
+			} else {
+				req.getRequestDispatcher("/sign_up")
+						.forward(req, resp);
 			}
 		}
 	}
