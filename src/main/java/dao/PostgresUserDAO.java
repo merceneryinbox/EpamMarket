@@ -60,7 +60,6 @@ public class PostgresUserDAO implements UserDAO {
             e.printStackTrace();
             return Optional.of(null);
         }
-
     }
 
     @Override
@@ -70,7 +69,17 @@ public class PostgresUserDAO implements UserDAO {
 
     @Override
     public boolean deleteUserByLogin(String login) {
-        throw new UnsupportedOperationException("implement me");
+        try (Connection connection = source.getConnection()) {
+            String deleteQueryByLogin = "DELETE FROM users WHERE login = ?";
+            preparedStatement = connection.prepareStatement(deleteQueryByLogin);
+            preparedStatement.setString(1,login);
+            preparedStatement.execute();
+            //info in log4j
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public List<User> parserResultSet(ResultSet resultSet) {
