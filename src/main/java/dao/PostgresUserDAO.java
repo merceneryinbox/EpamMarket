@@ -64,7 +64,23 @@ public class PostgresUserDAO implements UserDAO {
 
     @Override
     public boolean updateUser(User newUser, User oldUser) {
-        throw new UnsupportedOperationException("implement me");
+        try (Connection connection = source.getConnection()) {
+            String updateQuery = "UPDATE users SET login=?," +
+                    "email=?, phone=?,password=?,status=? WHERE id=?";
+            preparedStatement = connection.prepareStatement(updateQuery);
+            preparedStatement.setString(1,newUser.getLogin());
+            preparedStatement.setString(2,newUser.getEmail());
+            preparedStatement.setString(3,newUser.getPhone());
+            preparedStatement.setString(4,newUser.getPassword());
+            preparedStatement.setString(5,newUser.getStatus());
+            preparedStatement.setInt(6,oldUser.getId());
+            preparedStatement.execute();
+            //info in log4j
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
