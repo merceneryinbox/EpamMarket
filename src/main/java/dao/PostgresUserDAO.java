@@ -24,7 +24,7 @@ public class PostgresUserDAO implements UserDAO {
     @Override
     public boolean createNew(User user) {
         try (Connection connection = source.getConnection()) {
-            String queryInsertNew = "INSERT INTO epammarket.users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
+            String queryInsertNew = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(queryInsertNew);
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getEmail());
@@ -68,12 +68,12 @@ public class PostgresUserDAO implements UserDAO {
             String updateQuery = "UPDATE users SET login=?," +
                     "email=?, phone=?,password=?,status=? WHERE id=?";
             preparedStatement = connection.prepareStatement(updateQuery);
-            preparedStatement.setString(1,newUser.getLogin());
-            preparedStatement.setString(2,newUser.getEmail());
-            preparedStatement.setString(3,newUser.getPhone());
-            preparedStatement.setString(4,newUser.getPassword());
-            preparedStatement.setString(5,newUser.getStatus());
-            preparedStatement.setInt(6,oldUser.getId());
+            preparedStatement.setString(1, newUser.getLogin());
+            preparedStatement.setString(2, newUser.getEmail());
+            preparedStatement.setString(3, newUser.getPhone());
+            preparedStatement.setString(4, newUser.getPassword());
+            preparedStatement.setString(5, newUser.getStatus());
+            preparedStatement.setInt(6, oldUser.getId());
             preparedStatement.execute();
             //info in log4j
             return true;
@@ -88,7 +88,7 @@ public class PostgresUserDAO implements UserDAO {
         try (Connection connection = source.getConnection()) {
             String deleteQueryByLogin = "DELETE FROM users WHERE login = ?";
             preparedStatement = connection.prepareStatement(deleteQueryByLogin);
-            preparedStatement.setString(1,login);
+            preparedStatement.setString(1, login);
             preparedStatement.execute();
             //info in log4j
             return true;
