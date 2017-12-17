@@ -9,4 +9,15 @@ public class Reserve {
     private Integer goodId;
     private Integer amount;
     private String reserveTime;
+
+    @Override
+    public String toString() {
+        return "Reserve{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", goodId=" + goodId +
+                ", amount=" + amount +
+                ", reserveTime='" + reserveTime + '\'' +
+                '}';
+    }
 }

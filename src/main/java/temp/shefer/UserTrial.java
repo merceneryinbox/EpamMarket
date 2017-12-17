@@ -1,31 +1,40 @@
-package temp;
+package temp.shefer;
 
 import DbConnection.DataSourceInit;
+import entities.User;
+import lombok.val;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Market {
-    public static void main(String[] args) throws PropertyVetoException, SQLException, IOException {
+public class UserTrial {
+    public static void main(String[] args) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             DataSource instance = DataSourceInit.getDataSource();
             connection = instance.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO users (login,email,phone_number, password) VALUES (?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("SELECT id_user, login, email, phone, password, status FROM users");
             resultSet = preparedStatement.executeQuery();
+            System.out.println("Hello");
             while (resultSet.next()) {
-                System.out.println("login: " + resultSet.getString("login"));
-                System.out.println("email: " + resultSet.getString("email"));
-                System.out.println("phone_number: " + resultSet.getString("phone_number"));
-                System.out.println("password: " + resultSet.getString("password"));
+                val user = new User();
+                user.setId(resultSet.getInt("id_user"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone"));
+                user.setStatus(resultSet.getString("status"));
+
+                System.out.println(user);
             }
+            System.out.println("Users!");
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

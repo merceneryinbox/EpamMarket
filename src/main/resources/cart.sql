@@ -13,4 +13,3 @@ CREATE TABLE cart
 
 CREATE UNIQUE INDEX cart_id_uindex
   ON cart (id_cart);
-
