@@ -58,7 +58,7 @@ public class PostgresUserDAO implements UserDAO {
             return Optional.of(user);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Optional.of(null);
+            return Optional.empty();
         }
     }
 
