@@ -10,3 +10,4 @@ gradlew.bat
 test
 *.iml
 *.ipr
+classes

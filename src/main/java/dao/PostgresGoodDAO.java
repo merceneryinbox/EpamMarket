@@ -1,10 +1,12 @@
 package dao;
 
 import entities.Good;
+import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Optional;
 
+@Component
 public class PostgresGoodDAO implements GoodDAO {
     @Override
     public Optional<Good> getGoodByName(String name) {

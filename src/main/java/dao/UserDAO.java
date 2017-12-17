@@ -1,9 +1,11 @@
 package dao;
 
 import entities.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public interface UserDAO {
 
     boolean createNew(User user);
