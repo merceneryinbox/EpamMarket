@@ -18,6 +18,9 @@
 <a href="price_list">
     Watch our goods!
 </a>
-
+<br><br>
+<form action="/ru" method="post">
+    <input type="submit" value="Go to russian version of market."/>
+</form>
 </body>
 </html>

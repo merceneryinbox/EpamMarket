@@ -12,5 +12,9 @@
 <form action="price_list" method="post">
     <input type="submit" value="Sign Up"/>
 </form>
+<br><br>
+<form action="/sign_up_ru" method="post">
+    <input type="submit" value="Go to russian version of market."/>
+</form>
 </body>
 </html>

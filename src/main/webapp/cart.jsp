@@ -11,5 +11,9 @@
 <form action="price_list" method="post">
     <input type="submit" value="go back to price list"/>
 </form>
+<br><br>
+<form action="/cart_ru" method="post">
+    <input type="submit" value="Go to russian version of market."/>
+</form>
 </body>
 </html>

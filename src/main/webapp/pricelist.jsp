@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <html>
 <head>
     <title>Price list</title>
@@ -32,7 +33,10 @@
 <form action="cart" method="post">
     <input type="submit" value="Go to cart"/>
 </form>
-
+<br><br>
+<form action="/price_list_ru" method="post">
+    <input type="submit" value="Go to russian version of market."/>
+</form>
 
 </body>
 </html>

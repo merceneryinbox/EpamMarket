@@ -21,8 +21,12 @@
 <h1>
 Now we cant get role of user, so here two buttons yet.
 </h1>
-<form action="admin" method="post">
+<form action="admin_page" method="post">
     <input type="submit" value="if you are admin, then you will go this page!"/>
+</form>
+<br><br>
+<form action="/sign_in_ru" method="post">
+    <input type="submit" value="Go to russian version of market."/>
 </form>
 </body>
 </html>

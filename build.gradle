@@ -19,5 +19,6 @@ dependencies {
             'org.apache.tomcat:tomcat-catalina:9.0.2',
             'c3p0:c3p0:0.9.0.4'
             'org.apache.tomcat:tomcat-servlet-api:9.0.2'
+            'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1'
 }
 
