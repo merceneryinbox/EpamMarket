@@ -1,13 +1,12 @@
 CREATE TABLE goods
 (
-  id_good      SERIAL        NOT NULL
+  good_id      SERIAL        NOT NULL
     CONSTRAINT goods_pkey
     PRIMARY KEY,
-  product_name VARCHAR(256)  NOT NULL,
+  name VARCHAR(256)  NOT NULL,
   price        REAL          NOT NULL,
   amount       INTEGER       NOT NULL,
-  description  VARCHAR(1024) NOT NULL,
-  image        VARCHAR(256)
+  description  VARCHAR(1024) NOT NULL
 );
 
 CREATE UNIQUE INDEX goods_id_uindex
