@@ -10,5 +10,5 @@ CREATE TABLE goods
 );
 
 CREATE UNIQUE INDEX goods_id_uindex
-  ON goods (id_good);
+  ON goods (good_id);
 
