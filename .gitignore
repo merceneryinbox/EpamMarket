@@ -5,6 +5,7 @@ gradle/
 out/
 gen/
 build/
+temp/
 gradlew
 gradlew.bat
 test

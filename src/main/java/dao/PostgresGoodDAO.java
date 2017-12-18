@@ -20,7 +20,13 @@ public class PostgresGoodDAO implements GoodDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                val good = buildGoodFromResultSet(resultSet);
+                val good = new Good(
+                        resultSet.getInt("id_good"),
+                        resultSet.getString("product_name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount"),
+                        resultSet.getString("description")
+                );
                 return Optional.of(good);
             }
         } catch (SQLException e) {
@@ -71,15 +77,5 @@ public class PostgresGoodDAO implements GoodDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private Good buildGoodFromResultSet(ResultSet resultSet) throws SQLException {
-        val good = new Good();
-        good.setId(resultSet.getInt("id_good"));
-        good.setName(resultSet.getString("product_name"));
-        good.setPrice(resultSet.getDouble("price"));
-        good.setAmount(resultSet.getInt("amount"));
-        good.setDescription(resultSet.getString("description"));
-        return good;
     }
 }

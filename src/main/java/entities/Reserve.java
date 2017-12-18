@@ -26,15 +26,4 @@ public class Reserve {
                 ", reserveTime='" + reserveTime + '\'' +
                 '}';
     }
-
-//
-//    public static Reserve testReserveForName(String name) {
-//        return new Reserve(
-//                0,
-//                "",
-//                0,
-//                0,
-//                Timestamp.
-//        );
-//    }
 }
