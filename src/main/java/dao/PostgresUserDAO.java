@@ -18,6 +18,7 @@ public class PostgresUserDAO implements UserDAO {
     private static final String UPDATE_QUERY = "UPDATE users SET login=?," +
             "email=?, phone=?,password=?,status=? WHERE user_id=?";
     private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
+    private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
 
 
     public PostgresUserDAO(DataSource source) {
@@ -97,6 +98,20 @@ public class PostgresUserDAO implements UserDAO {
         try (Connection connection = source.getConnection()) {
             preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN);
             preparedStatement.setString(1, login);
+            preparedStatement.execute();
+            //TODO info in log4j
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteUserById(Integer id) {
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID);
+            preparedStatement.setInt(1, id);
             preparedStatement.execute();
             //TODO info in log4j
             return true;

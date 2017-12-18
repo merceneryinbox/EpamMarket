@@ -15,4 +15,6 @@ public interface UserDAO {
     boolean updateUser(User newUser, User oldUser);
 
     boolean deleteUserByLogin(String login);
+
+    boolean deleteUserById(Integer id);
 }
