@@ -18,10 +18,11 @@ public class PostgresCartDAO implements CartDAO {
     public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? and goods_id = ?";
     public static final String DELETE_QUERY = "DELETE FROM cart WHERE user_id = ? and goods_id = ?";
 
+    public static final DataSource DATA_SOURCE = DataSourceInit.getDataSource();
+
     @Override
     public Optional<List<Reserve>> getReserveListByLogin(Integer login) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
             preparedStatement.setInt(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -45,8 +46,7 @@ public class PostgresCartDAO implements CartDAO {
 
     @Override
     public Optional<Reserve> getReserve(Integer login, Integer goodId) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY)) {
             preparedStatement.setInt(1, login);
             preparedStatement.setInt(2, goodId);
@@ -82,8 +82,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void deleteReserve(Integer userId, Integer goodID) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodID);
@@ -94,8 +93,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void createReserve(Integer userId, Integer goodId, Integer amount, Timestamp timestamp) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodId);
@@ -108,8 +106,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void updateReserve(Integer userId, Integer goodId, Integer amount, Timestamp timestamp) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setInt(1, amount);
             preparedStatement.setTimestamp(2, timestamp);

@@ -8,6 +8,5 @@ build/
 temp/
 gradlew
 gradlew.bat
-test
 *.iml
 *.ipr

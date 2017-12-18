@@ -17,10 +17,12 @@ public class PostgresGoodDAO implements GoodDAO {
     public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
+    public static final DataSource DATA_SOURCE = DataSourceInit.getDataSource();
+    
     @Override
-    public Optional<Good> getGoodByName(String name) {;
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+    public Optional<Good> getGoodByName(String name) {
+        
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);){
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -43,8 +45,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void addGood(Good good) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
             preparedStatement.setString(1, good.getName());
             preparedStatement.setDouble(2, good.getPrice());
@@ -58,8 +60,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void deleteGoodByName(String name) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, name);
             preparedStatement.execute();
@@ -70,8 +72,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void updateGood(Good good) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setDouble(1, good.getPrice());
             preparedStatement.setInt(2, good.getAmount());
