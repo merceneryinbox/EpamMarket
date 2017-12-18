@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Reserve {
     private Integer id;
-    private String login;
+    private Integer userId;
     private Integer goodId;
     private Integer amount;
     private Timestamp reserveTime;

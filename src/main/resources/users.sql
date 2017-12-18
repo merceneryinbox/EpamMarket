@@ -11,7 +11,7 @@ CREATE TABLE users
 );
 
 CREATE UNIQUE INDEX users_login_uindex
-  ON users (login);
+  ON users (userId);
 
 CREATE UNIQUE INDEX users_email_uindex
   ON users (email);

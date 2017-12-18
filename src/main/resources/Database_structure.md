@@ -31,9 +31,9 @@
 ### Cart
 ```
   "id = 26461" : {
-    "login" : "michael",
+    "userId" : "3186",
     "good_id" : "6287",
     "amount" : "1",
-    "reserve_time" : "what format?"
+    "reserve_time" : "Timestamp"
   }
 ```

@@ -20,7 +20,7 @@ public class CartServlet extends HttpServlet {
 	
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//		String        login;
+		//		String        userId;
 //		String        password;
 		Integer       id_cart;
 		Integer       id_user;
@@ -29,7 +29,7 @@ public class CartServlet extends HttpServlet {
 		LocalDateTime reserve_time;
 		
 		if (req != null) {
-//			login = (String) req.getAttribute("login");
+//			userId = (String) req.getAttribute("userId");
 			id_user = (Integer) req.getAttribute("id_user");
 //			password = (String) req.getAttribute("password");
 			id_cart = (Integer) req.getAttribute("id_cart");

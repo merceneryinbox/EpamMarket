@@ -18,12 +18,12 @@ public class Market {
         try {
             DataSource instance = DataSourceInit.getDataSource();
             connection = instance.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO users (login,email,phone_number, password) VALUES (?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO users (login, email, phone, password) VALUES (?, ?, ?, ?)");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 System.out.println("login: " + resultSet.getString("login"));
                 System.out.println("email: " + resultSet.getString("email"));
-                System.out.println("phone_number: " + resultSet.getString("phone_number"));
+                System.out.println("phone: " + resultSet.getString("phone"));
                 System.out.println("password: " + resultSet.getString("password"));
             }
         } catch (SQLException e) {

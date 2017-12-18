@@ -29,7 +29,7 @@ public class PostgresCartDAO implements CartDAO {
             while (resultSet.next()) {
                 val reserve = new Reserve(
                         resultSet.getInt("id_cart"),
-                        resultSet.getString("id_user"),
+                        resultSet.getInt("id_user"),
                         resultSet.getInt("id_good"),
                         resultSet.getInt("amount_cart"),
                         resultSet.getTimestamp("reserve_time")
@@ -54,7 +54,7 @@ public class PostgresCartDAO implements CartDAO {
             while (resultSet.next()) {
                 val reserve = new Reserve(
                         resultSet.getInt("id_cart"),
-                        resultSet.getString("id_user"),
+                        resultSet.getInt("id_user"),
                         resultSet.getInt("id_good"),
                         resultSet.getInt("amount_cart"),
                         resultSet.getTimestamp("reserve_time")
