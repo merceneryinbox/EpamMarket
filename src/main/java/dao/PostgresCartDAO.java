@@ -12,13 +12,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class PostgresCartDAO implements CartDAO {
+    public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE id_user = ?";
+    public static final String GET_QUERY = "SELECT * FROM cart WHERE id_user = ? and id_good = ?";
+    public static final String CREATE_QUERY = "INSERT INTO cart (id_user, id_good, amount_cart, reserve_time) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY = "UPDATE cart SET amount_cart = ?, reserve_time = ? WHERE id_user = ? and id_good = ?";
+    public static final String DELETE_QUERY = "DELETE FROM cart WHERE id_user = ? and id_good = ?";
+
     @Override
     public Optional<List<Reserve>> getReserveListByLogin(String login) {
-        val sql = "SELECT * FROM cart WHERE id_user = '" + login + "'";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<Reserve> reserveList = new ArrayList<>();
             while (resultSet.next()) {
                 val reserve = new Reserve(
@@ -39,10 +45,9 @@ public class PostgresCartDAO implements CartDAO {
 
     @Override
     public Optional<Reserve> getReserve(String login, Integer goodId) {
-        val sql = "SELECT * FROM cart WHERE id_user = ? and id_good = ?";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY)) {
             preparedStatement.setString(1, login);
             preparedStatement.setInt(2, goodId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -77,10 +82,9 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void deleteReserve(String login, Integer goodID) {
-        val sql = "DELETE FROM cart WHERE id_user = ? and id_good = ?";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, login);
             preparedStatement.setInt(2, goodID);
             preparedStatement.execute();
@@ -90,10 +94,9 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void createReserve(String login, Integer goodId, Integer amount, Timestamp timestamp) {
-        val sql = "INSERT INTO cart (id_user, id_good, amount_cart, reserve_time) VALUES (?,?,?,?)";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_QUERY)) {
             preparedStatement.setString(1, login);
             preparedStatement.setDouble(2, goodId);
             preparedStatement.setInt(3, amount);
@@ -105,10 +108,9 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void updateReserve(String login, Integer goodId, Integer amount, Timestamp timestamp) {
-        val sql = "UPDATE cart SET amount_cart = ?, reserve_time = ? WHERE id_user = ? and id_good = ?";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setInt(1, amount);
             preparedStatement.setTimestamp(2, timestamp);
             preparedStatement.setString(3, login);

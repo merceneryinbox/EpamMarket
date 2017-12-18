@@ -12,13 +12,18 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class PostgresGoodDAO implements GoodDAO {
+    public static final String GET_QUERY = "SELECT * FROM goods WHERE product_name = ?";
+    public static final String ADD_QUERY = "INSERT INTO goods (product_name, price, amount, description) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE product_name = ?";
+    public static final String DELETE_QUERY = "DELETE FROM goods WHERE product_name = ?";
+
     @Override
-    public Optional<Good> getGoodByName(String name) {
-        val sql = "SELECT * FROM goods WHERE product_name = '" + name + "'";
+    public Optional<Good> getGoodByName(String name) {;
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);){
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 val good = new Good(
                         resultSet.getInt("id_good"),
@@ -37,10 +42,9 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void addGood(Good good) {
-        val sql = "INSERT INTO goods (product_name, price, amount, description) VALUES (?,?,?,?)";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
             preparedStatement.setString(1, good.getName());
             preparedStatement.setDouble(2, good.getPrice());
             preparedStatement.setInt(3, good.getAmount());
@@ -53,10 +57,10 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void deleteGoodByName(String name) {
-        val sql = "DELETE FROM goods WHERE product_name = '" + name + "'";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
+            preparedStatement.setString(1, name);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,10 +69,9 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void updateGood(Good good) {
-        val sql = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE product_name = ?";
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setDouble(1, good.getPrice());
             preparedStatement.setInt(2, good.getAmount());
             preparedStatement.setString(3, good.getDescription());
