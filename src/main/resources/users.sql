@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
   login    VARCHAR(32)               NOT NULL,
@@ -5,7 +6,7 @@ CREATE TABLE users
   phone    VARCHAR(32)               NOT NULL,
   password VARCHAR(128)              NOT NULL,
   status   VARCHAR(32) DEFAULT FALSE NOT NULL,
-  id_user  SERIAL                    NOT NULL
+  user_id  SERIAL                    NOT NULL
     CONSTRAINT users_id_user_pk
     PRIMARY KEY
 );
@@ -20,5 +21,5 @@ CREATE UNIQUE INDEX users_phone_number_uindex
   ON users (phone);
 
 CREATE UNIQUE INDEX users_id_user_uindex
-  ON users (id_user);
+  ON users (user_id);
 
