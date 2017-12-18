@@ -14,17 +14,6 @@ public class Good {
     private Integer amount;
     private String description;
 
-    @Override
-    public String toString() {
-        return "Good{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
     public static Good testGoodForName(String name) {
         return new Good(
                 0,

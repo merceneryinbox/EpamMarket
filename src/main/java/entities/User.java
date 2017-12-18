@@ -9,16 +9,4 @@ public class User {
     private String email;
     private String phone;
     private String status;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }
