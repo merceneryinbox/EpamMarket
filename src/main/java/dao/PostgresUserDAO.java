@@ -15,6 +15,11 @@ import java.util.Optional;
 public class PostgresUserDAO implements UserDAO {
     private DataSource source;
     private PreparedStatement preparedStatement;
+    private static final String INSERT_QUERY_NEW = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
+    private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final String UPDATE_QUERY = "UPDATE users SET login=?," +
+            "email=?, phone=?,password=?,status=? WHERE id=?";
+    private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
 
 
     public PostgresUserDAO(DataSource source) {
@@ -24,15 +29,14 @@ public class PostgresUserDAO implements UserDAO {
     @Override
     public boolean createNew(User user) {
         try (Connection connection = source.getConnection()) {
-            String queryInsertNew = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
-            preparedStatement = connection.prepareStatement(queryInsertNew);
+            preparedStatement = connection.prepareStatement(INSERT_QUERY_NEW);
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPhone());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getStatus());
             preparedStatement.execute();
-            //we can add log about successfully creating
+            //TODO we can add log about successfully creating
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,29 +49,24 @@ public class PostgresUserDAO implements UserDAO {
     public Optional<User> getUserByLogin(String login) {
         User user;
         try (Connection connection = source.getConnection()) {
-            String selectQuereByLogin = "SELECT * FROM users WHERE login = ?";
-            preparedStatement = connection.prepareStatement(selectQuereByLogin);
+            preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN);
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<User> users = parserResultSet(resultSet);
-            if (users.size() < 1) {
-                user = null;
-            } else {
-                user = users.get(0);
-            }
-            return Optional.of(user);
+            user = parserResultSet(resultSet);
+            if (user!=null)
+                return Optional.of(user);
         } catch (SQLException e) {
             e.printStackTrace();
             return Optional.empty();
         }
+        return Optional.empty();
     }
 
     @Override
     public boolean updateUser(User newUser, User oldUser) {
+        //FIXME do we need check if newUser or oldUser is null?
         try (Connection connection = source.getConnection()) {
-            String updateQuery = "UPDATE users SET login=?," +
-                    "email=?, phone=?,password=?,status=? WHERE id=?";
-            preparedStatement = connection.prepareStatement(updateQuery);
+            preparedStatement = connection.prepareStatement(UPDATE_QUERY);
             preparedStatement.setString(1, newUser.getLogin());
             preparedStatement.setString(2, newUser.getEmail());
             preparedStatement.setString(3, newUser.getPhone());
@@ -75,7 +74,7 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(5, newUser.getStatus());
             preparedStatement.setInt(6, oldUser.getId());
             preparedStatement.execute();
-            //info in log4j
+            //TODO info in log4j
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,11 +85,10 @@ public class PostgresUserDAO implements UserDAO {
     @Override
     public boolean deleteUserByLogin(String login) {
         try (Connection connection = source.getConnection()) {
-            String deleteQueryByLogin = "DELETE FROM users WHERE login = ?";
-            preparedStatement = connection.prepareStatement(deleteQueryByLogin);
+            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN);
             preparedStatement.setString(1, login);
             preparedStatement.execute();
-            //info in log4j
+            //TODO info in log4j
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,27 +96,28 @@ public class PostgresUserDAO implements UserDAO {
         }
     }
 
-    public List<User> parserResultSet(ResultSet resultSet) {
-        List<User> users = new ArrayList<>();
+    private User parserResultSet(ResultSet resultSet) {
+        User user = new User();
         try {
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 String login = resultSet.getString("login");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 String password = resultSet.getString("password");
                 String status = resultSet.getString("status");
                 int id = resultSet.getInt("id");
-                User user = new User();
+                user.setLogin(login);
                 user.setId(id);
                 user.setEmail(email);
                 user.setPhone(phone);
                 user.setPassword(password);
                 user.setStatus(status);
-                users.add(user);
+            } else {
+                user = null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return users;
+        return user;
     }
 }
