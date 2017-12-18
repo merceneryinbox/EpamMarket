@@ -1,7 +1,5 @@
 package dao;
 
-import java.util.List;
-
 import entities.User;
 
 import javax.sql.DataSource;
@@ -9,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class PostgresUserDAO implements UserDAO {
@@ -53,13 +50,11 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             user = parserResultSet(resultSet);
-            if (user!=null)
-                return Optional.of(user);
+            return Optional.of(user);
         } catch (SQLException e) {
             e.printStackTrace();
             return Optional.empty();
         }
-        return Optional.empty();
     }
 
     @Override
