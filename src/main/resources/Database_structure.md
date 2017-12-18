@@ -28,10 +28,10 @@
   }
 ```
 ### Cart
-```
+`
   "cart_id = 26461" : {
-    "login" : "michael",
-    "good_name" : "Mersedes",
+    "user_id" : "3186", //changes from Taras
+    "good_id" : "6287", //changes from Taras
     "amount" : "1",
     "reserve_time" : "what format?"
   }
