@@ -41,6 +41,10 @@ public class PostgresUserDAO implements UserDAO {
         }
 
     }
+    @Override
+    public Optional<User> getUserById(Integer id){
+        throw new UnsupportedOperationException("implement me");
+    }
 
     @Override
     public Optional<User> getUserByLogin(String login) {
