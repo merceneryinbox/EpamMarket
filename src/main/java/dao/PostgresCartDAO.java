@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class PostgresCartDAO implements CartDAO {
-    public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE id_user = ?";
-    public static final String GET_QUERY = "SELECT * FROM cart WHERE id_user = ? and id_good = ?";
-    public static final String CREATE_QUERY = "INSERT INTO cart (id_user, id_good, amount_cart, reserve_time) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE cart SET amount_cart = ?, reserve_time = ? WHERE id_user = ? and id_good = ?";
-    public static final String DELETE_QUERY = "DELETE FROM cart WHERE id_user = ? and id_good = ?";
+    public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
+    public static final String GET_QUERY = "SELECT * FROM cart WHERE user_id = ? and goods_id = ?";
+    public static final String CREATE_QUERY = "INSERT INTO cart (user_id, goods_id, amount, reserve_time) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? and goods_id = ?";
+    public static final String DELETE_QUERY = "DELETE FROM cart WHERE user_id = ? and goods_id = ?";
 
     @Override
     public Optional<List<Reserve>> getReserveListByLogin(Integer login) {
@@ -28,10 +28,10 @@ public class PostgresCartDAO implements CartDAO {
             List<Reserve> reserveList = new ArrayList<>();
             while (resultSet.next()) {
                 val reserve = new Reserve(
-                        resultSet.getInt("id_cart"),
-                        resultSet.getInt("id_user"),
-                        resultSet.getInt("id_good"),
-                        resultSet.getInt("amount_cart"),
+                        resultSet.getInt("cart_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("goods_id"),
+                        resultSet.getInt("amount"),
                         resultSet.getTimestamp("reserve_time")
                 );
                 reserveList.add(reserve);
@@ -53,10 +53,10 @@ public class PostgresCartDAO implements CartDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 val reserve = new Reserve(
-                        resultSet.getInt("id_cart"),
-                        resultSet.getInt("id_user"),
-                        resultSet.getInt("id_good"),
-                        resultSet.getInt("amount_cart"),
+                        resultSet.getInt("cart_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("goods_id"),
+                        resultSet.getInt("amount"),
                         resultSet.getTimestamp("reserve_time")
                 );
                 return Optional.of(reserve);

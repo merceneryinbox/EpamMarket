@@ -99,7 +99,7 @@ public class PostgresUserDAO implements UserDAO {
                 String phone = resultSet.getString("phone");
                 String password = resultSet.getString("password");
                 String status = resultSet.getString("status");
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("user_id");
                 user.setLogin(login);
                 user.setId(id);
                 user.setEmail(email);

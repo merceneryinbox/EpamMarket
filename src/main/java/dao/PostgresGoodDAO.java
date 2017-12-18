@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class PostgresGoodDAO implements GoodDAO {
-    public static final String GET_QUERY = "SELECT * FROM goods WHERE product_name = ?";
-    public static final String ADD_QUERY = "INSERT INTO goods (product_name, price, amount, description) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE product_name = ?";
-    public static final String DELETE_QUERY = "DELETE FROM goods WHERE product_name = ?";
+    public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
+    public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
+    public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
     @Override
     public Optional<Good> getGoodByName(String name) {;
@@ -26,8 +26,9 @@ public class PostgresGoodDAO implements GoodDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 val good = new Good(
-                        resultSet.getInt("id_good"),
-                        resultSet.getString("product_name"),
+                        resultSet.getInt("goods_id"),
+                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
+                        resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),
                         resultSet.getString("description")
