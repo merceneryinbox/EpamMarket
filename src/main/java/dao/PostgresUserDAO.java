@@ -14,6 +14,7 @@ public class PostgresUserDAO implements UserDAO {
     private PreparedStatement preparedStatement;
     private static final String INSERT_QUERY_NEW = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
     private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final String SELECT_QUERY_BY_ID = "SELECT * FROM users WHERE user_id = ?";
     private static final String UPDATE_QUERY = "UPDATE users SET login=?," +
             "email=?, phone=?,password=?,status=? WHERE user_id=?";
     private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
@@ -43,7 +44,17 @@ public class PostgresUserDAO implements UserDAO {
     }
     @Override
     public Optional<User> getUserById(Integer id){
-        throw new UnsupportedOperationException("implement me");
+        User user;
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            user = parserResultSet(resultSet);
+            return Optional.of(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Override
