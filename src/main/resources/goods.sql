@@ -11,4 +11,5 @@ CREATE TABLE goods
 
 CREATE UNIQUE INDEX goods_id_uindex
   ON goods (good_id);
+CREATE UNIQUE INDEX goods_name_uindex ON goods (name);
 
