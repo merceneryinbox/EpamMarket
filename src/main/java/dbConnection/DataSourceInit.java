@@ -1,6 +1,8 @@
-package DbConnection;
+package dbConnection;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -8,12 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Component
 public interface DataSourceInit {
+
     ComboPooledDataSource instance = new ComboPooledDataSource();
-
-     static DataSource getDataSource() {
-
-            synchronized (DataSourceInit.class) {
+        @Bean
+         static DataSource getDataSource() {
+             synchronized (DataSourceInit.class) {
                 final Properties properties = new Properties();
                 try (InputStream resourceAsStream = DataSourceInit.class.getResourceAsStream("/jdbc/jdbc.properties")) {
                     properties.load(resourceAsStream);
@@ -22,15 +25,15 @@ public interface DataSourceInit {
                     final String password = properties.getProperty("password");
                     final String driver = properties.getProperty("driver");
                     final int maxpoolsize = Integer.parseInt(properties.getProperty("pool.max"));
-                    instance.setDriverClass(driver);
                     instance.setJdbcUrl(url);
                     instance.setUser(userName);
                     instance.setPassword(password);
                     instance.setMaxPoolSize(maxpoolsize);
+                    instance.setDriverClass(driver);
                 } catch (IOException | PropertyVetoException e) {
                     e.printStackTrace();
                 }
-            }
+             }
         return instance;
     }
 

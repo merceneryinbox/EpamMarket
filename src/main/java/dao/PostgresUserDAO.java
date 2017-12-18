@@ -1,9 +1,10 @@
 package dao;
 
 import entities.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+@Repository
 public class PostgresUserDAO implements UserDAO {
     @Override
     public boolean createNew(User user) {

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+
 @WebServlet("/sign_up")
 public class RegistrationServlet extends HttpServlet {
 	String userName = null;

@@ -1,5 +1,6 @@
 package servlets;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ public class CartServlet extends HttpServlet {
 	String login    = null;
 	String password = null;
 	long   cartId   = 0;
-	
+
 	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
@@ -31,7 +32,7 @@ public class CartServlet extends HttpServlet {
 			}
 		}
 	}
-	
+
 	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.getRequestDispatcher("cart.jsp")

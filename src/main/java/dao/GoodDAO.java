@@ -1,7 +1,9 @@
 package dao;
 
 import entities.Good;
+
 import java.util.Optional;
+
 
 public interface GoodDAO {
     Optional<Good> getGoodByName(String name);

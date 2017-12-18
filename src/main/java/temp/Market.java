@@ -1,16 +1,21 @@
 package temp;
 
-import DbConnection.DataSourceInit;
+import dao.UserDAO;
+import dbConnection.DataSourceInit;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Market {
+
+    private static final Logger logger = LogManager.getLogger(Market.class);
+
     public static void main(String[] args) throws PropertyVetoException, SQLException, IOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -18,12 +23,12 @@ public class Market {
         try {
             DataSource instance = DataSourceInit.getDataSource();
             connection = instance.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO users (login,email,phone_number, password) VALUES (?, ?, ?, ?)");
-            resultSet = preparedStatement.executeQuery("SELECT * FROM users");
+            preparedStatement = connection.prepareStatement("SELECT * FROM users");
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 System.out.println("login: " + resultSet.getString("login"));
                 System.out.println("email: " + resultSet.getString("email"));
-                System.out.println("phone_number: " + resultSet.getString("phone_number"));
+                System.out.println("phone_number: " + resultSet.getString("phone"));
                 System.out.println("password: " + resultSet.getString("password"));
             }
         } catch (SQLException e) {
@@ -45,5 +50,9 @@ public class Market {
                 e.printStackTrace();
             }
         }
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(MarketConfiguration.class);
+        UserDAO userDAO = context.getBean(UserDAO.class);
+        logger.info(userDAO.getUserByLogin(""));
+        context.registerShutdownHook();
     }
 }

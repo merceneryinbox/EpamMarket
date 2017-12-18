@@ -1,6 +1,7 @@
 group 'com.market.epam.learn'
 version '1.0-SNAPSHOT'
 apply plugin: 'java'
+apply plugin: 'war'
 
 sourceCompatibility = 1.8
 
@@ -15,8 +16,11 @@ dependencies {
     compile 'org.apache.logging.log4j:log4j-core:2.10.0',
             'org.springframework:spring-jdbc:5.0.2.RELEASE',
             'org.springframework:spring-core:5.0.2.RELEASE',
+            'org.springframework:spring-context:5.0.2.RELEASE',
+            'org.springframework:spring-aop:5.0.2.RELEASE',
             'org.apache.tomcat:tomcat-catalina:9.0.2',
-            'c3p0:c3p0:0.9.0.4'
-            'org.apache.tomcat:tomcat-servlet-api:9.0.2'
+            'c3p0:c3p0:0.9.0.4',
+            'org.apache.tomcat:tomcat-servlet-api:9.0.2',
+            'com.h2database:h2:1.4.191',
+            'org.postgresql:postgresql:+'
 }
-
