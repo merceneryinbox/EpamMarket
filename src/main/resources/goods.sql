@@ -1,6 +1,6 @@
 CREATE TABLE goods
 (
-  good_id      SERIAL        NOT NULL
+  goods_id      SERIAL        NOT NULL
     CONSTRAINT goods_pkey
     PRIMARY KEY,
   name VARCHAR(256)  NOT NULL,
@@ -10,6 +10,6 @@ CREATE TABLE goods
 );
 
 CREATE UNIQUE INDEX goods_id_uindex
-  ON goods (good_id);
+  ON goods (goods_id);
 CREATE UNIQUE INDEX goods_name_uindex ON goods (name);
 
