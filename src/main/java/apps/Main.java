@@ -1,12 +1,14 @@
 package apps;
 
+import dao.PostgresCartDAO;
 import dao.PostgresGoodDAO;
 import entities.Good;
 import lombok.val;
 
 public class Main {
     public static void main(String[] args) {
-        testGoodDao();
+        //testGoodDao();
+        testReserveDao();
     }
 
     public static void testGoodDao() {
@@ -37,9 +39,34 @@ public class Main {
         // GET GOOD
         val extracted3 = goodDAO.getGoodByName(name);
         System.out.println("Extracted : " + extracted3);
-
-
     }
 
+    public static void testReserveDao() {
+        val cartDao = new PostgresCartDAO();
+        val login = "Ololoshka";
+        val goodId = 1;
 
+        // ADD RESERVE
+        System.out.println("Trying to insert : " + 159);
+        cartDao.setAmountByLoginAndGoodId(login, goodId, 159);
+
+        // GET RESERVE
+        val extracted = cartDao.getReserve(login, goodId);
+        System.out.println("Extracted : " + extracted);
+
+        // UPDATE RESERVE
+        System.out.println("Trying to update : " + 753);
+        cartDao.setAmountByLoginAndGoodId(login, goodId, 753);
+
+        // GET RESERVE LIST
+        val extracted1 = cartDao.getReserveListByLogin(login);
+        System.out.println("Extracted list : " + extracted1);
+
+        // DELETE RESERVE
+        cartDao.setAmountByLoginAndGoodId(login, goodId, 0);
+
+        // GET RESERVE
+        val extracted2 = cartDao.getReserve(login, goodId);
+        System.out.println("Extracted : " + extracted2);
+    }
 }

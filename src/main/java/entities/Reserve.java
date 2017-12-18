@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +14,7 @@ public class Reserve {
     private String login;
     private Integer goodId;
     private Integer amount;
-    private String reserveTime;
+    private Timestamp reserveTime;
 
     @Override
     public String toString() {
@@ -24,4 +26,15 @@ public class Reserve {
                 ", reserveTime='" + reserveTime + '\'' +
                 '}';
     }
+
+//
+//    public static Reserve testReserveForName(String name) {
+//        return new Reserve(
+//                0,
+//                "",
+//                0,
+//                0,
+//                Timestamp.
+//        );
+//    }
 }

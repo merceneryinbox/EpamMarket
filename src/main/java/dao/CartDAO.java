@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface CartDAO {
     Optional<List<Reserve>> getReserveListByLogin(String login);
-    Optional<Reserve> gerReserve(String login, Integer goodId);
+    Optional<Reserve> getReserve(String login, Integer goodId);
     void setAmountByLoginAndGoodId(String login, Integer goodId, Integer amount);
 }
