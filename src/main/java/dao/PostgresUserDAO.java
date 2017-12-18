@@ -15,7 +15,7 @@ public class PostgresUserDAO implements UserDAO {
     private static final String INSERT_QUERY_NEW = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
     private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
     private static final String UPDATE_QUERY = "UPDATE users SET login=?," +
-            "email=?, phone=?,password=?,status=? WHERE id=?";
+            "email=?, phone=?,password=?,status=? WHERE user_id=?";
     private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
 
 
@@ -100,7 +100,7 @@ public class PostgresUserDAO implements UserDAO {
                 String phone = resultSet.getString("phone");
                 String password = resultSet.getString("password");
                 String status = resultSet.getString("status");
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("user_id");
                 user.setLogin(login);
                 user.setId(id);
                 user.setEmail(email);
