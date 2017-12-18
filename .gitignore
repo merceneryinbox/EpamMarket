@@ -1,12 +1,12 @@
 .idea/
 .gradle/
-#.settings/
+settings/
 gradle/
-#out/
+out/
 gen/
-#build/
-#gradlew
-#gradlew.bat
+build/
+gradlew
+gradlew.bat
 test
 *.iml
 *.ipr
