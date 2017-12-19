@@ -18,20 +18,7 @@ public class SignInServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		String login;
-		String password;
-		login = (String) session.getAttribute("login");
-		password = (String) session.getAttribute("password");
-		if (login != null && password != null) {
-			if (login.equalsIgnoreCase("admin")) {
-				req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
-			} else {
-				req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
-			}
-		} else {
-			req.getRequestDispatcher("/signin.jsp").forward(req, resp);
-		}
+		doPost(req,resp);
 	}
 
 	@Override
@@ -40,28 +27,34 @@ public class SignInServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		String login;
 		String password;
-		login = (String) req.getParameter("login");
-		password = (String) req.getParameter("password");
-		//TODO: logic of verification login and password in DB
-		//TODO: logic of checking login's status
-		checker = "active";
-		if (login.equals("admin")) {
-			checker = "admin";
-		}
-		if (login.equals("banned")) {
-			checker = "banned";
-		}
-		if (checker.equalsIgnoreCase("banned")) {
-			req.getRequestDispatcher("/banneduser.jsp")
-					.forward(req, resp);
-		} else if (checker.equalsIgnoreCase("active")) {
-			session.setAttribute("login", login);
-			session.setAttribute("password", password);
-			req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
-		} else if (checker.equalsIgnoreCase("admin")) {
-			session.setAttribute("login", login);
-			session.setAttribute("password", password);
-			req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
+		login = (String) session.getAttribute("login");
+		password = (String) session.getAttribute("password");
+		if (login == null && password == null) {
+			req.getRequestDispatcher("/signin.jsp").forward(req, resp);
+		} else {
+			login = req.getParameter("login");
+			password = req.getParameter("password");
+			//TODO: logic of verification login and password in DB
+			//TODO: logic of checking login's status
+			checker = "active";
+			if (login.equals("admin")) {
+				checker = "admin";
+			}
+			if (login.equals("banned")) {
+				checker = "banned";
+			}
+			if (checker.equalsIgnoreCase("banned")) {
+				req.getRequestDispatcher("/banneduser.jsp")
+						.forward(req, resp);
+			} else if (checker.equalsIgnoreCase("active")) {
+				session.setAttribute("login", login);
+				session.setAttribute("password", password);
+				req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
+			} else if (checker.equalsIgnoreCase("admin")) {
+				session.setAttribute("login", login);
+				session.setAttribute("password", password);
+				req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
+			}
 		}
 	}
 
