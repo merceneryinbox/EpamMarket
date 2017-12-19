@@ -14,6 +14,7 @@ dependencies {
     classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
 
+
     testCompile group: 'org.junit.platform:junit-platform-gradle-plugin:1.1.0-M1',
             'org.junit.jupiter:junit-jupiter-api:5.0.1'
 
