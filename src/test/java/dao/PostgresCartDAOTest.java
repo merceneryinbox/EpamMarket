@@ -1,6 +1,7 @@
 package dao;
 
 import DbConnection.DataSourceInit;
+import DbConnection.DatabaseManager;
 import entities.Good;
 import entities.Reserve;
 import entities.User;
@@ -16,6 +17,8 @@ public class PostgresCartDAOTest {
 
     @Test
     public void testReserveDao() {
+        DatabaseManager.init();
+
         final String login = "Alistar";
         final String goodName = "Targon";
         final Integer initialAmount = 159;
@@ -60,5 +63,7 @@ public class PostgresCartDAOTest {
 
         userDao.deleteUserByLogin(login);
         goodDao.deleteGoodByName(goodName);
+
+        DatabaseManager.drop();
     }
 }
