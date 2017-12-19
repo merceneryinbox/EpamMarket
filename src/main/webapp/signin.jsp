@@ -4,11 +4,12 @@
     <title>Sign in form</title>
 </head>
 <body>
-<h1>
-    There will be form for sign in!
-</h1>
-<form action="price_list" method="post">
-    <input type="submit" value="Sign In"/>
+<form action="/sign_in" method="post">
+    <p><strong>Login:</strong></p>
+    <input type="text" name="login" value=""/>
+    <br/><p><strong>Password:</strong></p>
+    <input type="password" name="password" value=""/><br/><br>
+    <input type="submit" value="Sign In"/> <br/>
 </form>
 <br><br>
 <h1>
