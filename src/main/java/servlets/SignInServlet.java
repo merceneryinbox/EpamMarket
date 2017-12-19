@@ -55,12 +55,10 @@ public class SignInServlet extends HttpServlet {
                         .forward(req, resp);
             } else if (status.equalsIgnoreCase("active")) {
                 session.setAttribute("login", login);
-                session.setAttribute("password", password);
                 session.setAttribute("status", status);
                 req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
             } else if (status.equalsIgnoreCase("admin")) {
                 session.setAttribute("login", login);
-                session.setAttribute("password", password);
                 session.setAttribute("status", status);
                 req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
             }
