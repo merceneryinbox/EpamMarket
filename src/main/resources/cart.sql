@@ -8,5 +8,6 @@ CREATE TABLE cart
   CONSTRAINT cart___fk__users FOREIGN KEY (user_id) REFERENCES users (user_id),
   CONSTRAINT cart___fk__goods FOREIGN KEY (goods_id) REFERENCES goods (goods_id)
 );
+
 CREATE UNIQUE INDEX cart_cart_id_uindex ON cart (cart_id);
 

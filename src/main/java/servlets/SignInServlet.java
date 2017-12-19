@@ -28,7 +28,7 @@ public class SignInServlet extends HttpServlet {
 		String      login;
 		String      password;
 		if (session != null) {
-			login = (String) session.getAttribute("login");
+			login = (String) session.getAttribute("userId");
 			password = (String) session.getAttribute("password");
 			checker = checkUser(login, password);
 			
