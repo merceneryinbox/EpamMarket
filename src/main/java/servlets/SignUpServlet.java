@@ -16,7 +16,7 @@ import java.io.IOException;
 public class SignUpServlet extends HttpServlet {
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String login;
 		String password;
 		String email;
@@ -24,50 +24,39 @@ public class SignUpServlet extends HttpServlet {
 		String statusDefault;
 		User user = new User();
 		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
-		
-		if (req != null) {
-			login = (String) req.getAttribute("login");
-			password = (String) req.getAttribute("password");
-			email = (String) req.getAttribute("email");
-			phone = (String) req.getAttribute("phone");
-			statusDefault = UserStatus.ACTIVE.name();
-			
-			if (postgresUserDAO.getUserByLogin(login) == null) {
+		try {
+			if (request != null) {
+				login = (String) request.getAttribute("login");
+				password = (String) request.getAttribute("password");
+				email = (String) request.getAttribute("email");
+				phone = (String) request.getAttribute("phone");
+				statusDefault = UserStatus.ACTIVE.name();
 				
-				if (login != null && password != null) {
-					user.setLogin(login);
-					user.setPassword(password);
-					user.setEmail(email);
-					user.setPhone(phone);
-					user.setStatus(statusDefault);
+				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
 					
-					try {
-						HttpSession registrationSession = req.getSession();
+					if (login != null && password != null) {
+						user.setLogin(login);
+						user.setPassword(password);
+						user.setEmail(email == null ? "n@email" : email);
+						user.setPhone(phone == null ? "no phone" : phone);
+						user.setStatus(statusDefault);
+						
+						HttpSession registrationSession = request.getSession();
 						registrationSession.setAttribute("user", user);
 						postgresUserDAO.createNew(user);
+						request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
 						
-						req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
-					} catch (Exception e) {
-						e.printStackTrace();
+					} else {
+						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
-					try {
-						req.getRequestDispatcher("/signup.jsp").forward(req, resp);
-					} catch (ServletException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			} else {
-				try {
-					req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
-				} catch (ServletException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+					request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
 				}
 			}
+		} catch (ServletException serve) {
+			serve.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
