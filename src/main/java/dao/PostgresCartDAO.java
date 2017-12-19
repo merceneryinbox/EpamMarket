@@ -21,10 +21,10 @@ public class PostgresCartDAO implements CartDAO {
     public static final DataSource DATA_SOURCE = DataSourceInit.getDataSource();
 
     @Override
-    public Optional<List<Reserve>> getReserveListByLogin(Integer login) {
+    public Optional<List<Reserve>> getReserveListByLogin(Integer userId) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
-            preparedStatement.setInt(1, login);
+            preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Reserve> reserveList = new ArrayList<>();
             while (resultSet.next()) {
@@ -45,10 +45,10 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
-    public Optional<Reserve> getReserve(Integer login, Integer goodId) {
+    public Optional<Reserve> getReserve(Integer userId, Integer goodId) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY)) {
-            preparedStatement.setInt(1, login);
+            preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -68,17 +68,17 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
-    public void setAmountByLoginAndGoodId(Integer login, Integer goodId, Integer amount) {
+    public void setAmountByLoginAndGoodId(Integer userId, Integer goodId, Integer amount) {
         if (amount == 0) {
-            deleteReserve(login, goodId);
+            deleteReserve(userId, goodId);
             return;
         }
 
-        val reserve = getReserve(login, goodId);
+        val reserve = getReserve(userId, goodId);
         if (reserve.isPresent())
-            updateReserve(login, goodId, amount, reserve.get().getReserveTime());
+            updateReserve(userId, goodId, amount, reserve.get().getReserveTime());
         else
-            createReserve(login, goodId, amount, Timestamp.from(Instant.now()));
+            createReserve(userId, goodId, amount, Timestamp.from(Instant.now()));
     }
 
     private void deleteReserve(Integer userId, Integer goodID) {
