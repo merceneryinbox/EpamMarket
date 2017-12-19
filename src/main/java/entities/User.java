@@ -1,7 +1,12 @@
 package entities;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     private Integer id;
     private String login;
@@ -9,4 +14,15 @@ public class User {
     private String email;
     private String phone;
     private String status;
+
+    public static User testUserForName(String name) {
+        return new User(
+                0,
+                name,
+                name.hashCode() + "",
+                name + "@email.com",
+                "+7" + ( + name.hashCode() + "0000000000").substring(0, 10),
+                "Active"
+        );
+    }
 }
