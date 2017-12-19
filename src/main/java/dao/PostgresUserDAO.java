@@ -21,7 +21,6 @@ public class PostgresUserDAO implements UserDAO {
     private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
     private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
 
-
     public PostgresUserDAO() {
         this.source = DataSourceInit.getDataSource();
     }

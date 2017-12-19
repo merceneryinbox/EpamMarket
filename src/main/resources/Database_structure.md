@@ -23,6 +23,7 @@
 ```
   "id = 6287" : {
     "name" : "Mercedes-Benz S-Class 2017",
+    "price" : "127000520",
     "amount" : "12",
     "description" : "Series of luxury flagship vehicles produced by the German automaker Mercedes-Benz"
   }
@@ -30,9 +31,9 @@
 ### Cart
 ```
   "id = 26461" : {
-    "login" : "michael",
+    "user_id" : "3186",
     "good_id" : "6287",
     "amount" : "1",
-    "reserve_time" : "what format?"
+    "reserve_time" : "Timestamp"
   }
 ```

@@ -21,7 +21,7 @@ public class RegistrationServlet extends HttpServlet {
 		String  phone;
 		String  status;
 		if (req != null) {
-			login = (String) req.getAttribute("login");
+			login = (String) req.getAttribute("userId");
 			password = (String) req.getAttribute("password");
 			id_user = (Integer) req.getAttribute("id_user");
 			email = (String) req.getAttribute("email");
