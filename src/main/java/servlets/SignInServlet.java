@@ -1,8 +1,6 @@
 package servlets;
 
 import entities.User;
-import services.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -66,5 +64,4 @@ public class SignInServlet extends HttpServlet {
             }
         }
     }
-    
 }
