@@ -117,6 +117,4 @@ public class PostgresCartDAO implements CartDAO {
             e.printStackTrace();
         }
     }
-
-
 }
