@@ -1,5 +1,6 @@
 package dao;
 
+import DbConnection.DataSourceInit;
 import entities.User;
 
 import javax.sql.DataSource;
@@ -14,13 +15,20 @@ public class PostgresUserDAO implements UserDAO {
     private PreparedStatement preparedStatement;
     private static final String INSERT_QUERY_NEW = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
     private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final String SELECT_QUERY_BY_ID = "SELECT * FROM users WHERE user_id = ?";
     private static final String UPDATE_QUERY = "UPDATE users SET login=?," +
-            "email=?, phone=?,password=?,status=? WHERE id=?";
+            "email=?, phone=?,password=?,status=? WHERE user_id=?";
     private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
+    private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
+
+    public PostgresUserDAO() {
+        this.source = DataSourceInit.getDataSource();
+    }
 
     public PostgresUserDAO(DataSource source) {
         this.source = source;
     }
+
 
     @Override
     public boolean createNew(User user) {
@@ -39,6 +47,21 @@ public class PostgresUserDAO implements UserDAO {
             return false;
         }
 
+    }
+
+    @Override
+    public Optional<User> getUserById(Integer id) {
+        User user;
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            user = parserResultSet(resultSet);
+            return Optional.of(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -81,6 +104,20 @@ public class PostgresUserDAO implements UserDAO {
         try (Connection connection = source.getConnection()) {
             preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN);
             preparedStatement.setString(1, login);
+            preparedStatement.execute();
+            //TODO info in log4j
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteUserById(Integer id) {
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID);
+            preparedStatement.setInt(1, id);
             preparedStatement.execute();
             //TODO info in log4j
             return true;
