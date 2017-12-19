@@ -1,6 +1,8 @@
 package servlets;
 
 import entities.User;
+import services.UserCheckPasswordService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
