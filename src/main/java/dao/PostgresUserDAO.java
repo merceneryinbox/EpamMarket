@@ -1,5 +1,6 @@
 package dao;
 
+import DbConnection.DataSourceInit;
 import entities.User;
 
 import javax.sql.DataSource;
@@ -21,9 +22,14 @@ public class PostgresUserDAO implements UserDAO {
     private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
 
 
+    public PostgresUserDAO() {
+        this.source = DataSourceInit.getDataSource();
+    }
+
     public PostgresUserDAO(DataSource source) {
         this.source = source;
     }
+
 
     @Override
     public boolean createNew(User user) {
@@ -43,8 +49,9 @@ public class PostgresUserDAO implements UserDAO {
         }
 
     }
+
     @Override
-    public Optional<User> getUserById(Integer id){
+    public Optional<User> getUserById(Integer id) {
         User user;
         try (Connection connection = source.getConnection()) {
             preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_ID);
