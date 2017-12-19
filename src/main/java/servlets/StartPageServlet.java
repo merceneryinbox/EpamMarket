@@ -9,14 +9,15 @@ import java.io.IOException;
 
 @WebServlet(name = "StartPage", value = "/")
 public class StartPageServlet extends HttpServlet {
-	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+			IOException {
 		doGet(req, resp);
 	}
 	
-	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		req.getRequestDispatcher("/index.jsp")
-				.forward(req, resp);
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+			IOException {
+		req.getRequestDispatcher("index.jsp").forward(req, resp);
 	}
 }
