@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>Dolphin shops!</title>
@@ -9,7 +10,7 @@
 <h1>
     Glad to see you in our dolphin-shop!
 </h1>
-<form action="sign_in" method="post">
+<form action="sign_in" method="get">
 <input type="submit" value="Sign In"/>
 </form>
 <form action="sign_up" method="post">
