@@ -1,7 +1,7 @@
 package dao;
 
 import entities.Good;
-import org.junit.Assert;
+import DbConnection.DatabaseManager;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -12,6 +12,7 @@ public class PostgresGoodDAOTest {
 
     @Test
     public void testGoodDao() {
+        DatabaseManager.init();
         GoodDAO goodDAO = new PostgresGoodDAO();
         final String name = "Mersedes";
         final String updatedDescription = "updated description";
@@ -38,6 +39,8 @@ public class PostgresGoodDAOTest {
         Optional<Good> deleted = goodDAO.getGoodByName(name);
         assertFalse(deleted.isPresent());
         System.out.println("Extracted : " + deleted);
-    }
 
+
+        DatabaseManager.drop();
+    }
 }

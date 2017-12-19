@@ -6,6 +6,7 @@ out/
 gen/
 build/
 temp/
+src/main/resources/h2/
 gradlew
 gradlew.bat
 *.iml

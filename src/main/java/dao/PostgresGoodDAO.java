@@ -1,7 +1,7 @@
 package dao;
 
-import DbConnection.DataSourceInit;
 import entities.Good;
+import DbConnection.DataSourceInit;
 import lombok.val;
 
 import javax.sql.DataSource;
@@ -30,6 +30,7 @@ public class PostgresGoodDAO implements GoodDAO {
                 val good = new Good(
                         resultSet.getInt("goods_id"),
                         // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
+                        // TODO Updated - no troubles have been detected while testing, so mb its ok
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),
