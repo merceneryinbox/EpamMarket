@@ -13,10 +13,10 @@ import java.util.Optional;
 
 public class PostgresCartDAO implements CartDAO {
     public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
-    public static final String GET_QUERY = "SELECT * FROM cart WHERE user_id = ? and goods_id = ?";
+    public static final String GET_QUERY = "SELECT * FROM cart WHERE user_id = ? AND goods_id = ?";
     public static final String CREATE_QUERY = "INSERT INTO cart (user_id, goods_id, amount, reserve_time) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? and goods_id = ?";
-    public static final String DELETE_QUERY = "DELETE FROM cart WHERE user_id = ? and goods_id = ?";
+    public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? AND goods_id = ?";
+    public static final String DELETE_QUERY = "DELETE FROM cart WHERE user_id = ? AND goods_id = ?";
 
     @Override
     public Optional<List<Reserve>> getReserveListByLogin(Integer login) {
@@ -40,6 +40,11 @@ public class PostgresCartDAO implements CartDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Reserve> getReserveById(Integer reserveId) {
         return Optional.empty();
     }
 
