@@ -60,10 +60,11 @@ public class PostgresGoodDAO implements GoodDAO {
                             resultSet.getString("description")
                     ));
                 }
+
         }  catch (SQLException e){
             e.printStackTrace();
         }
-        return null;
+        return goods;
     }
 
     @Override
