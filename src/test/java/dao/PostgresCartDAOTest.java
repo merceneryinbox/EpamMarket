@@ -6,14 +6,22 @@ import entities.Good;
 import entities.Reserve;
 import entities.User;
 import lombok.val;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PostgresCartDAOTest {
+
+    @BeforeEach
+    public void init(){
+
+    }
 
     @Test
     public void testReserveDao() {
@@ -52,7 +60,7 @@ public class PostgresCartDAOTest {
         // GET RESERVE
         val updated = cartDao.getReserve(userId, goodId);
         assertTrue(updated.isPresent());
-        assertEquals(updated.get().getAmount(), updatedAmount);
+        assertThat(updated.get().getAmount(),is (updatedAmount));
         System.out.println("Extracted: " + updated);
 
         // DELETE RESERVE
