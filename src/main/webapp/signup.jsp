@@ -7,10 +7,10 @@
     <title> Registration Form</title>
 </head>
 <style>
-    div {
-        padding: 10px;
-        border: 5px solid grey;
-        margin: 0px
+    layer {
+        background: ghostwhite; /* Цвет фона */
+        border: 2px solid black;  /* Параметры рамки */
+        padding: 20px; /* Поля вокруг текста */
     }
 </style>
 <body>
