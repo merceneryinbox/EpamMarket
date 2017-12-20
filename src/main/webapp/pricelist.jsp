@@ -12,16 +12,16 @@
             <table style="table-layout: auto" border="2" align="center" width="600">
                 <tr>
                     <th>Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
                     <th>In stock</th>
+                    <th>Description</th>
+                    <th>Price</th>
                 </tr>
                 <c:forEach var="product" items="${priceList}">
                     <tr>
                         <td><c:out value='${product.name}'/></td>
-                        <td><c:out value='${product.price}'/></td>
-                        <td><c:out value='${product.description}'/></td>
                         <td><c:out value='${product.amount}'/></td>
+                        <td><c:out value='${product.description}'/></td>
+                        <td><c:out value='${product.price}'/></td>
                     </tr>
                 </c:forEach>
             </table>
