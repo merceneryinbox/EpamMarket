@@ -22,10 +22,4 @@ dependencies {
             'c3p0:c3p0:0.9.0.4',
             'org.apache.tomcat:tomcat-servlet-api:9.0.2',
             'postgresql:postgresql:+'
-
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.1',
-            'org.junit.vintage:junit-vintage-engine:4.12.1',
-            'org.junit.platform:junit-platform-launcher:1.0.1',
-            'org.junit.platform:junit-platform-runner:1.0.1'
-
 }
