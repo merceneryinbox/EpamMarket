@@ -7,13 +7,13 @@ import entities.Good;
 import java.util.List;
 
 public class GoodsService {
-	private GoodDAO goodDAO;
+    private GoodDAO goodDAO;
 
-	public GoodsService() {
-		goodDAO = new PostgresGoodDAO();
-	}
+    public GoodsService() {
+        goodDAO = new PostgresGoodDAO();
+    }
 
-	public List<Good> getPriceList() {
-		return goodDAO.getAllGoods();
-	}
+    public List<Good> getPriceList() {
+        return goodDAO.getAllGoods();
+    }
 }
