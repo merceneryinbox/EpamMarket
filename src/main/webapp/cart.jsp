@@ -8,7 +8,7 @@
     There will be user's cart!
 </h1>
 
-<form action="price_list" method="post">
+<form action="/pricelist.jsp" method="post">
     <input type="submit" value="go back to price list"/>
 </form>
 </body>

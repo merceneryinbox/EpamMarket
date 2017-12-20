@@ -2,6 +2,7 @@ package dao;
 
 import DbConnection.DataSourceInit;
 import entities.User;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -9,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-
+@Component
 public class PostgresUserDAO implements UserDAO {
     private DataSource source;
     private PreparedStatement preparedStatement;

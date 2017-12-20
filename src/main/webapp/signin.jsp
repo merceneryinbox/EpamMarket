@@ -4,7 +4,7 @@
     <title>Sign in form</title>
 </head>
 <body>
-<form action="/sign_in" method="post">
+<form action="/signin.jsp" method="post">
     <p><strong>Login:</strong></p>
     <input type="text" name="login" value=""/>
     <br/><p><strong>Password:</strong></p>
@@ -15,15 +15,18 @@
 <h1>
     if you are not registered yet
 </h1>
-<form action="sign_up" method="post">
+<form action="/signup.jsp" method="post">
     <input type="submit" value="Registration"/>
 </form>
 <br><br>
 <h1>
 Now we cant get role of user, so here two buttons yet.
 </h1>
-<form action="admin" method="post">
+<form action="/adminpage.jsp" method="post">
     <input type="submit" value="if you are admin, then you will go this page!"/>
 </form>
 </body>
 </html>
+
+
+

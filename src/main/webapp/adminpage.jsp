@@ -7,7 +7,7 @@
 <h1>
     There will be admin page, where he could ban bad users.
 </h1>
-<form action="" method="post">
+<form action="/index.jsp" method="post">
     <input type="submit" value="Return to welcome page"/>
 </form>
 </body>

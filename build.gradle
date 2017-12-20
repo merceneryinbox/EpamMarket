@@ -2,7 +2,6 @@ group 'com.market.epam.learn'
 version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceCompatibility = 1.8
 
@@ -11,12 +10,10 @@ repositories {
 }
 
 dependencies {
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
 
 
-    testCompile group: 'org.junit.platform:junit-platform-gradle-plugin:1.1.0-M1',
-            'org.junit.jupiter:junit-jupiter-api:5.0.1'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
 
     compile 'org.apache.logging.log4j:log4j-core:2.10.0',
             'org.springframework: spring-jdbc: 4.3.13.RELEASE',
@@ -24,13 +21,14 @@ dependencies {
             'org.apache.tomcat:tomcat-catalina:9.0.2',
             'c3p0:c3p0:0.9.0.4',
             'org.apache.tomcat:tomcat-servlet-api:9.0.2',
-            'postgresql:postgresql:+'
+            'postgresql:postgresql:+',
+            'taglibs:standard:1.1.2',
+            'jstl:jstl:1.2'
 
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.1',
             'org.junit.vintage:junit-vintage-engine:4.12.1',
             'org.junit.platform:junit-platform-launcher:1.0.1',
             'org.junit.platform:junit-platform-runner:1.0.1'
-
 
 }
 

@@ -1,16 +1,18 @@
 package DbConnection;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
+@Component
 public interface DataSourceInit {
     ComboPooledDataSource instance = new ComboPooledDataSource();
-
+    @Bean
      static DataSource getDataSource() {
 
             synchronized (DataSourceInit.class) {
