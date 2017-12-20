@@ -1,7 +1,7 @@
 package servlets;
 
 import entities.Good;
-import services.AllGoodsGetterService;
+import services.GoodsService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @WebServlet(name = "PriceList", value = "/price_list")
 public class PriceListServlet extends HttpServlet {
-	private static AllGoodsGetterService allGoodsGetter = new AllGoodsGetterService();
+	private static GoodsService allGoodsGetter = new GoodsService();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
