@@ -20,12 +20,12 @@ public class SignInServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String login;
-        String password;
-        login = (String) session.getAttribute("login");
-        password = (String) session.getAttribute("password");
-        if (login != null && password != null) {
-            if (login.equalsIgnoreCase("admin")) {
+        String status;
+        User user;
+        user = (User) session.getAttribute("user");
+        if (user != null) {
+            status = user.getStatus();
+            if (status.equalsIgnoreCase("admin")) {
                 req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
             } else {
                 req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
@@ -47,20 +47,20 @@ public class SignInServlet extends HttpServlet {
         User user;
         user = UserCheckPasswordService.checkPassword(login, password);
         if (user == null) {
-            req.getRequestDispatcher("/signin.jsp").forward(req, resp);
+            req.getRequestDispatcher("/signin.jsp").forward(req,resp);
         } else {
             status = user.getStatus();
             if (status.equalsIgnoreCase("banned")) {
                 req.getRequestDispatcher("/banneduser.jsp")
                         .forward(req, resp);
             } else if (status.equalsIgnoreCase("active")) {
-                session.setAttribute("login", login);
-                session.setAttribute("status", status);
-                req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
+                session.setAttribute("user", user);
+                req.getRequestDispatcher("/pricelist.jsp")
+                        .forward(req, resp);
             } else if (status.equalsIgnoreCase("admin")) {
-                session.setAttribute("login", login);
-                session.setAttribute("status", status);
-                req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
+                session.setAttribute("user", user);
+                req.getRequestDispatcher("/admingpage.jsp")
+                        .forward(req, resp);
             }
         }
     }
