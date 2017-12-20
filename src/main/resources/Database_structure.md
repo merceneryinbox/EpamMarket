@@ -31,7 +31,7 @@
 `
   "cart_id = 26461" : {
     "user_id" : "3186", //changes from Taras
-    "good_id" : "6287", //changes from Taras
+    "goods_id" : "6287", //changes from Taras
     "amount" : "1",
     "reserve_time" : "what format?"
   }
