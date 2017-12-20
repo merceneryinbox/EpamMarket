@@ -21,10 +21,33 @@ public class PostgresGoodDAO implements GoodDAO {
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
     @Override
-    public Optional<Good> getGoodByName(String name) {;
+    public Optional<Good> getGoodById(Integer id) {
         DataSource instance = DataSourceInit.getDataSource();
         try (Connection connection = instance.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);){
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                val good = new Good(
+                        resultSet.getInt("goods_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount"),
+                        resultSet.getString("description")
+                );
+                return Optional.of(good);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Good> getGoodByName(String name) {
+        DataSource instance = DataSourceInit.getDataSource();
+        try (Connection connection = instance.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
