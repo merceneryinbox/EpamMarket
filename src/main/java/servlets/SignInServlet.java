@@ -2,6 +2,7 @@ package servlets;
 
 import entities.User;
 import services.UserCheckPasswordService;
+import services.UserStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,29 +42,29 @@ public class SignInServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String login;
         String password;
-        String status;
+        UserStatus status;
         login = req.getParameter("login");
         password = req.getParameter("password");
         User user;
         user = UserCheckPasswordService.checkPassword(login, password);
-        System.out.println(user);
         if (user == null) {
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
-            status = user.getStatus();
+            status = UserStatus.valueOf(user.getStatus());
             switch (status) {
-                case "banned":
+                case BANNED:
                     req.getRequestDispatcher("/banneduser.jsp").forward(req, resp);
                     break;
-                case "active":
+                case ACTIVE:
                     session.setAttribute("user", user);
                     req.getRequestDispatcher("pricelist.jsp").forward(req,resp);
                     break;
-                case "admin":
+                case ADMIN:
                     session.setAttribute("user",user);
                     req.getRequestDispatcher("/adminpage.jsp").forward(req,resp);
                     break;
             }
         }
     }
+
 }
