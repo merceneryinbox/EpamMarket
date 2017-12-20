@@ -17,10 +17,10 @@
 <h1>
     This buttons will appear only if you are not logged.
 </h1>
-<form action="sign_in" method="post">
+<form action="/signin.jsp" method="post">
     <input type="submit" value="Sign In"/>
 </form>
-<form action="sign_up" method="post">
+<form action="/signup.jsp" method="post">
     <input type="submit" value="Registration"/>
 </form>
 
@@ -29,7 +29,7 @@
 <h1>
     This button will apear only if you are logged.
 </h1>
-<form action="cart" method="post">
+<form action="/cart.jsp" method="post">
     <input type="submit" value="Go to cart"/>
 </form>
 

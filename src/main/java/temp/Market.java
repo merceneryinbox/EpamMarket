@@ -18,7 +18,7 @@ public class Market {
         try {
             DataSource instance = DataSourceInit.getDataSource();
             connection = instance.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO users (login, email, phone, password) VALUES (?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("SELECT * FROM users");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 System.out.println("login: " + resultSet.getString("login"));
