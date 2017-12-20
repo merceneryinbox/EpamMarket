@@ -1,5 +1,10 @@
 package servlets;
 
+import dao.PostgresCartDAO;
+import dao.PostgresUserDAO;
+import entities.Reserve;
+import entities.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,53 +12,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Optional;
 
+// create List of cartages from cart table in DB and forwarding List in request to cart.jsp
 @WebServlet(name = "Cart", value = "/cart")
 public class CartServlet extends HttpServlet {
 	
 	
-	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+			IOException {
 		doPost(req, resp);
 	}
 	
-	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		//		String        userId;
-//		String        password;
-		Integer       id_cart;
-		Integer       id_user;
-		Integer       id_good;
-		Integer       amount_cart;
-		LocalDateTime reserve_time;
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+			ServletException, IOException {
+		Reserve reserve = new Reserve();
+		User user = new User();
+		PostgresCartDAO postgresCartDAO = new PostgresCartDAO();
+		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
+		Integer userId;
+		String login;
+		Integer goodsamount;
+		Integer goodsId;
 		
-		if (req != null) {
-//			userId = (String) req.getAttribute("userId");
-			id_user = (Integer) req.getAttribute("id_user");
-//			password = (String) req.getAttribute("password");
-			id_cart = (Integer) req.getAttribute("id_cart");
-			id_good = (Integer) req.getAttribute("id_good");
-			amount_cart = (Integer) req.getAttribute("amount_cart");
-			reserve_time = (LocalDateTime) req.getAttribute("reserve_time");
+		HttpSession cartSession = request.getSession();
+		
+		login = (String) cartSession.getAttribute("login    ");
+		
+		userId = (Integer) request.getAttribute("user_id");
+		
+		Optional<User> optionalUser = postgresUserDAO.getUserByLogin(login);
+		
+		if (optionalUser.isPresent()) {
+			user = optionalUser.get();
+			userId = user.getId();
 			
-			HttpSession cartSession = req.getSession();
+			goodsamount = (Integer) request.getAttribute("amount");
+			goodsId = (Integer) request.getAttribute("goods_id");
 			
-			if (cartSession != null) {
-				cartSession.setAttribute("id_cart", id_cart);
-				cartSession.setAttribute("id_good", id_good);
-				cartSession.setAttribute("id_user", id_user);
-				cartSession.setAttribute("amount_cart", amount_cart);
-				cartSession.setAttribute("reserve_time", reserve_time);
-			}
+			reserve.setUserId(userId);
+			reserve.setGoodId(goodsId);
+			reserve.setAmount(goodsamount);
 			
-			try {
-				req.getRequestDispatcher("cart.jsp")
-						.forward(req, resp);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
+			request.setAttribute("cart", reserve);
+		} else {
+			request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		}
 	}
 }
