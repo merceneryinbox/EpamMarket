@@ -12,18 +12,18 @@ import java.util.List;
 
 @WebServlet(name = "PriceList", value = "/price_list")
 public class PriceListServlet extends HttpServlet {
-	private static GoodsService allGoodsGetter = new GoodsService();
-	
+	private static GoodsService goodsService = new GoodsService();
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-		List<Good> priceList = new ArrayList<>(allGoodsGetter.getPriceList());
-		
+		List<Good> priceList = new ArrayList<>(goodsService.getPriceList());
+
 		try {
 			req.setAttribute("priceList", priceList);
 			req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }
