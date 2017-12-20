@@ -17,13 +17,13 @@ public class PostgresGoodDAO implements GoodDAO {
     public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
-    public static final DataSource DATA_SOURCE = DataSourceInit.getDataSource();
-    
+    final DataSource DATA_SOURCE;
+
     @Override
     public Optional<Good> getGoodByName(String name) {
-        
+
         try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);){
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -46,7 +46,7 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void addGood(Good good) {
-        
+
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
             preparedStatement.setString(1, good.getName());
@@ -61,7 +61,7 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void deleteGoodByName(String name) {
-        
+
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, name);
@@ -73,7 +73,7 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void updateGood(Good good) {
-        
+
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setDouble(1, good.getPrice());
@@ -84,5 +84,9 @@ public class PostgresGoodDAO implements GoodDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public PostgresGoodDAO(DataSource dataSource) {
+        DATA_SOURCE = dataSource;
     }
 }

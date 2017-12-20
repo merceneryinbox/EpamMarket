@@ -10,11 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DatabaseManager {
-
-    public static final DataSource DATA_SOURCE = DataSourceInit.getDataSource();
-
-    public static void init() {
-        try (Connection connection = DATA_SOURCE.getConnection();
+    public static void init(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(getInitQuery())) {
             ps.execute();
         } catch (SQLException e) {
@@ -22,8 +19,8 @@ public class DatabaseManager {
         }
     }
 
-    public static void drop() {
-        try (Connection connection = DATA_SOURCE.getConnection();
+    public static void drop(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(getDropQuery())) {
             ps.execute();
         } catch (SQLException e) {
