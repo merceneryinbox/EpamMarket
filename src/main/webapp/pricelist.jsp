@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Price list</title>
@@ -8,6 +9,25 @@
     Price list will be here!
 </h1>
 <br><br>
+<div>
+    <table border="2">
+        <caption>
+            Table of our Products
+        </caption>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+        <c:forEach var="product" items="${priceList}">
+        <tr>
+            <td><c:out value='${product.name}'/></td>
+            <td><c:out value='${product.price}'/></td>
+            <td><c:out value='${product.description}'/></td>
+        </tr>
+        </c:forEach>
+    </table>
+</div>
 
 <form action="/" method="post">
     <input type="submit" value="Go to welcome-page"/>
