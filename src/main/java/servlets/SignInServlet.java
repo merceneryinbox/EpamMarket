@@ -46,21 +46,23 @@ public class SignInServlet extends HttpServlet {
         password = req.getParameter("password");
         User user;
         user = UserCheckPasswordService.checkPassword(login, password);
+        System.out.println(user);
         if (user == null) {
-            req.getRequestDispatcher("/signin.jsp").forward(req,resp);
+            req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
             status = user.getStatus();
-            if (status.equalsIgnoreCase("banned")) {
-                req.getRequestDispatcher("/banneduser.jsp")
-                        .forward(req, resp);
-            } else if (status.equalsIgnoreCase("active")) {
-                session.setAttribute("user", user);
-                req.getRequestDispatcher("/pricelist.jsp")
-                        .forward(req, resp);
-            } else if (status.equalsIgnoreCase("admin")) {
-                session.setAttribute("user", user);
-                req.getRequestDispatcher("/admingpage.jsp")
-                        .forward(req, resp);
+            switch (status) {
+                case "banned":
+                    req.getRequestDispatcher("/banneduser.jsp").forward(req, resp);
+                    break;
+                case "active":
+                    session.setAttribute("user", user);
+                    req.getRequestDispatcher("pricelist.jsp").forward(req,resp);
+                    break;
+                case "admin":
+                    session.setAttribute("user",user);
+                    req.getRequestDispatcher("/adminpage.jsp").forward(req,resp);
+                    break;
             }
         }
     }
