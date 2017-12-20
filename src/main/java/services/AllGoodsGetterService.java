@@ -1,14 +1,12 @@
 package services;
 
+import dao.PostgresGoodDAO;
 import entities.Good;
 
 import java.util.List;
 
 public class AllGoodsGetterService {
-	private List<Good> priceList;
-
 	public List<Good> getPriceList() {
-
-		return priceList;
+		return new PostgresGoodDAO().getAllGoods();
 	}
 }
