@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class PostgresGoodDAO implements GoodDAO {
     public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
-    public static final String GET_All_QUERY = "SELECT * FROM goods";
+    public static final String GET_ALL_QUERY = "SELECT * FROM goods";
     public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
@@ -71,20 +71,20 @@ public class PostgresGoodDAO implements GoodDAO {
     public List<Good> getAllGoods() {
         List<Good> goods = new ArrayList<>();
         DataSource instance = DataSourceInit.getDataSource();
-        try(Connection connection = instance.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_All_QUERY);){
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while(resultSet.next()){
-                    goods.add(new Good(
-                            resultSet.getInt("goods_id"),
-                            resultSet.getString("name"),
-                            resultSet.getDouble("price"),
-                            resultSet.getInt("amount"),
-                            resultSet.getString("description")
-                    ));
-                }
+        try (Connection connection = instance.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                goods.add(new Good(
+                        resultSet.getInt("goods_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount"),
+                        resultSet.getString("description")
+                ));
+            }
 
-        }  catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return goods;
