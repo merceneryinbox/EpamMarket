@@ -14,6 +14,17 @@ import java.io.IOException;
 
 @WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
+			ServletException, IOException {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -50,7 +61,7 @@ public class SignUpServlet extends HttpServlet {
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
-					request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
+					request.getRequestDispatcher("/signup.jsp").forward(request, response);
 				}
 			}
 		} catch (ServletException serve) {
