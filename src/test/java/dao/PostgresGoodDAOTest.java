@@ -19,42 +19,38 @@ public class PostgresGoodDAOTest {
     public static final GoodDAO GOOD_DAO = new PostgresGoodDAO(DATA_SOURCE);
 
     @BeforeEach
-    void prepare() {
+    void init() {
         DatabaseManager.init(DATA_SOURCE);
     }
 
     @AfterEach
-    void finish() {
+    void drop() {
         DatabaseManager.drop(DATA_SOURCE);
-
     }
 
     @Test
-    public void testGoodDao() {
-        final String name = "Mersedes";
-        final String updatedDescription = "updated description";
-        Good good = Good.testGoodForName(name);
+    public void testAddGetUpdateDeleteDao() {
 
-        System.out.println("Trying to insert : " + good);
+        // ADD GOOD
+        final String name = "Mersedes";
+        Good good = Good.testGoodForName(name);
         GOOD_DAO.addGood(good);
+
+        // GET GOOD
         Optional<Good> inserted = GOOD_DAO.getGoodByName(name);
-        System.out.println(inserted);
         assertTrue(inserted.isPresent());
-        System.out.println("Extracted : " + inserted);
 
         // UPDATE GOOD
+        final String updatedDescription = "updated description";
         good.setDescription(updatedDescription);
-        System.out.println("Trying to update : " + good);
         GOOD_DAO.updateGood(good);
         Optional<Good> updated = GOOD_DAO.getGoodByName(name);
         assertTrue(updated.isPresent());
         assertEquals(updated.get().getDescription(), updatedDescription);
-        System.out.println("Extracted : " + updated);
 
         // DELETE GOOD
         GOOD_DAO.deleteGoodByName(name);
         Optional<Good> deleted = GOOD_DAO.getGoodByName(name);
         assertFalse(deleted.isPresent());
-        System.out.println("Extracted : " + deleted);
     }
 }
