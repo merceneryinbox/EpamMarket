@@ -3,6 +3,7 @@ package dao;
 import DbConnection.DataSourceInit;
 import entities.Good;
 import lombok.val;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-
+@Component
 public class PostgresGoodDAO implements GoodDAO {
     public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
     public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";

@@ -3,6 +3,7 @@ package dao;
 import DbConnection.DataSourceInit;
 import entities.Reserve;
 import lombok.val;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -10,7 +11,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Component
 public class PostgresCartDAO implements CartDAO {
     public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
     public static final String GET_QUERY = "SELECT * FROM cart WHERE user_id = ? and goods_id = ?";

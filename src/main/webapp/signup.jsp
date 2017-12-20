@@ -7,7 +7,7 @@
     <title> Registration Form</title>
 </head>
 <style>
-    div.ex {
+    div {
         padding: 10px;
         border: 5px solid grey;
         margin: 0px
@@ -15,7 +15,7 @@
 </style>
 <body>
 <h1> Registration Form</h1>
-<form action="${pageContext.servletContext.contextPath}/services/SignUpServlet" method="post">
+<form action="${pageContext.servletContext.contextPath}/servlets/SignUpServlet" method="post">
     <table style="with: 50%">
             <td>Login</td>
             <td><input type="text" name="login" value="${user.login}"/></td>

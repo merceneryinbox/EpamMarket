@@ -1,5 +1,6 @@
 package servlets;
 
+import org.springframework.stereotype.Service;
 import services.UserService;
 
 import javax.servlet.ServletException;
@@ -9,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-@WebServlet(name = "SignIn", value = "/signin")
+@Service
+@WebServlet(name = "SignIn", value = "/sign_in")
 public class SignInServlet extends HttpServlet {
 	
 	private String checker;
