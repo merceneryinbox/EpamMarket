@@ -13,7 +13,7 @@
 <form action="sign_in" method="get">
 <input type="submit" value="Sign In"/>
 </form>
-<form action="sign_up" method="post">
+<form action="sign_up" method="get">
     <input type="submit" value="Registration"/>
 </form>
 <a href="price_list">
