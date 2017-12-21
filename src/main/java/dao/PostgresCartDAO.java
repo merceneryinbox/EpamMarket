@@ -36,7 +36,7 @@ public class PostgresCartDAO implements CartDAO {
                 );
                 reserveList.add(reserve);
             }
-            return Optional.of(reserveList);
+            return Optional.ofNullable(reserveList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class PostgresCartDAO implements CartDAO {
                         resultSet.getInt("amount"),
                         resultSet.getTimestamp("reserve_time")
                 );
-                return Optional.of(reserve);
+                return Optional.ofNullable(reserve);
             }
         } catch (SQLException e) {
             e.printStackTrace();
