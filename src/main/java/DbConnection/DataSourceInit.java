@@ -7,7 +7,6 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 public interface DataSourceInit {
 
     static DataSource getDataSource() {

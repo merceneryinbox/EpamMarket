@@ -1,6 +1,7 @@
 package servlets;
 
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 import services.UserCheckPasswordService;
 import services.UserStatus;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
+@Log4j2
 @WebServlet(name = "SignIn", value = "/sign_in")
 public class SignInServlet extends HttpServlet {
 

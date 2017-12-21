@@ -4,6 +4,7 @@ import dao.PostgresCartDAO;
 import dao.PostgresUserDAO;
 import entities.Reserve;
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-// create List of cartages from cart table in DB and forwarding List in request to cart.jsp
+@Log4j2()
 @WebServlet(name = "Cart", value = "/cart")
 public class CartServlet extends HttpServlet {
 	
@@ -40,9 +41,6 @@ public class CartServlet extends HttpServlet {
 		HttpSession cartSession = request.getSession();
 		
 		login = (String) cartSession.getAttribute("login    ");
-		
-		userId = (Integer) request.getAttribute("user_id");
-		
 		Optional<User> optionalUser = postgresUserDAO.getUserByLogin(login);
 		
 		if (optionalUser.isPresent()) {

@@ -2,6 +2,7 @@ package servlets;
 
 import dao.PostgresUserDAO;
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 import services.UserStatus;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@Log4j2
 @WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
 	@Override
@@ -37,7 +39,7 @@ public class SignUpServlet extends HttpServlet {
 		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
 		try {
 			if (request != null) {
-				login =  request.getParameter("login");
+				login = request.getParameter("login");
 				password = request.getParameter("password");
 				email = request.getParameter("email");
 				phone = request.getParameter("phone");
@@ -63,10 +65,8 @@ public class SignUpServlet extends HttpServlet {
 					request.getRequestDispatcher("/signup.jsp").forward(request, response);
 				}
 			}
-		} catch (ServletException serve) {
-			serve.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (ServletException | IOException serve) {
+			log.error("Droped down at " + this.getClass() + " because of \n" + serve.getMessage());
 		}
 	}
 }

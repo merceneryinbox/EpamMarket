@@ -1,7 +1,9 @@
 package services;
 
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class UserRegistrator {
 	
 	public UserRegistrator() {
@@ -9,7 +11,6 @@ public class UserRegistrator {
 	
 	public boolean registrate(User user) {
 		boolean result = false;
-// TODO: 19.12.2017 Wait for PostgreUserDao constructor change into constructor without parameters
 		return result;
 	}
 }

@@ -3,15 +3,13 @@ package temp;
 import DbConnection.DataSourceInit;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Market {
-    public static void main(String[] args) throws PropertyVetoException, SQLException, IOException {
+    public static void main(String[] args) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
