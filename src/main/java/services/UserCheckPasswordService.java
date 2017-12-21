@@ -14,7 +14,7 @@ public class UserCheckPasswordService {
         Optional<User> userOptional = userDAO.getUserByLogin(login);
         if (userOptional.isPresent()) {
             user = userOptional.get();
-            if (user.getPassword().equals(password)) {
+            if (!(user.getPassword().equals(password))) {
                 user = null;
             }
         }
