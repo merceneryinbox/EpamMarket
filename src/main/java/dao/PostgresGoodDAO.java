@@ -9,15 +9,40 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PostgresGoodDAO implements GoodDAO {
     public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
+    public static final String GET_ALL_QUERY = "SELECT * FROM goods";
     public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
     final DataSource DATA_SOURCE;
+
+    @Override
+    public Optional<Good> getGoodById(Integer id) {
+        try (Connection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                val good = new Good(
+                        resultSet.getInt("goods_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount"),
+                        resultSet.getString("description")
+                );
+                return Optional.ofNullable(good);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 
     @Override
     public Optional<Good> getGoodByName(String name) {
@@ -36,12 +61,34 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getInt("amount"),
                         resultSet.getString("description")
                 );
-                return Optional.of(good);
+                return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Good> getAllGoods() {
+        List<Good> goods = new ArrayList<>();
+        try (Connection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                goods.add(new Good(
+                        resultSet.getInt("goods_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount"),
+                        resultSet.getString("description")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goods;
     }
 
     @Override
@@ -88,5 +135,9 @@ public class PostgresGoodDAO implements GoodDAO {
 
     public PostgresGoodDAO(DataSource dataSource) {
         DATA_SOURCE = dataSource;
+    }
+
+    public PostgresGoodDAO() {
+        DATA_SOURCE = DataSourceInit.getDataSource();
     }
 }

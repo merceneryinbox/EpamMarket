@@ -1,6 +1,8 @@
 package servlets;
 
-import services.UserService;
+import entities.User;
+import services.UserCheckPasswordService;
+import services.UserStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,39 +12,64 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "SignIn", value = "/signin")
+
+@WebServlet(name = "SignIn", value = "/sign_in")
 public class SignInServlet extends HttpServlet {
-	
-	private String checker;
-	
-	@Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		doPost(req, resp);
-	}
-	
-	@Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-//		req.getRequestDispatcher("/signin")
-//				.forward(req, resp);
-		HttpSession session = req.getSession();
-		String      login;
-		String      password;
-		if (session != null) {
-			login = (String) session.getAttribute("userId");
-			password = (String) session.getAttribute("password");
-			checker = checkUser(login, password);
-			
-			if (checker.equalsIgnoreCase("ban")) {
-				req.getRequestDispatcher("/banneduser.jsp")
-						.forward(req, resp);
-			}
-		}
-	}
-	
-	private String checkUser(String login, String password) {
-		String      result      = "not banned";
-		UserService userService = new UserService(login,password);
-		result = userService.checkBanInBase();
-		return result;
-	}
+
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        UserStatus status;
+        User user;
+        user = (User) session.getAttribute("user");
+        if (user != null) {
+            status = UserStatus.valueOf(user.getStatus());
+            switch (status) {
+                case ACTIVE:
+                    session.setAttribute("user", user);
+                    req.getRequestDispatcher("/price_list").forward(req,resp);
+                    break;
+                case ADMIN:
+                    session.setAttribute("user",user);
+                    req.getRequestDispatcher("/adminpage.jsp").forward(req,resp);
+                    break;
+            }
+        } else {
+            req.getRequestDispatcher("/signin.jsp").forward(req, resp);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        String login;
+        String password;
+        UserStatus status;
+        login = req.getParameter("login");
+        password = req.getParameter("password");
+        User user;
+        user = UserCheckPasswordService.checkPassword(login, password);
+        if (user == null) {
+            req.getRequestDispatcher("/signin.jsp").forward(req, resp);
+        } else {
+            status = UserStatus.valueOf(user.getStatus());
+            switch (status) {
+                case BANNED:
+                    req.getRequestDispatcher("/banneduser.jsp").forward(req, resp);
+                    break;
+                case ACTIVE:
+                    session.setAttribute("user", user);
+                    req.getRequestDispatcher("/price_list").forward(req,resp);
+                    break;
+                case ADMIN:
+                    session.setAttribute("user",user);
+                    req.getRequestDispatcher("/adminpage.jsp").forward(req,resp);
+                    break;
+            }
+        }
+    }
+
 }

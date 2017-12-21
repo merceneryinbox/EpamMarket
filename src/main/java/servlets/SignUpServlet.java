@@ -14,6 +14,17 @@ import java.io.IOException;
 
 @WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
+			ServletException, IOException {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -26,10 +37,10 @@ public class SignUpServlet extends HttpServlet {
 		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
 		try {
 			if (request != null) {
-				login = (String) request.getAttribute("login");
-				password = (String) request.getAttribute("password");
-				email = (String) request.getAttribute("email");
-				phone = (String) request.getAttribute("phone");
+				login =  request.getParameter("login");
+				password = request.getParameter("password");
+				email = request.getParameter("email");
+				phone = request.getParameter("phone");
 				statusDefault = UserStatus.ACTIVE.name();
 				
 				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
@@ -44,13 +55,12 @@ public class SignUpServlet extends HttpServlet {
 						HttpSession registrationSession = request.getSession();
 						registrationSession.setAttribute("user", user);
 						postgresUserDAO.createNew(user);
-						request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
-						
+						response.sendRedirect("/price_list");
 					} else {
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
-					request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
+					request.getRequestDispatcher("/signup.jsp").forward(request, response);
 				}
 			}
 		} catch (ServletException serve) {
