@@ -35,7 +35,7 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getInt("amount"),
                         resultSet.getString("description")
                 );
-                return Optional.of(good);
+                return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getInt("amount"),
                         resultSet.getString("description")
                 );
-                return Optional.of(good);
+                return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
             e.printStackTrace();

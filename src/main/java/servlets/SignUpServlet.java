@@ -37,10 +37,10 @@ public class SignUpServlet extends HttpServlet {
 		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
 		try {
 			if (request != null) {
-				login = (String) request.getAttribute("login");
-				password = (String) request.getAttribute("password");
-				email = (String) request.getAttribute("email");
-				phone = (String) request.getAttribute("phone");
+				login =  request.getParameter("login");
+				password = request.getParameter("password");
+				email = request.getParameter("email");
+				phone = request.getParameter("phone");
 				statusDefault = UserStatus.ACTIVE.name();
 				
 				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {

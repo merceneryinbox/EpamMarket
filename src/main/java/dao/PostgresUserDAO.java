@@ -57,7 +57,7 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             user = parserResultSet(resultSet);
-            return Optional.of(user);
+            return Optional.ofNullable(user);
         } catch (SQLException e) {
             e.printStackTrace();
             return Optional.empty();
