@@ -1,4 +1,4 @@
-package DbConnection;
+package db;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;

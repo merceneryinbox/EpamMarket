@@ -1,6 +1,6 @@
 package dao;
 
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 import entities.Reserve;
 import lombok.val;
 

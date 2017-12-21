@@ -1,7 +1,7 @@
 package dao;
 
 import entities.Good;
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 import lombok.val;
 
 import javax.sql.DataSource;
