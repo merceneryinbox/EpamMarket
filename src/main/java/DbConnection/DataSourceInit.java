@@ -12,7 +12,6 @@ public interface DataSourceInit {
     ComboPooledDataSource instance = new ComboPooledDataSource();
 
      static DataSource getDataSource() {
-
             synchronized (DataSourceInit.class) {
                 final Properties properties = new Properties();
                 try (InputStream resourceAsStream = DataSourceInit.class.getResourceAsStream("/jdbc/jdbc.properties")) {
