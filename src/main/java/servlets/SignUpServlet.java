@@ -55,8 +55,7 @@ public class SignUpServlet extends HttpServlet {
 						HttpSession registrationSession = request.getSession();
 						registrationSession.setAttribute("user", user);
 						postgresUserDAO.createNew(user);
-						request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
-						
+						response.sendRedirect("/price_list");
 					} else {
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
