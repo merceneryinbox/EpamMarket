@@ -29,7 +29,7 @@ public class SignInServlet extends HttpServlet {
             switch (status) {
                 case ACTIVE:
                     session.setAttribute("user", user);
-                    req.getRequestDispatcher("/price_list").forward(req,resp);
+                    resp.sendRedirect("/price_list");
                     break;
                 case ADMIN:
                     session.setAttribute("user",user);
@@ -62,7 +62,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ACTIVE:
                     session.setAttribute("user", user);
-                    req.getRequestDispatcher("/price_list").forward(req,resp);
+                    resp.sendRedirect("/price_list");
                     break;
                 case ADMIN:
                     session.setAttribute("user",user);
