@@ -8,11 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PostgresUserDAO implements UserDAO {
     private DataSource source;
     private PreparedStatement preparedStatement;
+    public static final String GET_ALL_QUERY = "SELECT * FROM users";
     private static final String INSERT_QUERY_NEW = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
     private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
     private static final String SELECT_QUERY_BY_ID = "SELECT * FROM users WHERE user_id = ?";
@@ -150,5 +153,28 @@ public class PostgresUserDAO implements UserDAO {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = source.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("login"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("status")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }
