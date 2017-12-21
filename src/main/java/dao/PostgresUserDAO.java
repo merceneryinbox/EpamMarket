@@ -69,7 +69,7 @@ public class PostgresUserDAO implements UserDAO {
         User user;
         try (Connection connection = source.getConnection()) {
             preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN);
-            preparedStatement.setString(1, login);
+            preparedStatement.setString(1,login);
             ResultSet resultSet = preparedStatement.executeQuery();
             user = parserResultSet(resultSet);
             return Optional.ofNullable(user);
