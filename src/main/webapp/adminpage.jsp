@@ -14,7 +14,7 @@
                 <th>Status</th>
                 <th>Here will be button</th>
             </tr>
-            <c:forEach var="user" items="${Users}">
+            <c:forEach var="user" items="${users}">
                 <tr>
                     <td><c:out value='${user.login}'/></td>
                     <td><c:out value='${user.status}'/></td>
