@@ -16,9 +16,9 @@
 <form action="sign_up" method="get">
     <input type="submit" value="Registration"/>
 </form>
-<a href="price_list">
-    Watch our goods!
-</a>
+<form action="price_list" method="get">
+    <input type="submit" value="Watch our goods!"/>
+</form>
 
 </body>
 </html>
