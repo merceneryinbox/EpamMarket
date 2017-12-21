@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "SignIn", value = "/signin")
+@WebServlet(name = "SignIn", value = "/sign_in")
 public class SignInServlet extends HttpServlet {
 	
 	private String checker;
