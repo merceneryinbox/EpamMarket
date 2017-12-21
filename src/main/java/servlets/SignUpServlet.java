@@ -11,24 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-
-@WebServlet("sign_up")
+@WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        User user = new User();
-        user =(User)session.getAttribute("user");
-        if (user == null){
-            req.getRequestDispatcher("/signup.jsp").forward(req, resp);}
-        else{
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        }
-    }
-
-    @Override
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
+			ServletException, IOException {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String login;
 		String password;
@@ -44,9 +42,9 @@ public class SignUpServlet extends HttpServlet {
 				email = (String) request.getAttribute("email");
 				phone = (String) request.getAttribute("phone");
 				statusDefault = UserStatus.ACTIVE.name();
-
-                if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
-
+				
+				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
+					
 					if (login != null && password != null) {
 						user.setLogin(login);
 						user.setPassword(password);
@@ -58,12 +56,12 @@ public class SignUpServlet extends HttpServlet {
 						registrationSession.setAttribute("user", user);
 						postgresUserDAO.createNew(user);
 						request.getRequestDispatcher("/pricelist.jsp").forward(request, response);
-
+						
 					} else {
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
-					request.getRequestDispatcher("/signin.jsp").forward(request, response);
+					request.getRequestDispatcher("/signup.jsp").forward(request, response);
 				}
 			}
 		} catch (ServletException serve) {
