@@ -1,6 +1,6 @@
 package temp;
 
-import DbConnection.DataSourceInit;
+import dbConnection.DataSourceInit;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;

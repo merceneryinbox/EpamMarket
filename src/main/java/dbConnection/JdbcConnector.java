@@ -1,4 +1,4 @@
-package DbConnection;
+package dbConnection;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
