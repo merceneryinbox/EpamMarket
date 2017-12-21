@@ -29,7 +29,7 @@ public class SignInServlet extends HttpServlet {
             if (status.equalsIgnoreCase("admin")) {
                 req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
             } else {
-                req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
+                resp.sendRedirect("/price_list");
             }
         } else {
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
@@ -57,7 +57,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ACTIVE:
                     session.setAttribute("user", user);
-                    req.getRequestDispatcher("pricelist.jsp").forward(req,resp);
+                    req.getRequestDispatcher("/price_list").forward(req,resp);
                     break;
                 case ADMIN:
                     session.setAttribute("user",user);
