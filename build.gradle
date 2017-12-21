@@ -16,7 +16,8 @@ dependencies {
             'org.hamcrest:java-hamcrest:+'
 
     compile 'org.apache.logging.log4j:log4j-core:2.10.0',
-            'org.springframework:spring-jdbc:4.3.13.RELEASE',
+            'org.apache.logging.log4j:log4j-api:2.10.0',
+    'org.springframework:spring-jdbc:4.3.13.RELEASE',
             'org.springframework:spring-core:4.3.13.RELEASE',
             'org.apache.tomcat:tomcat-catalina:9.0.2',
             'c3p0:c3p0:0.9.0.4',
