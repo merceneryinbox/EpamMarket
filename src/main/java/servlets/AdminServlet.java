@@ -1,7 +1,6 @@
 package servlets;
 
 import entities.User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +15,7 @@ public class AdminServlet extends HttpServlet{
 
     class AdminService {
         public List<User> getUserList(){
-            throw new NotImplementedException();
+            throw new UnsupportedOperationException();
         }
     }
     AdminService adminService = new AdminService();
