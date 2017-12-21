@@ -6,8 +6,8 @@ out/
 gen/
 build/
 temp/
+src/main/resources/h2/
 gradlew
 gradlew.bat
-test
 *.iml
 *.ipr

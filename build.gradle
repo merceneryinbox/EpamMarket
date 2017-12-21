@@ -10,7 +10,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
 
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1',
             'org.hamcrest:java-hamcrest:+'
@@ -21,7 +20,9 @@ dependencies {
             'org.apache.tomcat:tomcat-catalina:9.0.2',
             'c3p0:c3p0:0.9.0.4',
             'org.apache.tomcat:tomcat-servlet-api:9.0.2',
+            'com.h2database:h2:+',
             'postgresql:postgresql:+',
+            'org.projectlombok:lombok:1.16.18',
             'taglibs:standard:1.1.2',
             'jstl:jstl:1.2'
 }

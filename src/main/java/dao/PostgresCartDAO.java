@@ -18,12 +18,13 @@ public class PostgresCartDAO implements CartDAO {
     public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? AND goods_id = ?";
     public static final String DELETE_QUERY = "DELETE FROM cart WHERE user_id = ? AND goods_id = ?";
 
+    public final DataSource DATA_SOURCE;
+
     @Override
-    public Optional<List<Reserve>> getReserveListByLogin(Integer login) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+    public Optional<List<Reserve>> getReserveListByLogin(Integer userId) {
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
-            preparedStatement.setInt(1, login);
+            preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Reserve> reserveList = new ArrayList<>();
             while (resultSet.next()) {
@@ -49,11 +50,10 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
-    public Optional<Reserve> getReserve(Integer login, Integer goodId) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+    public Optional<Reserve> getReserve(Integer userId, Integer goodId) {
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY)) {
-            preparedStatement.setInt(1, login);
+            preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -73,22 +73,20 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
-    public void setAmountByLoginAndGoodId(Integer login, Integer goodId, Integer amount) {
+    public void setAmountByLoginAndGoodId(Integer userId, Integer goodId, Integer amount) {
         if (amount == 0) {
-            deleteReserve(login, goodId);
+            deleteReserve(userId, goodId);
             return;
         }
-
-        val reserve = getReserve(login, goodId);
+        val reserve = getReserve(userId, goodId);
         if (reserve.isPresent())
-            updateReserve(login, goodId, amount, reserve.get().getReserveTime());
+            updateReserve(userId, goodId, amount, reserve.get().getReserveTime());
         else
-            createReserve(login, goodId, amount, Timestamp.from(Instant.now()));
+            createReserve(userId, goodId, amount, Timestamp.from(Instant.now()));
     }
 
     private void deleteReserve(Integer userId, Integer goodID) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodID);
@@ -99,8 +97,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void createReserve(Integer userId, Integer goodId, Integer amount, Timestamp timestamp) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodId);
@@ -113,8 +110,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     private void updateReserve(Integer userId, Integer goodId, Integer amount, Timestamp timestamp) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setInt(1, amount);
             preparedStatement.setTimestamp(2, timestamp);
@@ -126,5 +122,11 @@ public class PostgresCartDAO implements CartDAO {
         }
     }
 
+    public PostgresCartDAO() {
+        this(DataSourceInit.getDataSource());
+    }
 
+    public PostgresCartDAO(DataSource dataSource) {
+        DATA_SOURCE = dataSource;
+    }
 }

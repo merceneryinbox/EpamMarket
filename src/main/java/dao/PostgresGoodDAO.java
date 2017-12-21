@@ -1,7 +1,7 @@
 package dao;
 
-import DbConnection.DataSourceInit;
 import entities.Good;
+import DbConnection.DataSourceInit;
 import lombok.val;
 
 import javax.sql.DataSource;
@@ -20,10 +20,11 @@ public class PostgresGoodDAO implements GoodDAO {
     public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
+    final DataSource DATA_SOURCE;
+
     @Override
     public Optional<Good> getGoodById(Integer id) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -45,8 +46,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public Optional<Good> getGoodByName(String name) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -54,6 +55,7 @@ public class PostgresGoodDAO implements GoodDAO {
                 val good = new Good(
                         resultSet.getInt("goods_id"),
                         // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
+                        // TODO Updated - no troubles have been detected while testing, so mb its ok
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),
@@ -70,8 +72,7 @@ public class PostgresGoodDAO implements GoodDAO {
     @Override
     public List<Good> getAllGoods() {
         List<Good> goods = new ArrayList<>();
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -92,8 +93,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void addGood(Good good) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
             preparedStatement.setString(1, good.getName());
             preparedStatement.setDouble(2, good.getPrice());
@@ -107,8 +108,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void deleteGoodByName(String name) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, name);
             preparedStatement.execute();
@@ -119,8 +120,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public void updateGood(Good good) {
-        DataSource instance = DataSourceInit.getDataSource();
-        try (Connection connection = instance.getConnection();
+
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setDouble(1, good.getPrice());
             preparedStatement.setInt(2, good.getAmount());
@@ -130,5 +131,13 @@ public class PostgresGoodDAO implements GoodDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public PostgresGoodDAO(DataSource dataSource) {
+        DATA_SOURCE = dataSource;
+    }
+
+    public PostgresGoodDAO() {
+        DATA_SOURCE = DataSourceInit.getDataSource();
     }
 }
