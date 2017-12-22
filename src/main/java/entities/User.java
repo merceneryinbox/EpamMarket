@@ -10,15 +10,15 @@ import lombok.extern.log4j.Log4j2;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-	private Integer id;
-	private String login;
-	private String password;
-	private String email;
-	private String phone;
-	private String status;
-	
-	public static User testUserForName(String name) {
-		return new User(0, name, name.hashCode() + "", name + "@email.com", "+7" + (+name
-				.hashCode() + "0000000000").substring(0, 10), "Active");
-	}
+    private Integer id;
+    private String  login;
+    private String  password;
+    private String  email;
+    private String  phone;
+    private String  status;
+
+    public static User testUserForName(String name) {
+        return new User(0, name, name.hashCode() + "", name + "@email.com", "+7" + (+name
+                .hashCode() + "0000000000").substring(0, 10), "Active");
+    }
 }

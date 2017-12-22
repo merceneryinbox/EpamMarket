@@ -3,6 +3,7 @@ package dao;
 import entities.User;
 
 import java.util.Optional;
+
 public interface UserDAO {
 
     boolean createNew(User user);

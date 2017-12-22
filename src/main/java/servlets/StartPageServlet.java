@@ -12,17 +12,17 @@ import java.io.IOException;
 @Log4j2
 @WebServlet(name = "StartPage", value = "/")
 public class StartPageServlet extends HttpServlet {
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-		doGet(req, resp);
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			req.getRequestDispatcher("index.jsp").forward(req, resp);
-		} catch (ServletException | IOException e) {
-			log.error("Droped down at " + this.getClass() + " because of \n" + e.getMessage());
-		}
-	}
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        doGet(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        } catch (ServletException | IOException e) {
+            log.error("Droped down at " + this.getClass() + " because of \n" + e.getMessage());
+        }
+    }
 }

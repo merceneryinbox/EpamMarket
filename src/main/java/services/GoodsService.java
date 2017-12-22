@@ -9,13 +9,13 @@ import java.util.List;
 
 @Log4j2
 public class GoodsService {
-	private GoodDAO goodDAO;
-	
-	public GoodsService() {
-		goodDAO = new PostgresGoodDAO();
-	}
-	
-	public List<Good> getPriceList() {
-		return goodDAO.getAllGoods();
-	}
+    private GoodDAO goodDAO;
+
+    public GoodsService() {
+        goodDAO = new PostgresGoodDAO();
+    }
+
+    public List<Good> getPriceList() {
+        return goodDAO.getAllGoods();
+    }
 }
