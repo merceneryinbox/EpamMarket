@@ -22,7 +22,6 @@ public class PostgresCartDAO implements CartDAO {
     public static PostgresCartDAO getInstance() {
         if (instance == null)
             instance = new PostgresCartDAO(DataSourceInit.getPostgres());
-
         return instance;
     }
 
@@ -31,7 +30,6 @@ public class PostgresCartDAO implements CartDAO {
     public static PostgresCartDAO getTestInstance() {
         if (testInstance == null)
             testInstance = new PostgresCartDAO(DataSourceInit.getH2());
-
         return testInstance;
     }
 
