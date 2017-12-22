@@ -1,6 +1,6 @@
 package dao;
 
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 import entities.User;
 import lombok.extern.log4j.Log4j2;
 
@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -23,6 +25,7 @@ public class PostgresUserDAO implements UserDAO {
             instance = new PostgresUserDAO(DataSourceInit.getPostgres());
 
         return instance;
+
     }
 
     private static PostgresUserDAO testInstance;
@@ -52,11 +55,13 @@ public class PostgresUserDAO implements UserDAO {
             "DELETE FROM users WHERE login = ?";
     private static final String DELETE_QUERY_BY_ID =
             "DELETE FROM users WHERE user_id = ?";
+    private static final String GET_ALL_QUERY =
+            "SELECT * FROM users";
 
     //--------------------------------CONSTRUCTOR---------------------------------------------
 
-    private PostgresUserDAO(DataSource DATA_SOURCE) {
-        this.DATA_SOURCE = DATA_SOURCE;
+    private PostgresUserDAO(DataSource dataSource) {
+        this.DATA_SOURCE = dataSource;
     }
 
     //--------------------------------DAO-METHODS---------------------------------------------
@@ -125,7 +130,6 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(5, newUser.getStatus());
             preparedStatement.setInt(6, oldUser.getId());
             preparedStatement.execute();
-            //TODO info in log4j
             log.info("User successfully updated by updateUser method in PostgresUserDao !");
             return true;
         } catch (SQLException e) {
@@ -165,6 +169,29 @@ public class PostgresUserDAO implements UserDAO {
         }
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("login"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("status")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
     //--------------------------------OTHER-METHODS---------------------------------------------
 
     private User parserResultSet(ResultSet resultSet) {
@@ -188,6 +215,7 @@ public class PostgresUserDAO implements UserDAO {
             }
         } catch (SQLException e) {
             log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+
         }
         return user;
     }

@@ -1,6 +1,6 @@
 package dao;
 
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 import entities.Reserve;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
