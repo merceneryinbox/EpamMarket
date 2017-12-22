@@ -1,5 +1,6 @@
 package servlets;
 
+import entities.CartCase;
 import entities.Reserve;
 import entities.User;
 import services.ReserveService;
@@ -26,7 +27,7 @@ public class CartServlet extends HttpServlet {
         User user;
         user = (User) session.getAttribute("user");
         if (user != null) {
-            List<Reserve> cart = reserveService.getCart(user.getId());
+            List<CartCase> cart = reserveService.getCart(user.getId());
             req.setAttribute("userCart",cart);
             req.getRequestDispatcher("/cart.jsp").forward(req, resp);
         } else {
