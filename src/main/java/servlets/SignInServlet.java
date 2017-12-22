@@ -52,7 +52,7 @@ public class SignInServlet extends HttpServlet {
         login = req.getParameter("login");
         password = req.getParameter("password");
         User user;
-        user = UserCheckPasswordService.checkPassword(login, password);
+        user = UserCheckPasswordService.getInstance().checkPassword(login, password);
         if (user == null) {
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {

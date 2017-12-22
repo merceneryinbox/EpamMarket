@@ -17,7 +17,7 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> userList = AdminService.getUserList();
+        List<User> userList = AdminService.getInstance().getUserList();
         try {
             req.setAttribute("users", userList);
             req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
