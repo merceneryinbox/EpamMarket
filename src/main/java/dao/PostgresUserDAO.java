@@ -86,7 +86,7 @@ public class PostgresUserDAO implements UserDAO {
     public Optional<User> getUserById(Integer id) {
         User user;
         try (Connection connection = DATA_SOURCE.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             user = parserResultSet(resultSet);
@@ -102,7 +102,7 @@ public class PostgresUserDAO implements UserDAO {
     public Optional<User> getUserByLogin(String login) {
         User user;
         try (Connection connection = DATA_SOURCE.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN)) {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             user = parserResultSet(resultSet);
@@ -117,7 +117,7 @@ public class PostgresUserDAO implements UserDAO {
     public boolean updateUser(User newUser, User oldUser) {
         //FIXME do we need check if newUser or oldUser is null? - yes we do !
         try (Connection connection = DATA_SOURCE.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setString(1, newUser.getLogin());
             preparedStatement.setString(2, newUser.getEmail());
             preparedStatement.setString(3, newUser.getPhone());
@@ -137,7 +137,7 @@ public class PostgresUserDAO implements UserDAO {
     @Override
     public boolean deleteUserByLogin(String login) {
         try (Connection connection = DATA_SOURCE.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN)) {
             preparedStatement.setString(1, login);
             preparedStatement.execute();
             //TODO info in log4j
@@ -152,7 +152,7 @@ public class PostgresUserDAO implements UserDAO {
     @Override
     public boolean deleteUserById(Integer id) {
         try (Connection connection = DATA_SOURCE.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
             //TODO info in log4j
