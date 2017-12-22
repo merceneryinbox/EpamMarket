@@ -1,6 +1,6 @@
 package temp;
 
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

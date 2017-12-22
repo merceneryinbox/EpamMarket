@@ -2,6 +2,7 @@ package dao;
 
 import entities.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDAO {
@@ -17,4 +18,6 @@ public interface UserDAO {
     boolean deleteUserByLogin(String login);
 
     boolean deleteUserById(Integer id);
+
+    List<User> getAllUsers();
 }

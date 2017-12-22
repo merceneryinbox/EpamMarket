@@ -1,8 +1,8 @@
 package dao;
 
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 import entities.Good;
-import DbConnection.DatabaseManager;
+import db.DatabaseManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

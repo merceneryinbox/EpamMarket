@@ -1,7 +1,7 @@
 package dao;
 
-import DbConnection.DataSourceInit;
-import DbConnection.DatabaseManager;
+import db.DataSourceInit;
+import db.DatabaseManager;
 import entities.Good;
 import entities.Reserve;
 import entities.User;

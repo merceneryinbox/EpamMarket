@@ -1,4 +1,4 @@
-package DbConnection;
+package db;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import lombok.extern.log4j.Log4j2;
