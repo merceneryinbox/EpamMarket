@@ -25,12 +25,12 @@ public class PostgresCartDAOTest {
     public static final GoodDAO GOOD_DAO = new PostgresGoodDAO(DATA_SOURCE);
 
     @BeforeEach
-    public void init(){
+    public void init() {
         DatabaseManager.init(DATA_SOURCE);
     }
 
     @AfterEach
-    public void drop(){
+    public void drop() {
         DatabaseManager.drop(DATA_SOURCE);
     }
 

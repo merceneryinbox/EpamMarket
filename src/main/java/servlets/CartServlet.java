@@ -29,14 +29,14 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        Reserve         reserve         = new Reserve();
-        User            user            = new User();
+        Reserve reserve = new Reserve();
+        User user = new User();
         PostgresCartDAO postgresCartDAO = new PostgresCartDAO();
         PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
-        Integer         userId;
-        String          login;
-        Integer         goodsamount;
-        Integer         goodsId;
+        Integer userId;
+        String login;
+        Integer goodsamount;
+        Integer goodsId;
 
         HttpSession cartSession = request.getSession();
 

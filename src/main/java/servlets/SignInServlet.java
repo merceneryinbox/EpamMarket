@@ -20,10 +20,10 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         HttpSession session = req.getSession();
-        UserStatus  status;
-        User        user;
+        UserStatus status;
+        User user;
         user = (User) session.getAttribute("user");
         if (user != null) {
             status = UserStatus.valueOf(user.getStatus());
@@ -44,11 +44,11 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String      login;
-        String      password;
-        UserStatus  status;
+        String login;
+        String password;
+        UserStatus status;
         login = req.getParameter("login");
         password = req.getParameter("password");
         User user;

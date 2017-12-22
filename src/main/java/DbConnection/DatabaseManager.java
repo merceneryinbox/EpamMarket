@@ -19,8 +19,8 @@ public class DatabaseManager {
             ps.execute();
         } catch (SQLException e) {
             log.error("Droped down at DatabaseManager public static void init(DataSource "
-                      + "dataSource because of \n" + e
-                              .getMessage());
+                    + "dataSource because of \n" + e
+                    .getMessage());
         }
     }
 
@@ -36,8 +36,8 @@ public class DatabaseManager {
         } catch (IOException e) {
             log.error(
                     "Droped down at private static String getInitQuery() in DatabaseManager "
-                    + "because of \n"
-                    + e
+                            + "because of \n"
+                            + e
                             .getMessage());
         }
         return null;
@@ -50,9 +50,9 @@ public class DatabaseManager {
     private static String getQueryFromInputStreams(InputStream... streams) throws IOException {
         StringBuffer strBuff = new StringBuffer();
         for (InputStream stream : streams) {
-            InputStreamReader isr  = new InputStreamReader(stream);
-            BufferedReader    buff = new BufferedReader(isr);
-            int               c;
+            InputStreamReader isr = new InputStreamReader(stream);
+            BufferedReader buff = new BufferedReader(isr);
+            int c;
             while ((c = buff.read()) != -1) {
                 strBuff.append((char) c);
             }
@@ -67,8 +67,8 @@ public class DatabaseManager {
         } catch (SQLException e) {
             log.error(
                     "Droped down at public static void drop(DataSource dataSource) in "
-                    + "DatabaseManager because of \n"
-                    + e
+                            + "DatabaseManager because of \n"
+                            + e
                             .getMessage());
         }
     }

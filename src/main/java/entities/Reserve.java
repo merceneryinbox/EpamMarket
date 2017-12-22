@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reserve {
-    private Integer   id;
-    private Integer   userId;
-    private Integer   goodId;
-    private Integer   amount;
+    private Integer id;
+    private Integer userId;
+    private Integer goodId;
+    private Integer amount;
     private Timestamp reserveTime;
 }

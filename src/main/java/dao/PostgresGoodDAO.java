@@ -16,15 +16,15 @@ import java.util.Optional;
 
 @Log4j2
 public class PostgresGoodDAO implements GoodDAO {
-    public static final String GET_QUERY     = "SELECT * FROM goods WHERE name = ?";
+    public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
     public static final String GET_ALL_QUERY = "SELECT * FROM goods";
     public static final String ADD_QUERY
-                                             = "INSERT INTO goods (name, price, amount, "
-                                               + "description) VALUES (?,?,?,?)";
+            = "INSERT INTO goods (name, price, amount, "
+            + "description) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY
-                                             = "UPDATE goods SET price = ?, amount = ?, "
-                                               + "description = ? WHERE name = ?";
-    public static final String DELETE_QUERY  = "DELETE FROM goods WHERE name = ?";
+            = "UPDATE goods SET price = ?, amount = ?, "
+            + "description = ? WHERE name = ?";
+    public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
     final DataSource DATA_SOURCE;
 
@@ -47,7 +47,7 @@ public class PostgresGoodDAO implements GoodDAO {
             while (resultSet.next()) {
                 val good = new Good(resultSet.getInt("goods_id"), resultSet
                         .getString("name"), resultSet.getDouble("price"), resultSet
-                                            .getInt("amount"), resultSet.getString("description"));
+                        .getInt("amount"), resultSet.getString("description"));
                 return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
@@ -73,13 +73,13 @@ public class PostgresGoodDAO implements GoodDAO {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 val good = new Good(resultSet.getInt("goods_id"),
-                                    // TODO Shefer 19.12 : Im not sure but `name` can be kinda
-                                    // keyword in SQL and should be escaped
-                                    // TODO Updated - no troubles have been detected while
-                                    // testing, so mb its ok
-                                    resultSet.getString("name"), resultSet.getDouble("price"),
-                                    resultSet
-                                            .getInt("amount"), resultSet.getString("description"));
+                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda
+                        // keyword in SQL and should be escaped
+                        // TODO Updated - no troubles have been detected while
+                        // testing, so mb its ok
+                        resultSet.getString("name"), resultSet.getDouble("price"),
+                        resultSet
+                                .getInt("amount"), resultSet.getString("description"));
                 return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
@@ -96,8 +96,8 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     public List<Good> getAllGoods() {
-        List<Good> goods     = new ArrayList<>();
-        ResultSet  resultSet = null;
+        List<Good> goods = new ArrayList<>();
+        ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE
                 .getConnection(); PreparedStatement preparedStatement = connection
                 .prepareStatement(GET_ALL_QUERY)) {
@@ -105,7 +105,7 @@ public class PostgresGoodDAO implements GoodDAO {
             while (resultSet.next()) {
                 goods.add(new Good(resultSet.getInt("goods_id"), resultSet
                         .getString("name"), resultSet.getDouble("price"), resultSet
-                                           .getInt("amount"), resultSet.getString("description")));
+                        .getInt("amount"), resultSet.getString("description")));
             }
 
         } catch (SQLException e) {

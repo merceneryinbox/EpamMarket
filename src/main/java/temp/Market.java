@@ -10,9 +10,9 @@ import java.sql.SQLException;
 
 public class Market {
     public static void main(String[] args) {
-        Connection        connection        = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet         resultSet         = null;
+        ResultSet resultSet = null;
         try {
             DataSource instance = DataSourceInit.getDataSource();
             connection = instance.getConnection();

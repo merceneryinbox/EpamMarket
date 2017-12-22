@@ -16,17 +16,17 @@ import java.util.Optional;
 public class PostgresCartDAO implements CartDAO {
     public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
     public static final String GET_QUERY
-                                             = "SELECT * FROM cart WHERE user_id = ? AND goods_id"
-                                               + " = ?";
+            = "SELECT * FROM cart WHERE user_id = ? AND goods_id"
+            + " = ?";
     public static final String CREATE_QUERY
-                                             = "INSERT INTO cart (user_id, goods_id, amount, "
-                                               + "reserve_time) VALUES (?,?,?,?)";
+            = "INSERT INTO cart (user_id, goods_id, amount, "
+            + "reserve_time) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY
-                                             = "UPDATE cart SET amount = ?, reserve_time = ? "
-                                               + "WHERE user_id = ? AND goods_id = ?";
+            = "UPDATE cart SET amount = ?, reserve_time = ? "
+            + "WHERE user_id = ? AND goods_id = ?";
     public static final String DELETE_QUERY
-                                             = "DELETE FROM cart WHERE user_id = ? AND goods_id ="
-                                               + " ?";
+            = "DELETE FROM cart WHERE user_id = ? AND goods_id ="
+            + " ?";
 
     public final DataSource DATA_SOURCE;
 
@@ -52,8 +52,8 @@ public class PostgresCartDAO implements CartDAO {
             while (resultSet.next()) {
                 val reserve = new Reserve(resultSet.getInt("cart_id"), resultSet
                         .getInt("user_id"), resultSet.getInt("goods_id"), resultSet
-                                                  .getInt("amount"),
-                                          resultSet.getTimestamp("reserve_time"));
+                        .getInt("amount"),
+                        resultSet.getTimestamp("reserve_time"));
                 reserveList.add(reserve);
             }
             return Optional.ofNullable(reserveList);
@@ -86,7 +86,9 @@ public class PostgresCartDAO implements CartDAO {
         val reserve = getReserve(userId, goodId);
         if (reserve.isPresent()) {
             updateReserve(userId, goodId, amount, reserve.get().getReserveTime());
-        } else { createReserve(userId, goodId, amount, Timestamp.from(Instant.now())); }
+        } else {
+            createReserve(userId, goodId, amount, Timestamp.from(Instant.now()));
+        }
     }
 
     private void deleteReserve(Integer userId, Integer goodID) {
@@ -114,8 +116,8 @@ public class PostgresCartDAO implements CartDAO {
             while (resultSet.next()) {
                 val reserve = new Reserve(resultSet.getInt("cart_id"), resultSet
                         .getInt("user_id"), resultSet.getInt("goods_id"), resultSet
-                                                  .getInt("amount"),
-                                          resultSet.getTimestamp("reserve_time"));
+                        .getInt("amount"),
+                        resultSet.getTimestamp("reserve_time"));
                 return Optional.ofNullable(reserve);
             }
         } catch (SQLException e) {

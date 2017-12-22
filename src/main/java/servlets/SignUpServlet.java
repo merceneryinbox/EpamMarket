@@ -20,7 +20,7 @@ public class SignUpServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         HttpSession session = request.getSession();
-        User        user    = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         if (user == null) {
             request.getRequestDispatcher("/signup.jsp").forward(request, response);
         } else {
@@ -30,12 +30,12 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String          login;
-        String          password;
-        String          email;
-        String          phone;
-        String          statusDefault;
-        User            user            = new User();
+        String login;
+        String password;
+        String email;
+        String phone;
+        String statusDefault;
+        User user = new User();
         PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
         try {
             if (request != null) {

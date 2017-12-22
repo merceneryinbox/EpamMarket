@@ -23,7 +23,7 @@ public class JdbcConnector {
 
         try {
             Class.forName(properties.getProperty("driver"), true,
-                          ComboPooledDataSource.class.getClassLoader());
+                    ComboPooledDataSource.class.getClassLoader());
         } catch (Exception e) {
             log.error(
                     "Droped down at private void getConnection() in JdbcConnector because of \n" + e

@@ -11,14 +11,14 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 public class Good {
     private Integer id;
-    private String  name;
-    private Double  price;
+    private String name;
+    private Double price;
     private Integer amount;
-    private String  description;
+    private String description;
 
     public static Good testGoodForName(String name) {
         return new Good(0, name, (name.hashCode() % 10000000) / 100.0, name
-                                                                               .hashCode() % 100,
-                        name + " very full descripton");
+                .hashCode() % 100,
+                name + " very full descripton");
     }
 }

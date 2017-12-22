@@ -11,11 +11,11 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 public class User {
     private Integer id;
-    private String  login;
-    private String  password;
-    private String  email;
-    private String  phone;
-    private String  status;
+    private String login;
+    private String password;
+    private String email;
+    private String phone;
+    private String status;
 
     public static User testUserForName(String name) {
         return new User(0, name, name.hashCode() + "", name + "@email.com", "+7" + (+name
