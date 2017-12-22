@@ -18,7 +18,11 @@
                 <tr>
                     <td><c:out value='${user.login}'/></td>
                     <td><c:out value='${user.status}'/></td>
-                    <td><c:out value='button will be her'/></td>
+                    <td> <form action="adminpage" method="post">
+                        <input type="hidden" name="userId" value="${user.id}">
+                        <input type="submit" value="Change status">
+                    </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
