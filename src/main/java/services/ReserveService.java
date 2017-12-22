@@ -17,13 +17,11 @@ public class ReserveService {
 
     public void reserveGoods(int userId, int goodsId, int amount) {
         Optional<Reserve> optionalReserve = cartDAO.getReserve(userId, goodsId);
-        Reserve reserve;
-        if (!optionalReserve.isPresent()) {
-            cartDAO.setAmountByLoginAndGoodId(userId, goodsId, amount);
-        } else {
-            reserve = optionalReserve.get();
-            cartDAO.setAmountByLoginAndGoodId(userId,goodsId,reserve.getAmount() + amount);
+        int amountForSet = amount;
+        if (optionalReserve.isPresent()) {
+            amountForSet+= optionalReserve.get().getAmount();
         }
+        cartDAO.setAmountByLoginAndGoodId(userId,goodsId,amountForSet);
     }
 
     public List<Reserve> getCart(int userId) {
