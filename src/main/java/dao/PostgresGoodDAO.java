@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class PostgresGoodDAO implements GoodDAO {
     public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
+    public static final String GET_BY_ID_QUERY = "SELECT * FROM goods WHERE goods_id = ?";
     public static final String GET_ALL_QUERY = "SELECT * FROM goods";
     public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
@@ -25,7 +26,7 @@ public class PostgresGoodDAO implements GoodDAO {
     @Override
     public Optional<Good> getGoodById(Integer id) {
         try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_QUERY);) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
