@@ -11,7 +11,7 @@
     Glad to see you in our dolphin-shop!
 </h1>
 <form action="sign_in" method="get">
-<input type="submit" value="Sign In"/>
+    <input type="submit" value="Sign In"/>
 </form>
 <form action="sign_up" method="get">
     <input type="submit" value="Registration"/>

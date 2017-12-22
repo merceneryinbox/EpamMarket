@@ -1,7 +1,8 @@
 package dao;
 
+import DbConnection.DataSourceInit;
 import entities.Good;
-import db.DataSourceInit;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
 import javax.sql.DataSource;
@@ -13,125 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public class PostgresGoodDAO implements GoodDAO {
     public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
     public static final String GET_ALL_QUERY = "SELECT * FROM goods";
-    public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
+    public static final String ADD_QUERY
+            = "INSERT INTO goods (name, price, amount, "
+            + "description) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY
+            = "UPDATE goods SET price = ?, amount = ?, "
+            + "description = ? WHERE name = ?";
     public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
 
     final DataSource DATA_SOURCE;
-
-    @Override
-    public Optional<Good> getGoodById(Integer id) {
-        try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                val good = new Good(
-                        resultSet.getInt("goods_id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("amount"),
-                        resultSet.getString("description")
-                );
-                return Optional.ofNullable(good);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Good> getGoodByName(String name) {
-
-        try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
-            preparedStatement.setString(1, name);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                val good = new Good(
-                        resultSet.getInt("goods_id"),
-                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
-                        // TODO Updated - no troubles have been detected while testing, so mb its ok
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("amount"),
-                        resultSet.getString("description")
-                );
-                return Optional.ofNullable(good);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Good> getAllGoods() {
-        List<Good> goods = new ArrayList<>();
-        try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                goods.add(new Good(
-                        resultSet.getInt("goods_id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("amount"),
-                        resultSet.getString("description")
-                ));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return goods;
-    }
-
-    @Override
-    public void addGood(Good good) {
-
-        try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
-            preparedStatement.setString(1, good.getName());
-            preparedStatement.setDouble(2, good.getPrice());
-            preparedStatement.setInt(3, good.getAmount());
-            preparedStatement.setString(4, good.getDescription());
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void deleteGoodByName(String name) {
-
-        try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
-            preparedStatement.setString(1, name);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void updateGood(Good good) {
-
-        try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
-            preparedStatement.setDouble(1, good.getPrice());
-            preparedStatement.setInt(2, good.getAmount());
-            preparedStatement.setString(3, good.getDescription());
-            preparedStatement.setString(4, good.getName());
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public PostgresGoodDAO(DataSource dataSource) {
         DATA_SOURCE = dataSource;
@@ -139,5 +34,137 @@ public class PostgresGoodDAO implements GoodDAO {
 
     public PostgresGoodDAO() {
         DATA_SOURCE = DataSourceInit.getDataSource();
+    }
+
+    @Override
+    public Optional<Good> getGoodById(Integer id) {
+        ResultSet resultSet = null;
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(GET_QUERY)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                val good = new Good(resultSet.getInt("goods_id"), resultSet
+                        .getString("name"), resultSet.getDouble("price"), resultSet
+                        .getInt("amount"), resultSet.getString("description"));
+                return Optional.ofNullable(good);
+            }
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException eIgnore) {
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Good> getGoodByName(String name) {
+        ResultSet resultSet = null;
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(GET_QUERY)) {
+
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                val good = new Good(resultSet.getInt("goods_id"),
+                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda
+                        // keyword in SQL and should be escaped
+                        // TODO Updated - no troubles have been detected while
+                        // testing, so mb its ok
+                        resultSet.getString("name"), resultSet.getDouble("price"),
+                        resultSet
+                                .getInt("amount"), resultSet.getString("description"));
+                return Optional.ofNullable(good);
+            }
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException eIgnore) {
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Good> getAllGoods() {
+        List<Good> goods = new ArrayList<>();
+        ResultSet resultSet = null;
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(GET_ALL_QUERY)) {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                goods.add(new Good(resultSet.getInt("goods_id"), resultSet
+                        .getString("name"), resultSet.getDouble("price"), resultSet
+                        .getInt("amount"), resultSet.getString("description")));
+            }
+
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException eIgnore) {
+            }
+        }
+        return goods;
+    }
+
+    @Override
+    public void addGood(Good good) {
+
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(ADD_QUERY)) {
+            preparedStatement.setString(1, good.getName());
+            preparedStatement.setDouble(2, good.getPrice());
+            preparedStatement.setInt(3, good.getAmount());
+            preparedStatement.setString(4, good.getDescription());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        }
+    }
+
+    @Override
+    public void deleteGoodByName(String name) {
+
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(DELETE_QUERY)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        }
+    }
+
+    @Override
+    public void updateGood(Good good) {
+
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(UPDATE_QUERY)) {
+            preparedStatement.setDouble(1, good.getPrice());
+            preparedStatement.setInt(2, good.getAmount());
+            preparedStatement.setString(3, good.getDescription());
+            preparedStatement.setString(4, good.getName());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        }
     }
 }

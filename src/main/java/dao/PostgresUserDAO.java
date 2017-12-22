@@ -1,29 +1,30 @@
 package dao;
 
-import db.DataSourceInit;
+import DbConnection.DataSourceInit;
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public class PostgresUserDAO implements UserDAO {
-    private DataSource source;
-    private PreparedStatement preparedStatement;
-    public static final String GET_ALL_QUERY = "SELECT * FROM users";
-    private static final String INSERT_QUERY_NEW = "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
+    private static final String INSERT_QUERY_NEW
+            = "INSERT INTO users (login,email,phone,"
+            + "password,status) VALUES(?,?,?,?,?)";
     private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
     private static final String SELECT_QUERY_BY_ID = "SELECT * FROM users WHERE user_id = ?";
-    private static final String UPDATE_QUERY = "UPDATE users SET login=?," +
-            "email=?, phone=?,password=?,status=? WHERE user_id=?";
+    private static final String UPDATE_QUERY = "UPDATE users SET login=?,"
+            + "email=?, phone=?,password=?,status=? "
+            + "WHERE user_id=?";
     private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
     private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
-
+    private DataSource source;
+    private PreparedStatement preparedStatement;
 
     public PostgresUserDAO() {
         this.source = DataSourceInit.getDataSource();
@@ -45,9 +46,12 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(5, user.getStatus());
             preparedStatement.execute();
             //TODO we can add log about successfully creating
+            log.info(
+                    "Successfully creating public boolean createNew(User user) in PostgresUserDAO");
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
             return false;
         }
 
@@ -63,71 +67,9 @@ public class PostgresUserDAO implements UserDAO {
             user = parserResultSet(resultSet);
             return Optional.ofNullable(user);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
             return Optional.empty();
-        }
-    }
-
-    @Override
-    public Optional<User> getUserByLogin(String login) {
-        User user;
-        try (Connection connection = source.getConnection()) {
-            preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN);
-            preparedStatement.setString(1,login);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            user = parserResultSet(resultSet);
-            return Optional.ofNullable(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    public boolean updateUser(User newUser, User oldUser) {
-        //FIXME do we need check if newUser or oldUser is null?
-        try (Connection connection = source.getConnection()) {
-            preparedStatement = connection.prepareStatement(UPDATE_QUERY);
-            preparedStatement.setString(1, newUser.getLogin());
-            preparedStatement.setString(2, newUser.getEmail());
-            preparedStatement.setString(3, newUser.getPhone());
-            preparedStatement.setString(4, newUser.getPassword());
-            preparedStatement.setString(5, newUser.getStatus());
-            preparedStatement.setInt(6, oldUser.getId());
-            preparedStatement.execute();
-            //TODO info in log4j
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean deleteUserByLogin(String login) {
-        try (Connection connection = source.getConnection()) {
-            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN);
-            preparedStatement.setString(1, login);
-            preparedStatement.execute();
-            //TODO info in log4j
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean deleteUserById(Integer id) {
-        try (Connection connection = source.getConnection()) {
-            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID);
-            preparedStatement.setInt(1, id);
-            preparedStatement.execute();
-            //TODO info in log4j
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
@@ -151,31 +93,79 @@ public class PostgresUserDAO implements UserDAO {
                 user = null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
         }
         return user;
     }
 
     @Override
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        try (Connection connection = source.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
+    public Optional<User> getUserByLogin(String login) {
+        User user;
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN);
+            preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                users.add(new User(
-                        resultSet.getInt("user_id"),
-                        resultSet.getString("login"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("status")
-                ));
-            }
-
+            user = parserResultSet(resultSet);
+            return Optional.ofNullable(user);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+            return Optional.empty();
         }
-        return users;
+    }
+
+    @Override
+    public boolean updateUser(User newUser, User oldUser) {
+        //FIXME do we need check if newUser or oldUser is null? - yes we do !
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+            preparedStatement.setString(1, newUser.getLogin());
+            preparedStatement.setString(2, newUser.getEmail());
+            preparedStatement.setString(3, newUser.getPhone());
+            preparedStatement.setString(4, newUser.getPassword());
+            preparedStatement.setString(5, newUser.getStatus());
+            preparedStatement.setInt(6, oldUser.getId());
+            preparedStatement.execute();
+            //TODO info in log4j
+            log.info("User successfully updated by updateUser method in PostgresUserDao !");
+            return true;
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteUserByLogin(String login) {
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN);
+            preparedStatement.setString(1, login);
+            preparedStatement.execute();
+            //TODO info in log4j
+            log.info("User successfully delete by deleteUserByLogin method in PostgresUserDao !");
+            return true;
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteUserById(Integer id) {
+        try (Connection connection = source.getConnection()) {
+            preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID);
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+            //TODO info in log4j
+            log.info("User successfully delete by deleteUserById method in PostgresUserDao !");
+            return true;
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+            return false;
+        }
     }
 }

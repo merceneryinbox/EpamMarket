@@ -7,7 +7,8 @@
 <form action="/sign_in" method="post">
     <p><strong>Login:</strong></p>
     <input type="text" name="login" value=""/>
-    <br/><p><strong>Password:</strong></p>
+    <br/>
+    <p><strong>Password:</strong></p>
     <input type="password" name="password" value=""/><br/><br>
     <input type="submit" value="Sign In"/> <br/>
 </form>
