@@ -16,4 +16,7 @@ public class GoodsService {
     public List<Good> getPriceList() {
         return goodDAO.getAllGoods();
     }
+    public void deleteGoodsByName(String name){
+        goodDAO.deleteGoodByName(name);
+    }
 }

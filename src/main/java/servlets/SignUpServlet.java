@@ -61,6 +61,7 @@ public class SignUpServlet extends HttpServlet {
 					}
 				} else {
 					request.getRequestDispatcher("/signup.jsp").forward(request, response);
+					request.setAttribute("tag",login);
 				}
 			}
 		} catch (ServletException serve) {

@@ -2,6 +2,7 @@ package servlets;
 
 import entities.Reserve;
 import entities.User;
+import services.GoodsService;
 import services.ReserveService;
 
 import javax.servlet.ServletException;
@@ -49,6 +50,9 @@ public class CartServlet extends HttpServlet {
             amount = Integer.valueOf(request.getParameter("amount"));
             reserveService.reserveGoods(userId, goodsId, amount);
         }
+        String name = request.getParameter("goodsName");
+        GoodsService goodsService = new GoodsService();
+        goodsService.deleteGoodsByName(name);
         response.sendRedirect("price_list");
     }
 
