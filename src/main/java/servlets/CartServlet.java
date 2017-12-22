@@ -1,10 +1,8 @@
 package servlets;
 
-import dao.PostgresCartDAO;
-import dao.PostgresUserDAO;
 import entities.Reserve;
 import entities.User;
-import services.AdminService;
+import services.ReserveService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,53 +11,46 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
 // create List of cartages from cart table in DB and forwarding List in request to cart.jsp
 @WebServlet(name = "Cart", value = "/cart")
 public class CartServlet extends HttpServlet {
-	
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-			IOException {
-		doPost(req, resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
-			ServletException, IOException {
-		Reserve reserve = new Reserve();
-		User user = new User();
-		PostgresCartDAO postgresCartDAO = new PostgresCartDAO();
-		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
-		Integer userId;
-		String login;
-		Integer goodsamount;
-		Integer goodsId;
-		
-		HttpSession cartSession = request.getSession();
-		
-		login = (String) cartSession.getAttribute("login    ");
-		
-		userId = (Integer) request.getAttribute("user_id");
-		
-		Optional<User> optionalUser = postgresUserDAO.getUserByLogin(login);
-		
-		if (optionalUser.isPresent()) {
-			user = optionalUser.get();
-			userId = user.getId();
-			
-			goodsamount = (Integer) request.getAttribute("amount");
-			goodsId = (Integer) request.getAttribute("goods_id");
-			
-			reserve.setUserId(userId);
-			reserve.setGoodId(goodsId);
-			reserve.setAmount(goodsamount);
-			
-			request.setAttribute("cart", reserve);
-		} else {
-			request.getRequestDispatcher("/signup.jsp").forward(request, response);
-		}
-	}
+
+    private static ReserveService reserveService = new ReserveService();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
+        HttpSession session = req.getSession();
+        User user;
+        user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Reserve> cart = reserveService.getCart(user.getId());
+            req.setAttribute("userCart",cart);
+            req.getRequestDispatcher("/cart.jsp").forward(req, resp);
+        } else {
+            resp.sendRedirect("sign_in");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
+        HttpSession session = request.getSession();
+        User user;
+        int userId;
+        int goodsId;
+        int amount;
+        user = (User) session.getAttribute("user");
+        if (user != null) {
+            userId = user.getId();
+            goodsId = Integer.valueOf(request.getParameter("goodsId"));
+            amount = Integer.valueOf(request.getParameter("amount"));
+            reserveService.reserveGoods(userId, goodsId, amount);
+        }
+        response.sendRedirect("price_list");
+    }
+
+
 }

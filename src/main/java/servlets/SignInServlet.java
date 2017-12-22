@@ -33,7 +33,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ADMIN:
                     session.setAttribute("user",user);
-                    req.getRequestDispatcher("/adminpage.jsp").forward(req,resp);
+                    resp.sendRedirect("/adminpage");
                     break;
             }
         } else {
@@ -66,7 +66,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ADMIN:
                     session.setAttribute("user",user);
-                    req.getRequestDispatcher("/adminpage.jsp").forward(req,resp);
+                    resp.sendRedirect("/adminpage");
                     break;
             }
         }
