@@ -31,7 +31,8 @@
         <tr>
             <td>Email</td>
             <td><input type="text" name="email" value=""/></td>
-        </tr></table>
+        </tr>
+    </table>
     <input type="submit" value="Sign Up"/>
 </form>
 </body>
