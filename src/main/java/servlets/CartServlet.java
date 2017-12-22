@@ -31,8 +31,8 @@ public class CartServlet extends HttpServlet {
             ServletException, IOException {
         Reserve reserve = new Reserve();
         User user = new User();
-        PostgresCartDAO postgresCartDAO = new PostgresCartDAO();
-        PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
+        PostgresCartDAO postgresCartDAO = PostgresCartDAO.getInstance();
+        PostgresUserDAO postgresUserDAO = PostgresUserDAO.getInstance();
         Integer userId;
         String login;
         Integer goodsamount;

@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PostgresCartDAOTest {
     public static final DataSource DATA_SOURCE = DataSourceInit.getH2();
-    public static final CartDAO CART_DAO = new PostgresCartDAO(DATA_SOURCE);
-    public static final UserDAO USER_DAO = new PostgresUserDAO(DATA_SOURCE);
-    public static final GoodDAO GOOD_DAO = new PostgresGoodDAO(DATA_SOURCE);
+    public static final CartDAO CART_DAO = PostgresCartDAO.getTestInstance();
+    public static final UserDAO USER_DAO = PostgresUserDAO.getTestInstance();
+    public static final GoodDAO GOOD_DAO = PostgresGoodDAO.getTestInstance();
 
     @BeforeEach
     public void init() {

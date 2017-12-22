@@ -16,25 +16,51 @@ import java.util.Optional;
 
 @Log4j2
 public class PostgresGoodDAO implements GoodDAO {
-    public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
-    public static final String GET_ALL_QUERY = "SELECT * FROM goods";
-    public static final String ADD_QUERY
-            = "INSERT INTO goods (name, price, amount, "
-            + "description) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY
-            = "UPDATE goods SET price = ?, amount = ?, "
-            + "description = ? WHERE name = ?";
-    public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
+
+    //--------------------------------SINGLETON------------------------------------------
+
+    private static PostgresGoodDAO instance = null;
+
+    public static PostgresGoodDAO getInstance() {
+        if (instance == null)
+            instance = new PostgresGoodDAO(DataSourceInit.getPostgres());
+
+        return instance;
+    }
+
+    private static PostgresGoodDAO testInstance;
+
+    public static PostgresGoodDAO getTestInstance() {
+        if (testInstance == null)
+            testInstance = new PostgresGoodDAO(DataSourceInit.getH2());
+
+        return testInstance;
+    }
+
+    //--------------------------------DATA-SOURCE---------------------------------------------
 
     final DataSource DATA_SOURCE;
 
-    public PostgresGoodDAO(DataSource dataSource) {
+    //--------------------------------QUERIES---------------------------------------------
+
+    public static final String GET_QUERY =
+            "SELECT * FROM goods WHERE name = ?";
+    public static final String GET_ALL_QUERY =
+            "SELECT * FROM goods";
+    public static final String ADD_QUERY =
+            "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY =
+            "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
+    public static final String DELETE_QUERY =
+            "DELETE FROM goods WHERE name = ?";
+
+    //--------------------------------CONSTRUCTOR---------------------------------------------
+
+    private PostgresGoodDAO(DataSource dataSource) {
         DATA_SOURCE = dataSource;
     }
 
-    public PostgresGoodDAO() {
-        DATA_SOURCE = DataSourceInit.getDataSource();
-    }
+    //--------------------------------QUERIES---------------------------------------------
 
     @Override
     public Optional<Good> getGoodById(Integer id) {
@@ -73,10 +99,8 @@ public class PostgresGoodDAO implements GoodDAO {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 val good = new Good(resultSet.getInt("goods_id"),
-                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda
-                        // keyword in SQL and should be escaped
-                        // TODO Updated - no troubles have been detected while
-                        // testing, so mb its ok
+                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
+                        // TODO Updated - no troubles have been detected while testing, so mb its ok
                         resultSet.getString("name"), resultSet.getDouble("price"),
                         resultSet
                                 .getInt("amount"), resultSet.getString("description"));

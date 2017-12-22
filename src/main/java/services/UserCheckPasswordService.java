@@ -12,7 +12,7 @@ public class UserCheckPasswordService {
 
     public static User checkPassword(String login, String password) {
         User user = null;
-        UserDAO userDAO = new PostgresUserDAO();
+        UserDAO userDAO = PostgresUserDAO.getInstance();
         Optional<User> userOptional = userDAO.getUserByLogin(login);
         if (userOptional.isPresent()) {
             user = userOptional.get();

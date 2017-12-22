@@ -14,29 +14,49 @@ import java.util.Optional;
 
 @Log4j2
 public class PostgresCartDAO implements CartDAO {
-    public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
-    public static final String GET_QUERY
-            = "SELECT * FROM cart WHERE user_id = ? AND goods_id"
-            + " = ?";
-    public static final String CREATE_QUERY
-            = "INSERT INTO cart (user_id, goods_id, amount, "
-            + "reserve_time) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY
-            = "UPDATE cart SET amount = ?, reserve_time = ? "
-            + "WHERE user_id = ? AND goods_id = ?";
-    public static final String DELETE_QUERY
-            = "DELETE FROM cart WHERE user_id = ? AND goods_id ="
-            + " ?";
+
+    //--------------------------------SINGLETON------------------------------------------
+
+    private static PostgresCartDAO instance = null;
+
+    public static PostgresCartDAO getInstance() {
+        if (instance == null)
+            instance = new PostgresCartDAO(DataSourceInit.getPostgres());
+
+        return instance;
+    }
+
+    private static PostgresCartDAO testInstance;
+
+    public static PostgresCartDAO getTestInstance() {
+        if (testInstance == null)
+            testInstance = new PostgresCartDAO(DataSourceInit.getH2());
+
+        return testInstance;
+    }
+
+    //--------------------------------QUERIES---------------------------------------------
+
+    public static final String GET_ALL_QUERY =
+            "SELECT * FROM cart WHERE user_id = ?";
+    public static final String GET_QUERY =
+            "SELECT * FROM cart WHERE user_id = ? AND goods_id = ?";
+    public static final String CREATE_QUERY =
+            "INSERT INTO cart (user_id, goods_id, amount, reserve_time) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY =
+            "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? AND goods_id = ?";
+    public static final String DELETE_QUERY =
+            "DELETE FROM cart WHERE user_id = ? AND goods_id = ?";
 
     public final DataSource DATA_SOURCE;
 
-    public PostgresCartDAO() {
-        this(DataSourceInit.getDataSource());
-    }
+    //--------------------------------CONSTRUCTOR---------------------------------------
 
-    public PostgresCartDAO(DataSource dataSource) {
+    private PostgresCartDAO(DataSource dataSource) {
         DATA_SOURCE = dataSource;
     }
+
+    //--------------------------------DAO-METHODS--------------------------------------
 
     @Override
     public Optional<List<Reserve>> getReserveListByLogin(Integer userId) {
@@ -91,18 +111,6 @@ public class PostgresCartDAO implements CartDAO {
         }
     }
 
-    private void deleteReserve(Integer userId, Integer goodID) {
-        try (Connection connection = DATA_SOURCE
-                .getConnection(); PreparedStatement preparedStatement = connection
-                .prepareStatement(DELETE_QUERY)) {
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, goodID);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
-        }
-    }
 
     @Override
     public Optional<Reserve> getReserve(Integer userId, Integer goodId) {
@@ -121,7 +129,7 @@ public class PostgresCartDAO implements CartDAO {
                 return Optional.ofNullable(reserve);
             }
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         } finally {
             try {
@@ -133,8 +141,9 @@ public class PostgresCartDAO implements CartDAO {
         return Optional.empty();
     }
 
-    private void updateReserve(Integer userId, Integer goodId, Integer amount,
-                               Timestamp timestamp) {
+    //--------------------------------OTHER-METHODS--------------------------------------------
+
+    private void updateReserve(Integer userId, Integer goodId, Integer amount, Timestamp timestamp) {
         try (Connection connection = DATA_SOURCE
                 .getConnection(); PreparedStatement preparedStatement = connection
                 .prepareStatement(UPDATE_QUERY)) {
@@ -144,7 +153,7 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(4, goodId);
             preparedStatement.execute();
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -158,6 +167,19 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(2, goodId);
             preparedStatement.setInt(3, amount);
             preparedStatement.setTimestamp(4, timestamp);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        }
+    }
+
+    private void deleteReserve(Integer userId, Integer goodID) {
+        try (Connection connection = DATA_SOURCE
+                .getConnection(); PreparedStatement preparedStatement = connection
+                .prepareStatement(DELETE_QUERY)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, goodID);
             preparedStatement.execute();
         } catch (SQLException e) {
             log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e

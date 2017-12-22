@@ -12,7 +12,7 @@ public class GoodsService {
     private GoodDAO goodDAO;
 
     public GoodsService() {
-        goodDAO = new PostgresGoodDAO();
+        goodDAO = PostgresGoodDAO.getInstance();
     }
 
     public List<Good> getPriceList() {
