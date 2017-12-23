@@ -8,13 +8,23 @@
 <div>
     <table style="table-layout: auto" border="2" align="center" width="600">
         <tr>
-            <th>Goods ID</th>
+            <th>Goods name</th>
             <th>Amount</th>
+            <th>Price for each</th>
+            <th>Price for all</th>
+            <th>Remove from cart</th>
         </tr>
         <c:forEach var="cart" items="${userCart}">
             <tr>
-                <td><c:out value='${cart.goodId}'/></td>
+                <td><c:out value='${cart.goodName}'/></td>
                 <td><c:out value='${cart.amount}'/></td>
+                <td><c:out value='${cart.price}'/></td>
+                <td><c:out value='${cart.price * cart.amount}'/></td>
+                <td>
+                    <form action="cartwithdelete" method="post">
+                    <input type="hidden" name="goodsId" value="${cart.goodId}">
+                    <input type="submit" value="Remove">
+                </form></td>
             </tr>
         </c:forEach>
     </table>
