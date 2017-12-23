@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GoodDAO {
-    Optional<Good> getGoodById(Integer id);
 
-    Optional<Good> getGoodByName(String name);
+    void addGood(Good good);
 
     List<Good> getAllGoods();
 
-    void addGood(Good good);
+    Optional<Good> getGoodById(Integer id);
+
+    Optional<Good> getGoodByName(String name);
 
     void deleteGoodByName(String name);
 
