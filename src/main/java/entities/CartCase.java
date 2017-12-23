@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CartCase {
     private String goodName;
+    private Integer goodId;
     private Integer amount;
     private Double  price;
 }

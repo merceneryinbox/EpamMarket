@@ -20,12 +20,11 @@
                 <td><c:out value='${cart.amount}'/></td>
                 <td><c:out value='${cart.price}'/></td>
                 <td><c:out value='${cart.price * cart.amount}'/></td>
-                <td><c:out value='${cart.goodId}'/>
+                <td>
                     <form action="cartwithdelete" method="post">
                     <input type="hidden" name="goodsId" value="${cart.goodId}">
-                    <input type="submit" value="Delete">
+                    <input type="submit" value="Remove">
                 </form></td>
-                <td><c:out value='${cart.amount}'/>
             </tr>
         </c:forEach>
     </table>

@@ -39,6 +39,7 @@ public class ReserveService {
             cart = optionalReserve.get();
             for (Reserve reserve : cart) {
                 CartCase cartCase = new CartCase();
+                cartCase.setGoodId(reserve.getGoodId());
                 cartCase.setGoodName(goodDAO.getGoodById(reserve.getGoodId()).get().getName());
                 cartCase.setAmount(reserve.getAmount());
                 cartCase.setPrice(goodDAO.getGoodById(reserve.getGoodId()).get().getPrice());
