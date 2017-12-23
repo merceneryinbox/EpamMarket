@@ -3,10 +3,17 @@
 <html>
 <head>
     <title>User's cart</title>
+    <style>
+        <%@include file="/bootstrap/css/bootstrap.min.css" %>
+    </style>
 </head>
-<body>
+<body class="p-3 mb-2 bg-info text-white">
+<%--------------------------HEADER--%>
+<%@include file="header.jspf" %>
+<%---------------------------content--%>
 <div>
-    <table style="table-layout: auto" border="2" align="center" width="600">
+    <h2 class="text-center">Cart for <b><c:out value="${sessionScope.user.login}"/></b></h2>
+    <table class="table table-striped">
         <tr>
             <th>Goods name</th>
             <th>Amount</th>
@@ -23,7 +30,7 @@
                 <td>
                     <form action="cartwithdelete" method="post">
                     <input type="hidden" name="goodsId" value="${cart.goodId}">
-                    <input type="submit" value="Remove">
+                    <input class="btn-info btn" type="submit" value="Remove">
                 </form></td>
             </tr>
         </c:forEach>
@@ -31,7 +38,9 @@
 </div>
 
 <form action="price_list" method="get">
-    <input type="submit" value="go back to price list"/>
+    <input class="btn btn-primary btn-block" type="submit" value="Go back to price list"/>
 </form>
+<%-------------FOOTER----------------%>
+<%@include file="footer.jspf" %>
 </body>
 </html>
