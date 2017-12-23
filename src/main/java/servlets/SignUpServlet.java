@@ -59,7 +59,7 @@ public class SignUpServlet extends HttpServlet {
 						postgresUserDAO.createNew(user);
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
-							registrationSession.setAttribute("user", user);
+							registrationSession.setAttribute("user", optionalUser.get());
 						} else {
 							request.getRequestDispatcher("/signup.jsp").forward(request,response);
 						}
