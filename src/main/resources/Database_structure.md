@@ -23,12 +23,13 @@
 ```
   "good_id = 6287" : {
     "name" : "Mercedes-Benz S-Class 2017",
+    "price" : "127000520",
     "amount" : "12",
     "description" : "Series of luxury flagship vehicles produced by the German automaker Mercedes-Benz"
   }
 ```
 ### Cart
-`
+```
   "cart_id = 26461" : {
   
     "user_id" : "3186", //changes from Taras
@@ -38,6 +39,5 @@
     "amount" : "1",
     
     "reserve_time" : "what format?"
-    
   }
 ```
