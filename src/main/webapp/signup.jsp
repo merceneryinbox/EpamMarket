@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,7 +24,7 @@
         <p><strong>Email:</strong></p>
         <input class="form-control" type="text" name="email" value="" placeholder="email@smth.com" required/>
         <br>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Un"/> <br/>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Up"/> <br/>
     </form>
 </div>
 <%-------------FOOTER----------------%>
