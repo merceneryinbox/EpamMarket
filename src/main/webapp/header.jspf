@@ -12,6 +12,9 @@
                 <c:if test="${sessionScope.user!=null}">
                     <li><a method="get" href="cart">Cart</a></li>
                 </c:if>
+                <c:if test="${sessionScope.user.status=='ADMIN'}">
+                    <li><a class="p-3 mb-2 bg-danger text-white" method="get" href="adminpage">List of Users</a></li>
+                </c:if>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <ul class="nav navbar-nav navbar-right">
