@@ -5,6 +5,7 @@ import db.DatabaseManager;
 import entities.Good;
 import entities.Reserve;
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,11 +19,12 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Log4j2
 public class PostgresCartDAOTest {
     public static final DataSource DATA_SOURCE = DataSourceInit.getH2();
-    public static final CartDAO CART_DAO = new PostgresCartDAO(DATA_SOURCE);
-    public static final UserDAO USER_DAO = new PostgresUserDAO(DATA_SOURCE);
-    public static final GoodDAO GOOD_DAO = new PostgresGoodDAO(DATA_SOURCE);
+    public static final CartDAO    CART_DAO    = new PostgresCartDAO(DATA_SOURCE);
+    public static final UserDAO    USER_DAO    = new PostgresUserDAO(DATA_SOURCE);
+    public static final GoodDAO    GOOD_DAO    = new PostgresGoodDAO(DATA_SOURCE);
 
     @BeforeEach
     public void init() {
@@ -36,16 +38,16 @@ public class PostgresCartDAOTest {
 
     @Test
     public void testReserveDao() {
-        final String login = "Nikita";
-        final String goodName = "Mersedes";
+        final String  login         = "Nikita";
+        final String  goodName      = "Mersedes";
         final Integer initialAmount = 159;
 
         USER_DAO.createNew(User.testUserForName(login));
-        val user = USER_DAO.getUserByLogin(login);
+        val     user   = USER_DAO.getUserByLogin(login);
         Integer userId = user.get().getId();
-
+        log.info("Test Log info into console ", getClass().getName());
         GOOD_DAO.addGood(Good.testGoodForName(goodName));
-        val good = GOOD_DAO.getGoodByName(goodName);
+        val good   = GOOD_DAO.getGoodByName(goodName);
         val goodId = good.get().getId();
 
         // ADD RESERVE

@@ -2,6 +2,7 @@ package servlets;
 
 import entities.User;
 import services.AdminService;
+import services.ChangeStatusService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +15,6 @@ import java.util.List;
 @WebServlet(name = "Admin", value = "/adminpage")
 public class AdminServlet extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> userList = AdminService.getUserList();
@@ -24,5 +24,12 @@ public class AdminServlet extends HttpServlet {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Integer id = Integer.valueOf(req.getParameter("userId"));
+        ChangeStatusService.changeStatusById(id);
+        resp.sendRedirect("adminpage");
     }
 }

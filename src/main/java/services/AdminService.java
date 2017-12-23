@@ -1,7 +1,7 @@
 package services;
 
-import dao.PostgresUserDAO;
 import dao.UserDAO;
+import dao.PostgresUserDAO;
 import entities.User;
 
 import java.util.List;

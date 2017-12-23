@@ -16,26 +16,30 @@ import java.io.IOException;
 @Log4j2
 @WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User        user    = (User) session.getAttribute("user");
         if (user == null) {
+            log.info("Redirect for registratio user");
             request.getRequestDispatcher("/signup.jsp").forward(request, response);
         } else {
+            log.info("Approve existing user and redirect him to index.jsp");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String login;
-        String password;
-        String email;
-        String phone;
-        String statusDefault;
-        User user = new User();
+        log.info("test info in SignUpServlet ", getClass().getName());
+        String          login;
+        String          password;
+        String          email;
+        String          phone;
+        String          statusDefault;
+        User            user            = new User();
         PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
         try {
             if (request != null) {
@@ -54,19 +58,28 @@ public class SignUpServlet extends HttpServlet {
                         user.setPhone(phone == null ? "no phone" : phone);
                         user.setStatus(statusDefault);
 
+                        log.info("Create not existing user, push him into db and to the "
+                                 + "HttpSession"
+                                 + ".");
+
                         HttpSession registrationSession = request.getSession();
                         registrationSession.setAttribute("user", user);
                         postgresUserDAO.createNew(user);
                         response.sendRedirect("/price_list");
                     } else {
+                        log.info("Redirect user" + user.getClass().getSimpleName()
+                                 + " to registration page.");
                         request.getRequestDispatcher("/signup.jsp").forward(request, response);
                     }
                 } else {
+                    log.info("Redirect user" + user.getClass().getSimpleName()
+                             + " to registration page.");
                     request.getRequestDispatcher("/signup.jsp").forward(request, response);
                 }
             }
         } catch (ServletException | IOException serve) {
-            log.error("Droped down at " + this.getClass() + " because of \n" + serve.getMessage());
+            log.error("Droped down at " + getClass().getSimpleName() + " because of \n"
+                      + serve.getMessage());
         }
     }
 }
