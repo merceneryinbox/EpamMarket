@@ -18,7 +18,7 @@
             <c:if test="${sessionScope.user!=null}">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a method="get" href="price_list">
+                        <a method="get" href="cart">
                             <c:out value="${sessionScope.user.login}"/>
                         </a>
                     </li>
