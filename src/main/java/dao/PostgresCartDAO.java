@@ -84,8 +84,8 @@ public class PostgresCartDAO implements CartDAO {
         else
             createReserve(userId, goodId, amount, Timestamp.from(Instant.now()));
     }
-
-    private void deleteReserve(Integer userId, Integer goodID) {
+    @Override
+    public void deleteReserve(Integer userId, Integer goodID) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setInt(1, userId);

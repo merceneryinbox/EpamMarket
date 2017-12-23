@@ -12,6 +12,7 @@
             <th>Amount</th>
             <th>Price for each</th>
             <th>Price for all</th>
+            <th>Remove from cart</th>
         </tr>
         <c:forEach var="cart" items="${userCart}">
             <tr>
@@ -19,6 +20,12 @@
                 <td><c:out value='${cart.amount}'/></td>
                 <td><c:out value='${cart.price}'/></td>
                 <td><c:out value='${cart.price * cart.amount}'/></td>
+                <td><c:out value='${cart.goodId}'/>
+                    <form action="cartwithdelete" method="post">
+                    <input type="hidden" name="goodsId" value="${cart.goodId}">
+                    <input type="submit" value="Delete">
+                </form></td>
+                <td><c:out value='${cart.amount}'/>
             </tr>
         </c:forEach>
     </table>

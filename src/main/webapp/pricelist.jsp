@@ -24,8 +24,8 @@
                         <td><c:out value='${product.description}'/></td>
                         <td><c:out value='${product.price}'/></td>
                         <td>
-                            <form action="cart" method="post">
-                                <p> Amount: </p> <input type="number" name="amount" value="1">
+                            <form action="price_list" method="post">
+                                <p> Amount: </p> <input type="number" name="amount" value="">
                                 <input type="hidden" name="goodsId" value="${product.id}">
                                 <input type="submit" value="Add in cart">
                             </form>
