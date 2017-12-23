@@ -25,7 +25,7 @@
 </div>
 <%---------------------CONTENT--%>
 <div class="container">
-    <form class ="form-signin" action="/sign_in" method="post">
+    <form class="form-signin" action="/sign_in" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <p><strong>Login:</strong></p>
         <input class="form-control" type="text" name="login" value="" required autofocus/>
@@ -39,6 +39,6 @@
     </form>
 </div>
 <%-------------FOOTER----------------%>
-<%@include file="footer.jspf"%>
+<%@include file="footer.jspf" %>
 </body>
 </html>
