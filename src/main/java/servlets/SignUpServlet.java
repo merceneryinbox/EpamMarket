@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
@@ -25,7 +26,7 @@ public class SignUpServlet extends HttpServlet {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String login;
@@ -34,6 +35,7 @@ public class SignUpServlet extends HttpServlet {
 		String phone;
 		String statusDefault;
 		User user = new User();
+		Optional<User> optionalUser;
 		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
 		try {
 			if (request != null) {
@@ -42,25 +44,32 @@ public class SignUpServlet extends HttpServlet {
 				email = request.getParameter("email");
 				phone = request.getParameter("phone");
 				statusDefault = UserStatus.ACTIVE.name();
-				
+
 				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
-					
+
 					if (login != null && password != null) {
 						user.setLogin(login);
 						user.setPassword(password);
 						user.setEmail(email == null ? "n@email" : email);
 						user.setPhone(phone == null ? "no phone" : phone);
 						user.setStatus(statusDefault);
-						
+
 						HttpSession registrationSession = request.getSession();
-						registrationSession.setAttribute("user", user);
+
 						postgresUserDAO.createNew(user);
+						optionalUser = postgresUserDAO.getUserByLogin(login);
+						if (optionalUser.isPresent()) {
+							registrationSession.setAttribute("user", optionalUser.get());
+						} else {
+							request.getRequestDispatcher("/signup.jsp").forward(request,response);
+						}
 						response.sendRedirect("/price_list");
 					} else {
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
 					request.getRequestDispatcher("/signup.jsp").forward(request, response);
+					request.setAttribute("tag",login);
 				}
 			}
 		} catch (ServletException serve) {

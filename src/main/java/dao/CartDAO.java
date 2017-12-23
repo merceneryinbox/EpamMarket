@@ -14,4 +14,5 @@ public interface CartDAO {
 
     Optional<Reserve> getReserve(Integer userId, Integer goodId);
 
+    void deleteReserve(Integer userId, Integer goodId);
 }
