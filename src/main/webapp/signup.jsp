@@ -10,21 +10,8 @@
     </style>
 </head>
 <body class="p-3 mb-2 bg-info text-white">
-<div class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="index.jsp" methods="post">Dolphin shop</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <div><img src="https://icon-icons.com/icons2/29/PNG/256/animal_dolphin_2740.png" height="50"></div>
-                </li>
-                <li><a method="get" href="price_list">PriceList</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<%-------------------------HEADER--%>
+<%@include file="header.jspf" %>
 <%---------------------CONTENT--%>
 <div>
     <form action="sign_up" method="post">
