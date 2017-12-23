@@ -2,6 +2,7 @@ package servlets;
 
 import dao.PostgresUserDAO;
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 import services.UserStatus;
 
 import javax.servlet.ServletException;
@@ -13,22 +14,27 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
+@Log4j2
 @WebServlet(name = "Registrarion", value = "/sign_up")
 public class SignUpServlet extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
 			ServletException, IOException {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
+			log.info("Redirect for registratio user");
 			request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		} else {
+			log.info("Approve existing user and redirect him to index.jsp");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		log.info("test info in SignUpServlet ", getClass().getName());
 		String login;
 		String password;
 		String email;
@@ -54,6 +60,10 @@ public class SignUpServlet extends HttpServlet {
 						user.setPhone(phone == null ? "no phone" : phone);
 						user.setStatus(statusDefault);
 
+						log.info("Create not existing user, push him into db and to the "
+								+ "HttpSession"
+								+ ".");
+
 						HttpSession registrationSession = request.getSession();
 
 						postgresUserDAO.createNew(user);
@@ -61,10 +71,14 @@ public class SignUpServlet extends HttpServlet {
 						if (optionalUser.isPresent()) {
 							registrationSession.setAttribute("user", optionalUser.get());
 						} else {
+							log.info("Redirect user" + user.getClass().getSimpleName()
+									+ " to registration page.");
 							request.getRequestDispatcher("/signup.jsp").forward(request,response);
 						}
 						response.sendRedirect("/price_list");
 					} else {
+						log.info("Redirect user" + user.getClass().getSimpleName()
+								+ " to registration page.");
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
@@ -72,10 +86,9 @@ public class SignUpServlet extends HttpServlet {
 					request.setAttribute("tag",login);
 				}
 			}
-		} catch (ServletException serve) {
-			serve.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (ServletException | IOException serve) {
+			log.error("Droped down at " + getClass().getSimpleName() + " because of \n"
+					+ serve.getMessage());
 		}
 	}
 }

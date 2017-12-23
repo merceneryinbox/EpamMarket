@@ -1,9 +1,8 @@
 package servlets;
 
 import entities.CartCase;
-import entities.Reserve;
 import entities.User;
-import services.GoodsService;
+import lombok.extern.log4j.Log4j2;
 import services.ReserveService;
 
 import javax.servlet.ServletException;
@@ -12,12 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
-// create List of cartages from cart table in DB and forwarding List in request to cart.jsp
+@Log4j2()
 @WebServlet(name = "Cart", value = "/cart")
 public class CartServlet extends HttpServlet {
 
