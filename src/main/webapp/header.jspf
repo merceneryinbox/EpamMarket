@@ -1,0 +1,29 @@
+<div class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.jsp" methods="post">Dolphin shop</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <div><img src="https://icon-icons.com/icons2/29/PNG/256/animal_dolphin_2740.png" height="50"></div>
+                </li>
+                <li><a method="get" href="price_list">PriceList</a></li>
+            </ul>
+            <c:if test="${sessionScope.user==null}">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a method="get" href="price_list">Guest</a></li>
+                </ul>
+            </c:if>
+            <c:if test="${sessionScope.user!=null}">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a method="get" href="price_list">
+                            <c:out value="${sessionScope.user.login}"/>
+                        </a>
+                    </li>
+                </ul>
+            </c:if>
+        </div>
+    </div>
+</div>
