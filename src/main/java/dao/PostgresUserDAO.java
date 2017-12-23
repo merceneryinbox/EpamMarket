@@ -1,6 +1,6 @@
 package dao;
 
-import DbConnection.DataSourceInit;
+import db.DataSourceInit;
 import entities.User;
 import lombok.extern.log4j.Log4j2;
 
@@ -9,22 +9,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
 public class PostgresUserDAO implements UserDAO {
-    private static final String INSERT_QUERY_NEW
-            = "INSERT INTO users (login,email,phone,"
-            + "password,status) VALUES(?,?,?,?,?)";
-    private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
-    private static final String SELECT_QUERY_BY_ID = "SELECT * FROM users WHERE user_id = ?";
-    private static final String UPDATE_QUERY = "UPDATE users SET login=?,"
-            + "email=?, phone=?,password=?,status=? "
-            + "WHERE user_id=?";
-    private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
-    private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
+
     private DataSource source;
     private PreparedStatement preparedStatement;
+
+    private static final String INSERT_QUERY_NEW =
+            "INSERT INTO users (login,email,phone,password,status) VALUES(?,?,?,?,?)";
+    public static final String GET_ALL_QUERY = "SELECT * FROM users";
+    private static final String SELECT_QUERY_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final String SELECT_QUERY_BY_ID = "SELECT * FROM users WHERE user_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE users SET login=?,email=?, phone=?,password=?,status=? WHERE user_id=?";
+    private static final String DELETE_QUERY_BY_LOGIN = "DELETE FROM users WHERE login = ?";
+    private static final String DELETE_QUERY_BY_ID = "DELETE FROM users WHERE user_id = ?";
+
 
     public PostgresUserDAO() {
         this.source = DataSourceInit.getDataSource();
@@ -73,31 +76,6 @@ public class PostgresUserDAO implements UserDAO {
         }
     }
 
-    private User parserResultSet(ResultSet resultSet) {
-        User user = new User();
-        try {
-            if (resultSet.next()) {
-                String login = resultSet.getString("login");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String password = resultSet.getString("password");
-                String status = resultSet.getString("status");
-                int id = resultSet.getInt("user_id");
-                user.setLogin(login);
-                user.setId(id);
-                user.setEmail(email);
-                user.setPhone(phone);
-                user.setPassword(password);
-                user.setStatus(status);
-            } else {
-                user = null;
-            }
-        } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
-        }
-        return user;
-    }
 
     @Override
     public Optional<User> getUserByLogin(String login) {
@@ -167,5 +145,54 @@ public class PostgresUserDAO implements UserDAO {
                     .getMessage());
             return false;
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = source.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("login"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("status")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    private User parserResultSet(ResultSet resultSet) {
+        User user = new User();
+        try {
+            if (resultSet.next()) {
+                String login = resultSet.getString("login");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String password = resultSet.getString("password");
+                String status = resultSet.getString("status");
+                int id = resultSet.getInt("user_id");
+                user.setLogin(login);
+                user.setId(id);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setPassword(password);
+                user.setStatus(status);
+            } else {
+                user = null;
+            }
+        } catch (SQLException e) {
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        }
+        return user;
     }
 }

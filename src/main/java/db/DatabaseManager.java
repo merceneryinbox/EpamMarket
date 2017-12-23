@@ -1,4 +1,4 @@
-package DbConnection;
+package db;
 
 import lombok.extern.log4j.Log4j2;
 
