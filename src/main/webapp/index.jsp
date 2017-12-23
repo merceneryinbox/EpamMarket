@@ -45,21 +45,6 @@
     </div>
 </div>
 <%-------------FOOTER----------------%>
-<div class="footer navbar-fixed-bottom navbar-inverse">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <p class="text-muted"><span class="glyphicon glyphicon-phone-alt"></span>+7-999-99-99</p>
-            </div>
-            <div class="col-md-6">
-                <div class="footer-copyright">
-                    <div class="container-fluid text-muted">
-                        © 2015 Copyright: <a href="https://www.epam.com"> EPAM.com </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include file="footer.jspf"%>
 </body>
 </html>
