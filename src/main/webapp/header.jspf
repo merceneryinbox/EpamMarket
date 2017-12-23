@@ -9,6 +9,9 @@
                     <div><img src="https://icon-icons.com/icons2/29/PNG/256/animal_dolphin_2740.png" height="50"></div>
                 </li>
                 <li><a method="get" href="price_list">PriceList</a></li>
+                <c:if test="${sessionScope.user!=null}">
+                    <li><a method="get" href="cart">Cart</a></li>
+                </c:if>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <ul class="nav navbar-nav navbar-right">
