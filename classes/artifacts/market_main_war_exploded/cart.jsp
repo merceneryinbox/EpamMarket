@@ -13,7 +13,7 @@
         </tr>
         <c:forEach var="cart" items="${userCart}">
             <tr>
-                <td><c:out value='${cart.goodId}'/>
+                <td colspan="2"><c:out value='${cart.goodId}'/>
                     <form action="cartwithdelete" method="post">
                     <input type="hidden" name="goodsId" value="${cart.goodId}">
                     <input type="submit" value="Delete">

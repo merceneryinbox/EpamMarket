@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
@@ -50,11 +52,6 @@ public class CartServlet extends HttpServlet {
             amount = Integer.valueOf(request.getParameter("amount"));
             reserveService.reserveGoods(userId, goodsId, amount);
         }
-        String name = request.getParameter("goodsName");
-        GoodsService goodsService = new GoodsService();
-        goodsService.deleteGoodsByName(name);
         response.sendRedirect("price_list");
     }
-
-
 }

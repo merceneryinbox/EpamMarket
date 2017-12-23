@@ -32,5 +32,8 @@ public class ReserveService {
         }
         return cart;
     }
-
+    public void deleteGoods(int userId,int goodsId){
+        PostgresCartDAO postgresCartDAO = new PostgresCartDAO();
+        postgresCartDAO.deleteReserve(userId,goodsId);
+    }
 }
