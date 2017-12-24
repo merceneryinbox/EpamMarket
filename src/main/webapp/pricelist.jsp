@@ -32,7 +32,7 @@
                         <p> Amount: </p>
                         <div class="row">
                             <div class="col-sm-4">
-                                <input class="form-control" type="number" name="amount" value="1">
+                                <input class="form-control" type="number" name="amount" value="1" required>
                                 <input type="hidden" name="goodsId" value="${product.id}">
                             </div>
                             <div class="col-sm-8">
