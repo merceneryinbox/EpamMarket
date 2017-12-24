@@ -22,9 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Log4j2
 public class PostgresCartDAOTest {
     public static final DataSource DATA_SOURCE = DataSourceInit.getH2();
-    public static final CartDAO    CART_DAO    = new PostgresCartDAO(DATA_SOURCE);
-    public static final UserDAO    USER_DAO    = new PostgresUserDAO(DATA_SOURCE);
-    public static final GoodDAO    GOOD_DAO    = new PostgresGoodDAO(DATA_SOURCE);
+
+    public static final CartDAO CART_DAO = PostgresCartDAO.getTestInstance();
+    public static final UserDAO USER_DAO = PostgresUserDAO.getTestInstance();
+    public static final GoodDAO GOOD_DAO = PostgresGoodDAO.getTestInstance();
 
     @BeforeEach
     public void init() {
@@ -38,16 +39,16 @@ public class PostgresCartDAOTest {
 
     @Test
     public void testReserveDao() {
-        final String  login         = "Nikita";
-        final String  goodName      = "Mersedes";
+        final String login = "Nikita";
+        final String goodName = "Mersedes";
         final Integer initialAmount = 159;
 
         USER_DAO.createNew(User.testUserForName(login));
-        val     user   = USER_DAO.getUserByLogin(login);
+        val user = USER_DAO.getUserByLogin(login);
         Integer userId = user.get().getId();
         log.info("Test Log info into console ", getClass().getName());
         GOOD_DAO.addGood(Good.testGoodForName(goodName));
-        val good   = GOOD_DAO.getGoodByName(goodName);
+        val good = GOOD_DAO.getGoodByName(goodName);
         val goodId = good.get().getId();
 
         // ADD RESERVE

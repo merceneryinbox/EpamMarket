@@ -42,7 +42,7 @@ public class SignUpServlet extends HttpServlet {
 		String statusDefault;
 		User user = new User();
 		Optional<User> optionalUser;
-		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
+		PostgresUserDAO postgresUserDAO = PostgresUserDAO.getInstance();
 		try {
 			if (request != null) {
 				login =  request.getParameter("login");

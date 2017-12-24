@@ -14,7 +14,7 @@ import java.util.List;
 @Log4j2
 @WebServlet(name = "PriceList", value = "/price_list")
 public class PriceListServlet extends HttpServlet {
-    private static GoodsService goodsService = new GoodsService();
+    private static GoodsService goodsService = GoodsService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

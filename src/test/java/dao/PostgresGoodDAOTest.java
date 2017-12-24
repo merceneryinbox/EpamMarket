@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PostgresGoodDAOTest {
     public static final DataSource DATA_SOURCE = DataSourceInit.getH2();
-    public static final GoodDAO GOOD_DAO = new PostgresGoodDAO(DATA_SOURCE);
+    public static final GoodDAO GOOD_DAO = PostgresGoodDAO.getTestInstance();
 
     @BeforeEach
     void init() {

@@ -9,13 +9,35 @@ import java.util.List;
 
 @Log4j2
 public class GoodsService {
-    private GoodDAO goodDAO;
 
-    public GoodsService() {
-        goodDAO = new PostgresGoodDAO();
+    //--------------------------------SINGLETON------------------------------------------
+
+    private static GoodsService instance = null;
+
+    synchronized public static GoodsService getInstance() {
+        if (instance == null)
+            instance = new GoodsService(PostgresGoodDAO.getInstance());
+        return instance;
     }
 
-    public List<Good> getPriceList() {
+    private static GoodsService testInstance;
+
+    synchronized public static GoodsService getTestInstance() {
+        if (testInstance == null)
+            testInstance = new GoodsService(PostgresGoodDAO.getTestInstance());
+        return testInstance;
+    }
+
+    private GoodsService(GoodDAO GoodDAO) {
+        this.goodDAO = GoodDAO;
+    }
+
+    //-------------------------------------------------------------------------------
+
+    private GoodDAO goodDAO;
+
+    synchronized public List<Good> getPriceList() {
         return goodDAO.getAllGoods();
     }
 }
+

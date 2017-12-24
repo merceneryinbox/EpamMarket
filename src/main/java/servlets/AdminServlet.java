@@ -19,7 +19,8 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> userList = AdminService.getUserList();
+
+        List<User> userList = AdminService.getInstance().getUserList();
         HttpSession session = req.getSession();
         UserStatus status;
         User user = (User) session.getAttribute("user");
@@ -46,7 +47,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = Integer.valueOf(req.getParameter("userId"));
-        ChangeStatusService.changeStatusById(id);
+        ChangeStatusService.getInstance().changeStatusById(id);
         resp.sendRedirect("adminpage");
     }
 }
