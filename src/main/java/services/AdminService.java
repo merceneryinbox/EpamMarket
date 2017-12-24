@@ -1,7 +1,7 @@
 package services;
 
-import dao.UserDAO;
 import dao.PostgresUserDAO;
+import dao.UserDAO;
 import entities.User;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class AdminService {
 
     private static AdminService instance = null;
 
-    public static AdminService getInstance() {
+    synchronized public static AdminService getInstance() {
         if (instance == null)
             instance = new AdminService(PostgresUserDAO.getInstance());
         return instance;
@@ -20,7 +20,7 @@ public class AdminService {
 
     private static AdminService testInstance;
 
-    public static AdminService getTestInstance() {
+    synchronized public static AdminService getTestInstance() {
         if (testInstance == null)
             testInstance = new AdminService(PostgresUserDAO.getTestInstance());
         return testInstance;
@@ -34,7 +34,7 @@ public class AdminService {
 
     private UserDAO userDao;
 
-    public List<User> getUserList() {
+    synchronized public List<User> getUserList() {
         return userDao.getAllUsers();
     }
 

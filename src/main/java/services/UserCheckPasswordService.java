@@ -14,7 +14,7 @@ public class UserCheckPasswordService {
 
     private static UserCheckPasswordService instance = null;
 
-    public static UserCheckPasswordService getInstance() {
+    synchronized public static UserCheckPasswordService getInstance() {
         if (instance == null)
             instance = new UserCheckPasswordService(PostgresUserDAO.getInstance());
         return instance;
@@ -22,7 +22,7 @@ public class UserCheckPasswordService {
 
     private static UserCheckPasswordService testInstance;
 
-    public static UserCheckPasswordService getTestInstance() {
+    synchronized public static UserCheckPasswordService getTestInstance() {
         if (testInstance == null)
             testInstance = new UserCheckPasswordService(PostgresUserDAO.getTestInstance());
         return testInstance;
@@ -36,7 +36,7 @@ public class UserCheckPasswordService {
 
     private UserDAO userDao;
 
-    public User checkPassword(String login, String password) {
+    synchronized public User checkPassword(String login, String password) {
         Optional<User> user = userDao.getUserByLogin(login);
         if (user.isPresent() && (user.get().getPassword().equals(password))) {
             return user.get();

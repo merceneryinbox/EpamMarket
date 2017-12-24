@@ -20,7 +20,7 @@ public class PostgresUserDAO implements UserDAO {
 
     private static PostgresUserDAO instance = null;
 
-    public static PostgresUserDAO getInstance() {
+    synchronized public static PostgresUserDAO getInstance() {
         if (instance == null)
             instance = new PostgresUserDAO(DataSourceInit.getPostgres());
 
@@ -30,7 +30,7 @@ public class PostgresUserDAO implements UserDAO {
 
     private static PostgresUserDAO testInstance;
 
-    public static PostgresUserDAO getTestInstance() {
+    synchronized public static PostgresUserDAO getTestInstance() {
         if (testInstance == null)
             testInstance = new PostgresUserDAO(DataSourceInit.getH2());
 
@@ -67,7 +67,7 @@ public class PostgresUserDAO implements UserDAO {
     //--------------------------------DAO-METHODS---------------------------------------------
 
     @Override
-    public boolean createNew(User user) {
+    synchronized public boolean createNew(User user) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY_NEW)) {
             preparedStatement.setString(1, user.getLogin());
@@ -88,7 +88,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public Optional<User> getUserById(Integer id) {
+    synchronized public Optional<User> getUserById(Integer id) {
         User user;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_ID)) {
@@ -104,7 +104,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public Optional<User> getUserByLogin(String login) {
+    synchronized public Optional<User> getUserByLogin(String login) {
         User user;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_LOGIN)) {
@@ -119,7 +119,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean updateUser(User newUser, User oldUser) {
+    synchronized public boolean updateUser(User newUser, User oldUser) {
         //FIXME do we need check if newUser or oldUser is null? - yes we do !
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
@@ -139,7 +139,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean deleteUserByLogin(String login) {
+    synchronized public boolean deleteUserByLogin(String login) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN)) {
             preparedStatement.setString(1, login);
@@ -154,7 +154,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean deleteUserById(Integer id) {
+    synchronized public boolean deleteUserById(Integer id) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID)) {
             preparedStatement.setInt(1, id);
@@ -170,7 +170,7 @@ public class PostgresUserDAO implements UserDAO {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    synchronized public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {

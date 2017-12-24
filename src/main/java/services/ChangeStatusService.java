@@ -10,7 +10,7 @@ public class ChangeStatusService {
 
     private static ChangeStatusService instance = null;
 
-    public static ChangeStatusService getInstance() {
+    synchronized public static ChangeStatusService getInstance() {
         if (instance == null)
             instance = new ChangeStatusService(PostgresUserDAO.getInstance());
         return instance;
@@ -18,7 +18,7 @@ public class ChangeStatusService {
 
     private static ChangeStatusService testInstance;
 
-    public static ChangeStatusService getTestInstance() {
+    synchronized public static ChangeStatusService getTestInstance() {
         if (testInstance == null)
             testInstance = new ChangeStatusService(PostgresUserDAO.getTestInstance());
         return testInstance;
@@ -32,7 +32,7 @@ public class ChangeStatusService {
 
     private UserDAO userDao;
 
-    public void changeStatusById(int id) {
+    synchronized public void changeStatusById(int id) {
         User newUser;
         User oldUser;
         UserStatus status;
@@ -50,7 +50,7 @@ public class ChangeStatusService {
                 case ADMIN:
                     break;
             }
-            boolean check = userDao.updateUser(newUser,oldUser);
+            boolean check = userDao.updateUser(newUser, oldUser);
         }
     }
 

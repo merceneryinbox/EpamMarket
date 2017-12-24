@@ -1,7 +1,7 @@
 package dao;
 
-import entities.Good;
 import db.DataSourceInit;
+import entities.Good;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
@@ -21,7 +21,7 @@ public class PostgresGoodDAO implements GoodDAO {
 
     private static PostgresGoodDAO instance = null;
 
-    public static PostgresGoodDAO getInstance() {
+    synchronized public static PostgresGoodDAO getInstance() {
         if (instance == null)
             instance = new PostgresGoodDAO(DataSourceInit.getPostgres());
 
@@ -30,7 +30,7 @@ public class PostgresGoodDAO implements GoodDAO {
 
     private static PostgresGoodDAO testInstance;
 
-    public static PostgresGoodDAO getTestInstance() {
+    synchronized public static PostgresGoodDAO getTestInstance() {
         if (testInstance == null)
             testInstance = new PostgresGoodDAO(DataSourceInit.getH2());
 
@@ -65,7 +65,7 @@ public class PostgresGoodDAO implements GoodDAO {
     //----------------------------------------------------------------------------------
 
     @Override
-    public Optional<Good> getGoodById(Integer id) {
+    synchronized public Optional<Good> getGoodById(Integer id) {
         ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_QUERY);) {
@@ -89,7 +89,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public Optional<Good> getGoodByName(String name) {
+    synchronized public Optional<Good> getGoodByName(String name) {
         ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
@@ -115,7 +115,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public List<Good> getAllGoods() {
+    synchronized public List<Good> getAllGoods() {
         List<Good> goods = new ArrayList<>();
         ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
@@ -139,7 +139,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public void addGood(Good good) {
+    synchronized public void addGood(Good good) {
 
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
@@ -155,7 +155,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public void deleteGoodByName(String name) {
+    synchronized public void deleteGoodByName(String name) {
 
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
@@ -168,7 +168,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public void updateGood(Good good) {
+    synchronized public void updateGood(Good good) {
 
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {

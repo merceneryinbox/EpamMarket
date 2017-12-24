@@ -14,7 +14,7 @@ public class GoodsService {
 
     private static GoodsService instance = null;
 
-    public static GoodsService getInstance() {
+    synchronized public static GoodsService getInstance() {
         if (instance == null)
             instance = new GoodsService(PostgresGoodDAO.getInstance());
         return instance;
@@ -22,7 +22,7 @@ public class GoodsService {
 
     private static GoodsService testInstance;
 
-    public static GoodsService getTestInstance() {
+    synchronized public static GoodsService getTestInstance() {
         if (testInstance == null)
             testInstance = new GoodsService(PostgresGoodDAO.getTestInstance());
         return testInstance;
@@ -36,7 +36,7 @@ public class GoodsService {
 
     private GoodDAO goodDAO;
 
-    public List<Good> getPriceList() {
+    synchronized public List<Good> getPriceList() {
         return goodDAO.getAllGoods();
     }
 }
