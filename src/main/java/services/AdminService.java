@@ -26,17 +26,17 @@ public class AdminService {
         return testInstance;
     }
 
-    //--------------------------------CONSTRUCTOR------------------------------------------
-
     private AdminService(UserDAO userDAO) {
         this.userDao = userDAO;
     }
 
     //--------------------------------------------------------------------------
+
     private UserDAO userDao;
 
     public List<User> getUserList() {
         return userDao.getAllUsers();
     }
+
 }
 

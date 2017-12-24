@@ -6,13 +6,38 @@ import entities.User;
 
 public class ChangeStatusService {
 
-    public static void changeStatusById(int id) {
-        UserDAO userDAO = PostgresUserDAO.getInstance();
+    //--------------------------------SINGLETON------------------------------------------
+
+    private static ChangeStatusService instance = null;
+
+    public static ChangeStatusService getInstance() {
+        if (instance == null)
+            instance = new ChangeStatusService(PostgresUserDAO.getInstance());
+        return instance;
+    }
+
+    private static ChangeStatusService testInstance;
+
+    public static ChangeStatusService getTestInstance() {
+        if (testInstance == null)
+            testInstance = new ChangeStatusService(PostgresUserDAO.getTestInstance());
+        return testInstance;
+    }
+
+    private ChangeStatusService(UserDAO userDAO) {
+        this.userDao = userDAO;
+    }
+
+    //--------------------------------------------------------------------------
+
+    private UserDAO userDao;
+
+    public void changeStatusById(int id) {
         User newUser;
         User oldUser;
         UserStatus status;
-        if (userDAO.getUserById(id).isPresent()) {
-            oldUser = userDAO.getUserById(id).get();
+        if (userDao.getUserById(id).isPresent()) {
+            oldUser = userDao.getUserById(id).get();
             newUser = oldUser;
             status = UserStatus.valueOf(newUser.getStatus());
             switch (status) {
@@ -25,7 +50,7 @@ public class ChangeStatusService {
                 case ADMIN:
                     break;
             }
-            boolean check = userDAO.updateUser(newUser,oldUser);
+            boolean check = userDao.updateUser(newUser,oldUser);
         }
     }
 

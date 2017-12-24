@@ -29,7 +29,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = Integer.valueOf(req.getParameter("userId"));
-        ChangeStatusService.changeStatusById(id);
+        ChangeStatusService.getInstance().changeStatusById(id);
         resp.sendRedirect("adminpage");
     }
 }

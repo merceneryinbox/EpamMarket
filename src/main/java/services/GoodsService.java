@@ -28,8 +28,6 @@ public class GoodsService {
         return testInstance;
     }
 
-    //--------------------------------CONSTRUCTOR------------------------------------------
-
     private GoodsService(GoodDAO GoodDAO) {
         this.goodDAO = GoodDAO;
     }

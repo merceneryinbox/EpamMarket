@@ -18,7 +18,7 @@ import java.util.List;
 @WebServlet(name = "Cart", value = "/cart")
 public class CartServlet extends HttpServlet {
 
-    private static ReserveService reserveService = new ReserveService();
+    private static ReserveService reserveService = ReserveService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

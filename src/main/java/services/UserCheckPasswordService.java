@@ -28,8 +28,6 @@ public class UserCheckPasswordService {
         return testInstance;
     }
 
-    //--------------------------------CONSTRUCTOR------------------------------------------
-
     private UserCheckPasswordService(UserDAO userDAO) {
         this.userDao = userDAO;
     }

@@ -1,9 +1,6 @@
 package services;
 
-import dao.CartDAO;
-import dao.GoodDAO;
-import dao.PostgresCartDAO;
-import dao.PostgresGoodDAO;
+import dao.*;
 import entities.CartCase;
 import entities.Good;
 import entities.Reserve;
@@ -14,9 +11,34 @@ import java.util.List;
 import java.util.Optional;
 
 public class ReserveService {
-    private CartDAO cartDAO = PostgresCartDAO.getInstance();
-    private GoodDAO goodDAO = PostgresGoodDAO.getInstance();
 
+    //--------------------------------SINGLETON------------------------------------------
+
+    private static ReserveService instance = null;
+
+    public static ReserveService getInstance() {
+        if (instance == null)
+            instance = new ReserveService(PostgresCartDAO.getInstance(), PostgresGoodDAO.getInstance());
+        return instance;
+    }
+
+    private static ReserveService testInstance;
+
+    public static ReserveService getTestInstance() {
+        if (testInstance == null)
+            testInstance = new ReserveService(PostgresCartDAO.getTestInstance(), PostgresGoodDAO.getTestInstance());
+        return testInstance;
+    }
+
+    private ReserveService(CartDAO cartDAO, GoodDAO goodDAO) {
+        this.cartDAO = cartDAO;
+        this.goodDAO = goodDAO;
+    }
+
+    //--------------------------------------------------------------------------
+
+    private CartDAO cartDAO;
+    private GoodDAO goodDAO;
 
     public void reserveGoods(int userId, int goodsId, int amount) {
         Optional<Reserve> optionalReserve = cartDAO.getReserve(userId, goodsId);
