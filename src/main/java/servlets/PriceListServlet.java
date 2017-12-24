@@ -28,4 +28,20 @@ public class PriceListServlet extends HttpServlet {
         }
 
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        int amount;
+
+        try {
+            amount = Integer.valueOf(req.getParameter("amount"));
+            if (amount >= 0) {
+                req.getRequestDispatcher("cart").forward(req, resp);
+            } else {
+                resp.sendRedirect("price_list");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -15,6 +15,7 @@
                     <th>In stock</th>
                     <th>Description</th>
                     <th>Price</th>
+                    <th>Add this goods!</th>
                 </tr>
                 <c:forEach var="product" items="${priceList}">
                     <tr>
@@ -22,6 +23,13 @@
                         <td><c:out value='${product.amount}'/></td>
                         <td><c:out value='${product.description}'/></td>
                         <td><c:out value='${product.price}'/></td>
+                        <td>
+                            <form action="price_list" method="post">
+                                <p> Amount: </p> <input type="number" name="amount" value="1">
+                                <input type="hidden" name="goodsId" value="${product.id}">
+                                <input type="submit" value="Add in cart">
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -39,10 +47,10 @@
     <h1>
         This buttons will appear only if you are not logged.
     </h1>
-    <form action="sign_in" method="post">
+    <form action="sign_in" method="get">
         <input type="submit" value="Sign In"/>
     </form>
-    <form action="sign_up" method="post">
+    <form action="sign_up" method="get">
         <input type="submit" value="Registration"/>
     </form>
 
@@ -51,7 +59,7 @@
     <h1>
         This button will apear only if you are logged.
     </h1>
-    <form action="cart" method="post">
+    <form action="cart" method="get">
         <input type="submit" value="Go to cart"/>
     </form>
 
