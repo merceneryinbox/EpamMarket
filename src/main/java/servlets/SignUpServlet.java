@@ -3,6 +3,7 @@ package servlets;
 import dao.PostgresUserDAO;
 import entities.User;
 import lombok.extern.log4j.Log4j2;
+import services.UserRegistrator;
 import services.UserStatus;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Log4j2
 @WebServlet(name = "Registrarion", value = "/sign_up")
@@ -43,6 +45,7 @@ public class SignUpServlet extends HttpServlet {
 		User user = new User();
 		Optional<User> optionalUser;
 		PostgresUserDAO postgresUserDAO = new PostgresUserDAO();
+
 		try {
 			if (request != null) {
 				login =  request.getParameter("login");
@@ -60,6 +63,7 @@ public class SignUpServlet extends HttpServlet {
 						user.setPhone(phone == null ? "no phone" : phone);
 						user.setStatus(statusDefault);
 
+						if (UserRegistrator.registrate(user)){
 						log.info("Create not existing user, push him into db and to the "
 								+ "HttpSession"
 								+ ".");
@@ -67,15 +71,19 @@ public class SignUpServlet extends HttpServlet {
 						HttpSession registrationSession = request.getSession();
 
 						postgresUserDAO.createNew(user);
+
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
 							registrationSession.setAttribute("user", optionalUser.get());
+							response.sendRedirect("/price_list");
 						} else {
 							log.info("Redirect user" + user.getClass().getSimpleName()
 									+ " to registration page.");
 							request.getRequestDispatcher("/signup.jsp").forward(request,response);
+						    }
+						} else {
+							request.getRequestDispatcher("/signup.jsp").forward(request,response);
 						}
-						response.sendRedirect("/price_list");
 					} else {
 						log.info("Redirect user" + user.getClass().getSimpleName()
 								+ " to registration page.");
