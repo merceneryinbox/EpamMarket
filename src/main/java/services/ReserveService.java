@@ -5,6 +5,7 @@ import dao.GoodDAO;
 import dao.PostgresCartDAO;
 import dao.PostgresGoodDAO;
 import entities.CartCase;
+import entities.Good;
 import entities.Reserve;
 
 import java.util.ArrayList;
@@ -44,10 +45,19 @@ public class ReserveService {
     synchronized public void reserveGoods(int userId, int goodsId, int amount) {
         Optional<Reserve> optionalReserve = cartDAO.getReserve(userId, goodsId);
         int amountForSet = amount;
-        if (optionalReserve.isPresent()) {
-            amountForSet += optionalReserve.get().getAmount();
+        Optional<Good> optionalGood = goodDAO.getGoodById(goodsId);
+        Good good;
+        if (optionalGood.isPresent()) {
+            good = optionalGood.get();
+            if (good.getAmount()>= amount) {
+                if (optionalReserve.isPresent()) {
+                    amountForSet += optionalReserve.get().getAmount();
+                }
+                good.setAmount(good.getAmount()-amount);
+                goodDAO.updateGood(good);
+                cartDAO.setAmountByLoginAndGoodId(userId, goodsId, amountForSet);
+            }
         }
-        cartDAO.setAmountByLoginAndGoodId(userId, goodsId, amountForSet);
     }
 
     synchronized public List<CartCase> getCart(int userId) {
@@ -65,10 +75,21 @@ public class ReserveService {
                 listForCart.add(cartCase);
             }
         }
+        listForCart.sort(null);
         return listForCart;
     }
 
     synchronized public void deleteGoods(int userId, int goodsId) {
-        cartDAO.deleteReserve(userId, goodsId);
+        Good good;
+        Optional<Good> optionalGood = goodDAO.getGoodById(goodsId);
+        Optional<Reserve> optionalReserve = cartDAO.getReserve(userId,goodsId);
+        Reserve reserve;
+        if (optionalGood.isPresent() && optionalReserve.isPresent()) {
+            good = optionalGood.get();
+            reserve = optionalReserve.get();
+            good.setAmount(good.getAmount() + reserve.getAmount());
+            goodDAO.updateGood(good);
+            cartDAO.deleteReserve(userId, goodsId);
+        }
     }
 }
