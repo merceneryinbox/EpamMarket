@@ -28,6 +28,11 @@
                             <c:out value="${sessionScope.user.login}"/>
                         </a>
                     </li>
+                    <li>
+                        <a method="get" href="out">
+                            Log Out
+                        </a>
+                    </li>
                 </ul>
             </c:if>
         </div>
