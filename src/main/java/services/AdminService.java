@@ -35,7 +35,9 @@ public class AdminService {
     private UserDAO userDao;
 
     synchronized public List<User> getUserList() {
-        return userDao.getAllUsers();
+        List<User> users = userDao.getAllUsers();
+        users.sort(null);
+        return users;
     }
 
 }

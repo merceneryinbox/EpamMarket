@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements Comparable {
     private Integer id;
     private String login;
     private String password;
@@ -20,5 +20,11 @@ public class User {
     public static User testUserForName(String name) {
         return new User(0, name, name.hashCode() + "", name + "@email.com", "+7" + (+name
                 .hashCode() + "0000000000").substring(0, 10), "Active");
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        User user = (User) o;
+        return this.getLogin().compareTo(user.getLogin());
     }
 }

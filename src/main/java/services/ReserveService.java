@@ -65,6 +65,7 @@ public class ReserveService {
                 listForCart.add(cartCase);
             }
         }
+        listForCart.sort(null);
         return listForCart;
     }
 

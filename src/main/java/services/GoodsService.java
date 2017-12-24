@@ -37,7 +37,9 @@ public class GoodsService {
     private GoodDAO goodDAO;
 
     synchronized public List<Good> getPriceList() {
-        return goodDAO.getAllGoods();
+        List<Good> goods = goodDAO.getAllGoods();
+        goods.sort(null);
+        return goods;
     }
 }
 
