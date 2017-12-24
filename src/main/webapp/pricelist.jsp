@@ -3,66 +3,81 @@
 <html>
 <head>
     <title>Price list</title>
+    <style>
+        <%@include file="/bootstrap/css/bootstrap.min.css" %>
+    </style>
 </head>
-<body>
+<body class="p-3 mb-2 bg-info text-white">
+<%--------------------------HEADER--%>
+<%@include file="header.jspf" %>
+<%---------------------------content--%>
 <div>
-    <div style="text-align: center">
-        <div style="font-size:25pt">List of our Product</div>
-        <div>
-            <table style="table-layout: auto" border="2" align="center" width="600">
-                <tr>
-                    <th>Name</th>
-                    <th>In stock</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Add this goods!</th>
-                </tr>
-                <c:forEach var="product" items="${priceList}">
-                    <tr>
-                        <td><c:out value='${product.name}'/></td>
-                        <td><c:out value='${product.amount}'/></td>
-                        <td><c:out value='${product.description}'/></td>
-                        <td><c:out value='${product.price}'/></td>
-                        <td>
-                            <form action="price_list" method="post">
-                                <p> Amount: </p> <input type="number" name="amount" value="1">
+    <h2 class="text-center">List of our Product</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>In stock</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Add this goods!</th>
+        </tr>
+        <c:forEach var="product" items="${priceList}">
+            <tr>
+                <td><c:out value='${product.name}'/></td>
+                <td><c:out value='${product.amount}'/></td>
+                <td><c:out value='${product.description}'/></td>
+                <td><c:out value='${product.price}'/></td>
+                <td>
+                    <form action="price_list" method="post">
+                        <p> Amount: </p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input class="form-control" type="number" name="amount" value="1">
                                 <input type="hidden" name="goodsId" value="${product.id}">
-                                <input type="submit" value="Add in cart">
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
-
-        <br>
-        <div>If you want to buy something just call us!</div>
-        <div>8800553535</div>
-    </div>
-    <form action="/" method="post">
-        <input type="submit" value="Go to welcome-page"/>
-    </form>
-
-    <br><br>
-    <h1>
-        This buttons will appear only if you are not logged.
-    </h1>
-    <form action="sign_in" method="get">
-        <input type="submit" value="Sign In"/>
-    </form>
-    <form action="sign_up" method="get">
-        <input type="submit" value="Registration"/>
-    </form>
-
-    <br><br>
-
-    <h1>
-        This button will apear only if you are logged.
-    </h1>
-    <form action="cart" method="get">
-        <input type="submit" value="Go to cart"/>
-    </form>
-
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="btn-info btn" type="submit" value="Add in cart">
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <c:if test="${sessionScope.user==null}">
+                <div>Please log in or log up for use your own cart</div>
+                <form action="sign_in" method="get">
+                    <input class=" btn btn-primary" type="submit" value="Sign In"/>
+                </form>
+                <form action="sign_up" method="get">
+                    <input class="btn btn-success" type="submit" value="Registration"/>
+                </form>
+            </c:if>
+            <c:if test="${sessionScope.user!=null}">
+                <div>See your cart</div>
+                <form action="cart" method="get">
+                    <input class="btn btn-success" type="submit" value="Go to cart"/>
+                </form>
+            </c:if>
+        </div>
+        <div class="col-sm-4">
+            <div>If you want to buy something without log in:</div>
+            <div>Call: +7-999-9999</div>
+        </div>
+    </div>
+</div>
+
+<form action="price_list" method="get">
+    <input class="btn btn-primary btn-block" type="submit" value="Back to top"/>
+</form>
+<br>
+<%-------------FOOTER----------------%>
+<%@include file="footer.jspf" %>
 </body>
 </html>

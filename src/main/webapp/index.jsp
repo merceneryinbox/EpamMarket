@@ -24,10 +24,10 @@
                 <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In"/>
             </form>
             <form action="sign_up" method="get">
-                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Registration"/>
+                <input class="btn btn-success btn-lg btn-block" type="submit" value="Registration"/>
             </form>
             <form action="price_list" method="get">
-                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Watch our goods!"/>
+                <input class="btn btn-warning btn-lg btn-block" type="submit" value="Watch our goods!"/>
             </form>
         </c:if>
         <c:if test="${sessionScope.user!=null}">
@@ -39,10 +39,10 @@
                 </h1>
             </div>
             <form action="price_list" method="get">
-                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Watch our goods!"/>
+                <input class="btn btn-warning btn-lg btn-block" type="submit" value="Watch our goods!"/>
             </form>
             <form action="cart" method="get">
-                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Look at your cart!"/>
+                <input class="btn btn-success btn-lg btn-block" type="submit" value="Look at your cart!"/>
             </form>
         </c:if>
 
