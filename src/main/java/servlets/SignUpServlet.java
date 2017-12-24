@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Log4j2
 @WebServlet(name = "Registrarion", value = "/sign_up")
