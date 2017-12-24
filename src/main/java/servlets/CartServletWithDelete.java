@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet(name = "CartWithDelete", value = "/cartwithdelete")
 public class CartServletWithDelete extends HttpServlet {
-    private static ReserveService reserveService = new ReserveService();
+    private static ReserveService reserveService = ReserveService.getInstance();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();

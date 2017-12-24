@@ -1,7 +1,7 @@
 package dao;
 
-import entities.Good;
 import db.DataSourceInit;
+import entities.Good;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
@@ -16,17 +16,56 @@ import java.util.Optional;
 
 @Log4j2
 public class PostgresGoodDAO implements GoodDAO {
-    public static final String GET_QUERY = "SELECT * FROM goods WHERE name = ?";
-    public static final String GET_BY_ID_QUERY = "SELECT * FROM goods WHERE goods_id = ?";
-    public static final String GET_ALL_QUERY = "SELECT * FROM goods";
-    public static final String ADD_QUERY = "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
-    public static final String UPDATE_QUERY = "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
-    public static final String DELETE_QUERY = "DELETE FROM goods WHERE name = ?";
+
+    //--------------------------------SINGLETON------------------------------------------
+
+    private static PostgresGoodDAO instance = null;
+
+    synchronized public static PostgresGoodDAO getInstance() {
+        if (instance == null)
+            instance = new PostgresGoodDAO(DataSourceInit.getPostgres());
+
+        return instance;
+    }
+
+    private static PostgresGoodDAO testInstance;
+
+    synchronized public static PostgresGoodDAO getTestInstance() {
+        if (testInstance == null)
+            testInstance = new PostgresGoodDAO(DataSourceInit.getH2());
+
+        return testInstance;
+    }
+
+    //--------------------------------DATA-SOURCE---------------------------------------------
 
     final DataSource DATA_SOURCE;
 
+    //--------------------------------QUERIES---------------------------------------------
+
+    public static final String GET_QUERY =
+            "SELECT * FROM goods WHERE name = ?";
+    public static final String GET_ALL_QUERY =
+            "SELECT * FROM goods";
+    public static final String GET_BY_ID_QUERY =
+            "SELECT * FROM goods WHERE goods_id = ?";
+    public static final String ADD_QUERY =
+            "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
+    public static final String UPDATE_QUERY =
+            "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
+    public static final String DELETE_QUERY =
+            "DELETE FROM goods WHERE name = ?";
+
+    //--------------------------------CONSTRUCTOR---------------------------------------------
+
+    private PostgresGoodDAO(DataSource dataSource) {
+        DATA_SOURCE = dataSource;
+    }
+
+    //----------------------------------------------------------------------------------
+
     @Override
-    public Optional<Good> getGoodById(Integer id) {
+    synchronized public Optional<Good> getGoodById(Integer id) {
         ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_QUERY);) {
@@ -50,7 +89,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public Optional<Good> getGoodByName(String name) {
+    synchronized public Optional<Good> getGoodByName(String name) {
         ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
@@ -76,7 +115,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public List<Good> getAllGoods() {
+    synchronized public List<Good> getAllGoods() {
         List<Good> goods = new ArrayList<>();
         ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
@@ -100,7 +139,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public void addGood(Good good) {
+    synchronized public void addGood(Good good) {
 
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY)) {
@@ -116,7 +155,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public void deleteGoodByName(String name) {
+    synchronized public void deleteGoodByName(String name) {
 
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
@@ -129,7 +168,7 @@ public class PostgresGoodDAO implements GoodDAO {
     }
 
     @Override
-    public void updateGood(Good good) {
+    synchronized public void updateGood(Good good) {
 
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
@@ -144,11 +183,4 @@ public class PostgresGoodDAO implements GoodDAO {
         }
     }
 
-    public PostgresGoodDAO(DataSource dataSource) {
-        DATA_SOURCE = dataSource;
-    }
-
-    public PostgresGoodDAO() {
-        DATA_SOURCE = DataSourceInit.getDataSource();
-    }
 }
