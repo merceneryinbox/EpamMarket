@@ -4,10 +4,12 @@ import entities.Good;
 import lombok.extern.log4j.Log4j2;
 import services.GoodsService;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,10 @@ public class PriceListServlet extends HttpServlet {
         try {
             req.setAttribute("priceList", priceList);
             req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
-        } catch (Exception e) {
-            log.error("Droped down at " + this.getClass() + " because of \n" + e.getMessage());
+        } catch (ServletException e) {
+            log.debug("Servlet dropped down because of " + e.getMessage());
+        } catch (IOException e) {
+            log.debug("Servlet dropped down because of " + e.getMessage());
         }
 
     }
@@ -40,8 +44,10 @@ public class PriceListServlet extends HttpServlet {
             } else {
                 resp.sendRedirect("price_list");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ServletException e) {
+            log.debug("Servlet dropped down because of " + e.getMessage());
+        } catch (IOException e) {
+            log.debug("Servlet dropped down because of " + e.getMessage());
         }
     }
 }

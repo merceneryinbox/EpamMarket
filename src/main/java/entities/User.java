@@ -27,4 +27,28 @@ public class User implements Comparable {
         User user = (User) o;
         return this.getLogin().compareTo(user.getLogin());
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Good)) {
+            return false;
+        }
+        Good other = (Good) object;
+        if ((this.id == null && other.getId() != null) || (this.id != null && !this.id.equals(other.getId()))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entities.User[ id = " + id + " login " + login + " status " + status + " ] ";
+    }
 }

@@ -14,15 +14,17 @@ import java.io.IOException;
 public class StartPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        log.info("doPost() method redirect request to doGet() method.");
         doGet(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
+            log.info("User redirected to index.jsp page.");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
-            log.error("Droped down at " + this.getClass() + " because of \n" + e.getMessage());
+            log.error("Dropped down at " + this.getClass() + " because of \n" + e.getMessage());
         }
     }
 }

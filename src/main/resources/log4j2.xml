@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="ON">
+<configuration status="ON" name="market" packages="/src/main/java">
     <Properties>
         <Property name="log-path">/logs</Property>
         <Property name="log-project-name">market</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">7</Property>
-        <Property name="rolling-size-based">10 MB</Property>
+        <Property name="rolling-size-based">1 MB</Property>
+        <Property name="rolling-time-based">6</Property>
+        <Property name="modulate-time">true</Property>
+        <Property name="consoleLevel">fatal</Property>
     </Properties>
     <Appenders>
-        <RandomAccessFile name="RandomAccessFile" fileName="${log-path}/${log-project-name}-asyncWithLocation.log"
-                          immediateFlush="true" append="false">
-            <PatternLayout>
-                <Pattern>%d %p %class{1.} [%t] %location %m %ex%n</Pattern>
-            </PatternLayout>
-        </RandomAccessFile>
 
-        <Console name="Console" target="SYSTEM_OUT">
+        <Console name="CONSOLE" target="SYSTEM_OUT">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
         </Console>
 
-        <RollingFile name="DEBUG" fileName="${log-path}/${log-project-name}-debug.log"
-                     filePattern="${log-path}/${log-project-name}-debug-%d-%i.log.zip">
+        <RollingFile name="DEBUG-ROLLING" fileName="${log-path}/${log-project-name}-debug.log"
+                     filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </RollingFile>
 
-        <RollingFile name="ERROR" fileName="${log-path}/${log-project-name}-error.log"
-                     filePattern="${log-path}/${log-project-name}-error-%d-%i.log.zip">
+        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}-error.log"
+                     filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </RollingFile>
 
-        <RollingFile name="INFO" fileName="${log-path}/${log-project-name}-info.log"
-                     filePattern="${log-path}/${log-project-name}-info-%d-%i.log.zip">
+        <RollingFile name="INFO-ROLLING" fileName="${log-path}/${log-project-name}-info.log"
+                     filePattern="${log-path}/info-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
             <!--<Filters>-->
@@ -65,13 +65,13 @@
     </Appenders>
     <Loggers>
         <Root level="all" includeLocation="true">
-            <AppenderRef ref="RandomAccessFile"/>
+            <AppenderRef ref="CONSOLE"/>
         </Root>
         <Logger name="market" level="debug" additivity="false">
-            <AppenderRef ref="Console" level="debug"/>
-            <AppenderRef ref="ERROR" level="error"/>
-            <AppenderRef ref="DEBUG" level="debug"/>
-            <AppenderRef ref="INFO" level="info"/>
+            <AppenderRef ref="CONSOLE" level="${consoleLevel}"/>
+            <AppenderRef ref="DEBUG-ROLLING" level="debug"/>
+            <AppenderRef ref="INFO-ROLLING" level="info"/>
+            <!--<AppenderRef ref="ERROR-ROLLING" level="error"/>-->
         </Logger>
     </Loggers>
 </configuration>
