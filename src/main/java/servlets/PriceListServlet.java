@@ -24,6 +24,7 @@ public class PriceListServlet extends HttpServlet {
 
         try {
             req.setAttribute("priceList", priceList);
+            log.info("Pricelist object " + priceList.toString() + " set into request.\nRedirection to pricelist.jsp.");
             req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
         } catch (ServletException e) {
             log.debug("Servlet dropped down because of " + e.getMessage());
@@ -36,12 +37,14 @@ public class PriceListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         int amount;
-
         try {
             amount = Integer.valueOf(req.getParameter("amount"));
+            log.info("Trigger block for amount = " + amount + " check starts.\n");
             if (amount >= 0) {
+                log.info("Amount = " + amount + " >=0.\nRedirect to cart.jsp.\n");
                 req.getRequestDispatcher("cart").forward(req, resp);
             } else {
+                log.info("Amount = " + amount + " <0.\nRedirect to priceList.jsp.\n");
                 resp.sendRedirect("price_list");
             }
         } catch (ServletException e) {

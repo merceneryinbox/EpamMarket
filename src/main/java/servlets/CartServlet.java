@@ -28,8 +28,10 @@ public class CartServlet extends HttpServlet {
         if (user != null) {
             List<CartCase> cart = reserveService.getCart(user.getId());
             req.setAttribute("userCart", cart);
+            log.info("userCart " + cart.toString() + " created and set to request.\nUser " + user.toString() + "\nredirected to cart.jsp page.");
             req.getRequestDispatcher("/cart.jsp").forward(req, resp);
         } else {
+            log.info("User null Redirected to signIn.jsp");
             resp.sendRedirect("sign_in");
         }
     }
@@ -43,11 +45,14 @@ public class CartServlet extends HttpServlet {
         int amount;
         user = (User) session.getAttribute("user");
         if (user != null) {
+            log.info("User " + user.toString() + " got in session " + session.toString());
             userId = user.getId();
             goodsId = Integer.valueOf(request.getParameter("goodsId"));
             amount = Integer.valueOf(request.getParameter("amount"));
             reserveService.reserveGoods(userId, goodsId, amount);
+            log.info("reserveGoods with userId, goodsId, amount\n" + userId + "\n" + goodsId + "\n" + amount + "\n created.");
         }
+        log.info("User null Redirected to priceList.jsp");
         response.sendRedirect("price_list");
     }
 }
