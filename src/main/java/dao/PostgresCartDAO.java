@@ -2,6 +2,7 @@ package dao;
 
 import db.DataSourceInit;
 import entities.Reserve;
+import lombok.Synchronized;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
@@ -35,7 +36,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     //--------------------------------QUERIES---------------------------------------------
-
+    public static final String GET_ALL = "SELECT * FROM cart";
     public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
     public static final String GET_QUERY = "SELECT * FROM cart WHERE user_id = ? AND goods_id = ?";
     public static final String CREATE_QUERY = "INSERT INTO cart (user_id, goods_id, amount, reserve_time) VALUES (?,?,?,?)";
@@ -71,7 +72,7 @@ public class PostgresCartDAO implements CartDAO {
                 );
                 reserveList.add(reserve);
             }
-            log.info("Resrve list got by login " + userId);
+            log.info("Reserve list got by login " + userId);
             return Optional.ofNullable(reserveList);
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
@@ -127,6 +128,32 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
+    synchronized public Optional<List<Reserve>> getAllReserves() {
+        ResultSet resultSet = null;
+        try (Connection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)) {
+            resultSet = preparedStatement.executeQuery();
+            List<Reserve> allReserves = new ArrayList<>();
+            while (resultSet.next()) {
+                val reserve = new Reserve(
+                        resultSet.getInt("cart_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("goods_id"),
+                        resultSet.getInt("amount"),
+                        resultSet.getTimestamp("reserve_time")
+                );
+                allReserves.add(reserve);
+            }
+            log.info("Received all reserves");
+            return Optional.ofNullable(allReserves);
+        } catch (SQLException e) {
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
+        }
+        return Optional.empty();
+    }
+
+    @Override
     synchronized public void deleteReserve(Integer userId, Integer goodID) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
@@ -171,4 +198,6 @@ public class PostgresCartDAO implements CartDAO {
                     .getMessage());
         }
     }
+
+
 }
