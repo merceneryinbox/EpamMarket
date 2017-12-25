@@ -49,6 +49,6 @@ public class User implements Comparable {
 
     @Override
     public String toString() {
-        return "entities.User[ id = " + id + " login " + login + " status " + status + " ] ";
+        return "entities.User[ login " + login + " status " + status + " ] ";
     }
 }

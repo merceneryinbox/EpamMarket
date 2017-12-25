@@ -33,7 +33,7 @@ public class PostgresGoodDAO implements GoodDAO {
     synchronized public static PostgresGoodDAO getTestInstance() {
         if (testInstance == null)
             testInstance = new PostgresGoodDAO(DataSourceInit.getH2());
-
+        log.info("Instance of PostgresGoodDAO got " + instance.toString());
         return testInstance;
     }
 
@@ -79,10 +79,12 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getInt("amount"),
                         resultSet.getString("description")
                 );
+                log.info("Good " + good.toString() + " got by ID " + id);
+
                 return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -105,10 +107,11 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getInt("amount"),
                         resultSet.getString("description")
                 );
+                log.info("Good " + good.toString() + " got by name " + name);
                 return Optional.ofNullable(good);
             }
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -130,9 +133,9 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getString("description")
                 ));
             }
-
+            log.info("All Goods List got");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return goods;
@@ -148,8 +151,9 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setInt(3, good.getAmount());
             preparedStatement.setString(4, good.getDescription());
             preparedStatement.execute();
+            log.info("Good " + good.toString() + " added");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -161,8 +165,9 @@ public class PostgresGoodDAO implements GoodDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, name);
             preparedStatement.execute();
+            log.info("Good with " + name + " deleted");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -177,8 +182,9 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setString(3, good.getDescription());
             preparedStatement.setString(4, good.getName());
             preparedStatement.execute();
+            log.info("Good " + good.toString() + " updated");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
