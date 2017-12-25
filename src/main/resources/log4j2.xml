@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="ON" name="market" packages="/src/main/java">
+<Configuration name="marketLog" status="debug">
+
+    <!---->
+
     <Properties>
-        <Property name="log-path">/logs</Property>
+        <Property name="log-path">defaultMarketLogsFolder</Property>
         <Property name="log-project-name">market</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">7</Property>
         <Property name="rolling-size-based">1 MB</Property>
         <Property name="rolling-time-based">6</Property>
         <Property name="modulate-time">true</Property>
-        <Property name="consoleLevel">fatal</Property>
+        <Property name="consoleLevel">debug</Property>
     </Properties>
-    <Appenders>
 
-        <Console name="CONSOLE" target="SYSTEM_OUT">
-            <PatternLayout>
-                <pattern>${log-pattern}</pattern>
-            </PatternLayout>
+    <!---->
+
+    <Appenders>
+        <Console name="ROOT_CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <RollingFile name="DEBUG-ROLLING" fileName="${log-path}/${log-project-name}-debug.log"
-                     filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip">
+        <RollingFile name="DEBUG-ROLLING" fileName="${log-path}/${log-project-name}---debug.log"
+                     filePattern="${log-path}/debug---${log-project-name}-%d-%i.log.zip" append="true"
+                     immediateFlush="true">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
@@ -30,7 +34,7 @@
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </RollingFile>
 
-        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}-error.log"
+        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}----error.log"
                      filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
@@ -42,7 +46,7 @@
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </RollingFile>
 
-        <RollingFile name="INFO-ROLLING" fileName="${log-path}/${log-project-name}-info.log"
+        <RollingFile name="INFO-ROLLING" fileName="${log-path}/${log-project-name}----info.log"
                      filePattern="${log-path}/info-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
@@ -53,25 +57,23 @@
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
             <!--<Filters>-->
-                <!--&lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;-->
-                <!--<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-                <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-                <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+            <!--&lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;-->
+            <!--<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+            <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+            <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
 
-                <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
-                <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
+            <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
+            <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
             <!--</Filters>-->
         </RollingFile>
+
     </Appenders>
     <Loggers>
-        <Root level="all" includeLocation="true">
-            <AppenderRef ref="CONSOLE"/>
+        <Root level="debug">
+            <AppenderRef ref="ROOT_CONSOLE"/>
+            <AppenderRef ref="DEBUG-ROLLING"/>
+            <AppenderRef ref="ERROR-ROLLING"/>
+            <AppenderRef ref="INFO-ROLLING"/>
         </Root>
-        <Logger name="market" level="debug" additivity="false">
-            <AppenderRef ref="CONSOLE" level="${consoleLevel}"/>
-            <AppenderRef ref="DEBUG-ROLLING" level="debug"/>
-            <AppenderRef ref="INFO-ROLLING" level="info"/>
-            <!--<AppenderRef ref="ERROR-ROLLING" level="error"/>-->
-        </Logger>
     </Loggers>
-</configuration>
+</Configuration>
