@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration name="marketLog" status="debug">
 
-    <!---->
+    <!--ROLLING INTO %TOMCAT_HOME%\bin\defaultMarketLogsFolder/-->
 
     <Properties>
         <Property name="log-path">defaultMarketLogsFolder</Property>
@@ -14,7 +14,6 @@
         <Property name="consoleLevel">debug</Property>
     </Properties>
 
-    <!---->
 
     <Appenders>
         <Console name="ROOT_CONSOLE" target="SYSTEM_OUT">
