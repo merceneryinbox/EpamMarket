@@ -8,7 +8,6 @@ import lombok.val;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,8 @@ public class PostgresGoodDAO implements GoodDAO {
     synchronized public static PostgresGoodDAO getTestInstance() {
         if (testInstance == null)
             testInstance = new PostgresGoodDAO(DataSourceInit.getH2());
-
+        // TODO: 25.12.2017 Why this produces exception? @OFedulov
+//        log.info("Instance of PostgresGoodDAO got " + instance.toString());
         return testInstance;
     }
 
@@ -66,23 +66,24 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     synchronized public Optional<Good> getGoodById(Integer id) {
-        ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_QUERY);) {
             preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                val good = new Good(
-                        resultSet.getInt("goods_id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("amount"),
-                        resultSet.getString("description")
-                );
-                return Optional.ofNullable(good);
+            try (val resultSet = preparedStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    val good = new Good(
+                            resultSet.getInt("goods_id"),
+                            resultSet.getString("name"),
+                            resultSet.getDouble("price"),
+                            resultSet.getInt("amount"),
+                            resultSet.getString("description")
+                    );
+                    log.info("Good " + good.toString() + " got by ID " + id);
+                    return Optional.ofNullable(good);
+                }
             }
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -90,25 +91,26 @@ public class PostgresGoodDAO implements GoodDAO {
 
     @Override
     synchronized public Optional<Good> getGoodByName(String name) {
-        ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY);) {
             preparedStatement.setString(1, name);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                val good = new Good(
-                        resultSet.getInt("goods_id"),
-                        // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
-                        // TODO Updated - no troubles have been detected while testing, so mb its ok
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("amount"),
-                        resultSet.getString("description")
-                );
-                return Optional.ofNullable(good);
+            try (val resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    val good = new Good(
+                            resultSet.getInt("goods_id"),
+                            // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
+                            // TODO Updated - no troubles have been detected while testing, so mb its ok
+                            resultSet.getString("name"),
+                            resultSet.getDouble("price"),
+                            resultSet.getInt("amount"),
+                            resultSet.getString("description")
+                    );
+                    log.info("Good " + good.toString() + " got by name " + name);
+                    return Optional.ofNullable(good);
+                }
             }
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -117,10 +119,9 @@ public class PostgresGoodDAO implements GoodDAO {
     @Override
     synchronized public List<Good> getAllGoods() {
         List<Good> goods = new ArrayList<>();
-        ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);) {
-            resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);
+             val resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 goods.add(new Good(
                         resultSet.getInt("goods_id"),
@@ -130,10 +131,9 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getString("description")
                 ));
             }
-
+            log.info("All Goods List got");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
         }
         return goods;
     }
@@ -148,8 +148,9 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setInt(3, good.getAmount());
             preparedStatement.setString(4, good.getDescription());
             preparedStatement.execute();
+            log.info("Good " + good.toString() + " added");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -161,8 +162,9 @@ public class PostgresGoodDAO implements GoodDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, name);
             preparedStatement.execute();
+            log.info("Good with " + name + " deleted");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -177,8 +179,9 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setString(3, good.getDescription());
             preparedStatement.setString(4, good.getName());
             preparedStatement.execute();
+            log.info("Good " + good.toString() + " updated");
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }

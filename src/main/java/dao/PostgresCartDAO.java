@@ -6,7 +6,10 @@ import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +18,14 @@ import java.util.Optional;
 @Log4j2
 public class PostgresCartDAO implements CartDAO {
 
-    //--------------------------------SINGLETON------------------------------------------
+    //--------------------------------SINGLETON-----------------------------------------
 
     private static PostgresCartDAO instance = null;
 
     synchronized public static PostgresCartDAO getInstance() {
         if (instance == null)
             instance = new PostgresCartDAO(DataSourceInit.getPostgres());
+        log.info("Instance of PostgresCartDAO got.");
         return instance;
     }
 
@@ -34,8 +38,8 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     //--------------------------------QUERIES---------------------------------------------
-
-    public static final String GET_ALL_QUERY = "SELECT * FROM cart WHERE user_id = ?";
+    public static final String GET_ALL_QUERY = "SELECT * FROM cart";
+    public static final String GET_ALL_BY_ID_QUERY = "SELECT * FROM cart WHERE user_id = ?";
     public static final String GET_QUERY = "SELECT * FROM cart WHERE user_id = ? AND goods_id = ?";
     public static final String CREATE_QUERY = "INSERT INTO cart (user_id, goods_id, amount, reserve_time) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? AND goods_id = ?";
@@ -53,27 +57,27 @@ public class PostgresCartDAO implements CartDAO {
     //--------------------------------DAO-METHODS--------------------------------------
 
     @Override
-    synchronized public Optional<List<Reserve>> getReserveListByLogin(Integer userId) {
-        ResultSet resultSet = null;
+    synchronized public Optional<List<Reserve>> getReserveListByUserId(Integer userId) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
             preparedStatement.setInt(1, userId);
-            resultSet = preparedStatement.executeQuery();
-            List<Reserve> reserveList = new ArrayList<>();
-            while (resultSet.next()) {
-                val reserve = new Reserve(
-                        resultSet.getInt("cart_id"),
-                        resultSet.getInt("user_id"),
-                        resultSet.getInt("goods_id"),
-                        resultSet.getInt("amount"),
-                        resultSet.getTimestamp("reserve_time")
-                );
-                reserveList.add(reserve);
+            try (val resultSet = preparedStatement.executeQuery()) {
+                List<Reserve> reserveList = new ArrayList<>();
+                while (resultSet.next()) {
+                    val reserve = new Reserve(
+                            resultSet.getInt("cart_id"),
+                            resultSet.getInt("user_id"),
+                            resultSet.getInt("goods_id"),
+                            resultSet.getInt("amount"),
+                            resultSet.getTimestamp("reserve_time")
+                    );
+                    reserveList.add(reserve);
+                }
+                log.info("Resrve list got by login " + userId);
+                return Optional.ofNullable(reserveList);
             }
-            return Optional.ofNullable(reserveList);
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
         }
         return Optional.empty();
     }
@@ -85,24 +89,25 @@ public class PostgresCartDAO implements CartDAO {
 
     @Override
     synchronized public Optional<Reserve> getReserve(Integer userId, Integer goodId) {
-        ResultSet resultSet = null;
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodId);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                val reserve = new Reserve(
-                        resultSet.getInt("cart_id"),
-                        resultSet.getInt("user_id"),
-                        resultSet.getInt("goods_id"),
-                        resultSet.getInt("amount"),
-                        resultSet.getTimestamp("reserve_time")
-                );
-                return Optional.ofNullable(reserve);
+            try (val resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    val reserve = new Reserve(
+                            resultSet.getInt("cart_id"),
+                            resultSet.getInt("user_id"),
+                            resultSet.getInt("goods_id"),
+                            resultSet.getInt("amount"),
+                            resultSet.getTimestamp("reserve_time")
+                    );
+                    log.info("Reserve got.");
+                    return Optional.ofNullable(reserve);
+                }
             }
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -123,14 +128,40 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
+    synchronized public Optional<List<Reserve>> getAllReserves() {
+        try (Connection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<Reserve> allReserves = new ArrayList<>();
+            while (resultSet.next()) {
+                val reserve = new Reserve(
+                        resultSet.getInt("cart_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("goods_id"),
+                        resultSet.getInt("amount"),
+                        resultSet.getTimestamp("reserve_time")
+                );
+                allReserves.add(reserve);
+            }
+            log.info("Received all reserves");
+            return Optional.ofNullable(allReserves);
+        } catch (SQLException e) {
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    @Override
     synchronized public void deleteReserve(Integer userId, Integer goodID) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodID);
             preparedStatement.execute();
+            log.info("Reserve deleted.");
+
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -143,8 +174,9 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, amount);
             preparedStatement.setTimestamp(4, timestamp);
             preparedStatement.execute();
+            log.info("Reserve created.");
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -158,8 +190,9 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, userId);
             preparedStatement.setInt(4, goodId);
             preparedStatement.execute();
+            log.info("Reserve updated.");
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }

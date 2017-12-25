@@ -1,67 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="ON">
+<Configuration name="marketLog" status="debug">
+
+    <!---->
+
     <Properties>
-        <Property name="log-path">/logs</Property>
+        <Property name="log-path">defaultMarketLogsFolder</Property>
         <Property name="log-project-name">market</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">7</Property>
-        <Property name="rolling-size-based">10 MB</Property>
+        <Property name="rolling-size-based">1 MB</Property>
+        <Property name="rolling-time-based">6</Property>
+        <Property name="modulate-time">true</Property>
+        <Property name="consoleLevel">debug</Property>
     </Properties>
+
+    <!---->
+
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout>
-                <pattern>${log-pattern}</pattern>
-            </PatternLayout>
+        <Console name="ROOT_CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <RollingFile name="DEBUG" fileName="${log-path}/${log-project-name}-debug.log"
-                     filePattern="${log-path}/${log-project-name}-debug-%d-%i.log.zip">
+        <RollingFile name="DEBUG-ROLLING" fileName="${log-path}/${log-project-name}---debug.log"
+                     filePattern="${log-path}/debug---${log-project-name}-%d-%i.log.zip" append="true"
+                     immediateFlush="true">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </RollingFile>
 
-        <RollingFile name="ERROR" fileName="${log-path}/${log-project-name}-error.log"
-                     filePattern="${log-path}/${log-project-name}-error-%d-%i.log.zip">
+        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}----error.log"
+                     filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </RollingFile>
 
-        <RollingFile name="INFO" fileName="${log-path}/${log-project-name}-info.log"
-                     filePattern="${log-path}/${log-project-name}-info-%d-%i.log.zip">
+        <RollingFile name="INFO-ROLLING" fileName="${log-path}/${log-project-name}----info.log"
+                     filePattern="${log-path}/info-${log-project-name}-%d-%i.log.zip">
             <PatternLayout>
                 <pattern>${log-pattern}</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <Filters>
-                <!-- Now deny warn, error and fatal messages -->
-                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <!--<Filters>-->
+            <!--&lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;-->
+            <!--<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+            <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+            <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
 
-                <!-- This filter accepts info, warn, error, fatal and denies debug/trace -->
-                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
+            <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
+            <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
+            <!--</Filters>-->
         </RollingFile>
+
     </Appenders>
     <Loggers>
-        <Logger name="market" level="trace" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="ERROR" level="error"/>
-            <AppenderRef ref="DEBUG" level="debug"/>
-            <AppenderRef ref="INFO" level="info"/>
-        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="ROOT_CONSOLE"/>
+            <AppenderRef ref="DEBUG-ROLLING"/>
+            <AppenderRef ref="ERROR-ROLLING"/>
+            <AppenderRef ref="INFO-ROLLING"/>
+        </Root>
     </Loggers>
-</configuration>
+</Configuration>
