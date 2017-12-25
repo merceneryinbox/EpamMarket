@@ -68,7 +68,7 @@ public class ReserveService {
     synchronized public List<CartCase> getCart(int userId) {
         List<Reserve> cart;
         List<CartCase> listForCart = new ArrayList<>();
-        Optional<List<Reserve>> optionalReserve = cartDAO.getReserveListByLogin(userId);
+        Optional<List<Reserve>> optionalReserve = cartDAO.getReserveListByUserId(userId);
         if (optionalReserve.isPresent()) {
             log.info("optionalReserve is Present.");
             cart = optionalReserve.get();
