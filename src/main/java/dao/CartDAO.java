@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface CartDAO {
     Optional<List<Reserve>> getAllReserves();
 
-    Optional<List<Reserve>> getReserveListByLogin(Integer login);
+    Optional<List<Reserve>> getReserveListByUserId(Integer login);
 
     void setAmountByLoginAndGoodId(Integer userId, Integer goodId, Integer amount);
 
