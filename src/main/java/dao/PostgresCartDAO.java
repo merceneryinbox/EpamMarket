@@ -15,7 +15,7 @@ import java.util.Optional;
 @Log4j2
 public class PostgresCartDAO implements CartDAO {
 
-    //--------------------------------SINGLETON------------------------------------------
+    //--------------------------------SINGLETON-----------------------------------------
 
     private static PostgresCartDAO instance = null;
 
