@@ -70,7 +70,7 @@ public class SignUpServlet extends HttpServlet {
 								+ "HttpSession"
 								+ " - registrationSession - " + registrationSession.toString());
 
-              postgresUserDAO.createNew(user);
+						postgresUserDAO.addUser(user);
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
 							log.info("New created User with ID return from DB - " + user.toString());

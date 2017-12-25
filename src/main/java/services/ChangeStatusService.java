@@ -56,7 +56,7 @@ public class ChangeStatusService {
                     log.info("User status changed from " + oldUser.getStatus() + " to " + newUser.getStatus());
                     break;
             }
-            boolean check = userDao.updateUser(newUser, oldUser);
+            userDao.updateUser(newUser, oldUser);
         }
     }
 

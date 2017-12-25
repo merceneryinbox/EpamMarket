@@ -9,6 +9,8 @@ import entities.Good;
 import entities.Reserve;
 import lombok.extern.log4j.Log4j2;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +70,7 @@ public class ReserveService {
     synchronized public List<CartCase> getCart(int userId) {
         List<Reserve> cart;
         List<CartCase> listForCart = new ArrayList<>();
-        Optional<List<Reserve>> optionalReserve = cartDAO.getReserveListByLogin(userId);
+        Optional<List<Reserve>> optionalReserve = cartDAO.getReserveListByUserId(userId);
         if (optionalReserve.isPresent()) {
             log.info("optionalReserve is Present.");
             cart = optionalReserve.get();
@@ -101,4 +103,22 @@ public class ReserveService {
             log.info("Good " + good.toString() + " deleted from reserve " + reserve.toString());
         }
     }
+
+    synchronized public void deleteAllOverdueReserves() {
+        Optional<List<Reserve>> optionalReserve = cartDAO.getAllReserves();
+        List<Reserve> reserves;
+        long a = Timestamp.from(Instant.now()).getTime();
+        long b;
+        if (optionalReserve.isPresent()) {
+            reserves = optionalReserve.get();
+            for (Reserve reserve: reserves) {
+                b = reserve.getReserveTime().getTime();
+                long hour = 3600000;
+                if (a-b>hour) {
+                    deleteGoods(reserve.getUserId(),reserve.getGoodId());
+                }
+            }
+        }
+    }
+
 }

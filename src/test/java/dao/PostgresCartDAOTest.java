@@ -2,9 +2,8 @@ package dao;
 
 import db.DataSourceInit;
 import db.DatabaseManager;
-import entities.Good;
+import entities.EntityGenerator;
 import entities.Reserve;
-import entities.User;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.junit.jupiter.api.AfterEach;
@@ -43,11 +42,11 @@ public class PostgresCartDAOTest {
         final String goodName = "Mersedes";
         final Integer initialAmount = 159;
 
-        USER_DAO.createNew(User.testUserForName(login));
+        USER_DAO.addUser(EntityGenerator.testUserForName(login));
         val user = USER_DAO.getUserByLogin(login);
         Integer userId = user.get().getId();
         log.info("Test Log info into console ", getClass().getName());
-        GOOD_DAO.addGood(Good.testGoodForName(goodName));
+        GOOD_DAO.addGood(EntityGenerator.testGoodForName(goodName));
         val good = GOOD_DAO.getGoodByName(goodName);
         val goodId = good.get().getId();
 

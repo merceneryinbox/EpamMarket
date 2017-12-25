@@ -13,7 +13,7 @@ public class UserRegistrator {
     static final Pattern VALID_PHONE_NUMBER_REGEX =
             Pattern.compile("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$", Pattern.CASE_INSENSITIVE);
     static final Pattern VALID_PASSWORD_REGEX =
-            Pattern.compile("/^[a-z0-9_-]{8,18}$/", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^[a-z0-9_-]{8,18}$", Pattern.CASE_INSENSITIVE);
 
     public UserRegistrator() {
     }

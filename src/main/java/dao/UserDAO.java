@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserDAO {
 
-    boolean createNew(User user);
+    boolean addUser(User user);
 
     Optional<User> getUserById(Integer id);
 
