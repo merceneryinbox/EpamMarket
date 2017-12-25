@@ -16,7 +16,7 @@ public class JdbcConnector {
                 .getResourceAsStream("resources\\jdbc.properties")) {
             properties.load(resourceAsStream);
         } catch (IOException e) {
-            log.error(
+            log.debug(
                     "Droped down at private void getConnection() in JdbcConnector because of \n" + e
                             .getMessage());
         }
@@ -25,7 +25,7 @@ public class JdbcConnector {
             Class.forName(properties.getProperty("driver"), true,
                     ComboPooledDataSource.class.getClassLoader());
         } catch (Exception e) {
-            log.error(
+            log.debug(
                     "Droped down at private void getConnection() in JdbcConnector because of \n" + e
                             .getMessage());
         }

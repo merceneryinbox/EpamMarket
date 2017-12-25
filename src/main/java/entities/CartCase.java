@@ -18,4 +18,29 @@ public class CartCase implements Comparable {
         CartCase cartCase = (CartCase) o;
         return this.getGoodName().compareTo(cartCase.getGoodName());
     }
+
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (goodId != null ? goodId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof CartCase)) {
+            return false;
+        }
+        CartCase other = (CartCase) object;
+        if ((this.goodId == null && other.goodId != null) || (this.goodId != null && !this.goodId.equals(other.goodId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entities.CartCase[ goodId = " + goodId + " goodName " + goodName + " price " + price + " amount " + amount + " ] ";
+    }
 }
