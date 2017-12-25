@@ -50,7 +50,7 @@ public class ChangeStatusService {
                 case ADMIN:
                     break;
             }
-            boolean check = userDao.updateUser(newUser, oldUser);
+            userDao.updateUser(newUser, oldUser);
         }
     }
 
