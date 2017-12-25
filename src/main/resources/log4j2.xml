@@ -62,6 +62,7 @@
             <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
             <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
 
+
             <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
             <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
             <!--</Filters>-->
