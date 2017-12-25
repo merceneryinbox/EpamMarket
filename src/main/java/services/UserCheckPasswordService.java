@@ -17,6 +17,7 @@ public class UserCheckPasswordService {
     synchronized public static UserCheckPasswordService getInstance() {
         if (instance == null)
             instance = new UserCheckPasswordService(PostgresUserDAO.getInstance());
+        log.info("Instance of singltone got.\n" + instance.toString());
         return instance;
     }
 
@@ -39,8 +40,11 @@ public class UserCheckPasswordService {
     synchronized public User checkPassword(String login, String password) {
         Optional<User> user = userDao.getUserByLogin(login);
         if (user.isPresent() && (user.get().getPassword().equals(password))) {
-            return user.get();
+            User user1 = user.get();
+            log.info("Legal user " + user1.toString() + " detected");
+            return user1;
         }
+        log.error("No user with such login = " + login + " and password " + password + " in the DB detected.");
         return null;
     }
 }
