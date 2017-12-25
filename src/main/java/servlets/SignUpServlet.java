@@ -65,12 +65,11 @@ public class SignUpServlet extends HttpServlet {
 						user.setStatus(statusDefault);
 
 						if (UserRegistrator.registrate(user)){
+							HttpSession registrationSession = request.getSession();
 						log.info("Create not existing user, push him into db and to the "
 								+ "HttpSession"
 								+ " - registrationSession - " + registrationSession.toString());
 
-						HttpSession registrationSession = request.getSession();
-						
               postgresUserDAO.createNew(user);
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
