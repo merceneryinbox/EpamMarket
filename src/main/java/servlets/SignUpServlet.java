@@ -25,7 +25,7 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			log.info("Redirect for registratio user");
+			log.info("Redirect user for registration.");
 			request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		} else {
 			log.info("Approve existing user and redirect him to index.jsp");
@@ -35,7 +35,7 @@ public class SignUpServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		log.info("test info in SignUpServlet ", getClass().getName());
+		log.info("Test info in SignUpServlet ", getClass().getName());
 		String login;
 		String password;
 		String email;
@@ -54,8 +54,10 @@ public class SignUpServlet extends HttpServlet {
 				statusDefault = UserStatus.ACTIVE.name();
 
 				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
-
+					log.info("Positive answer from request with user's fields got " + login);
 					if (login != null && password != null) {
+						log.info("Not null login and password detected.");
+
 						user.setLogin(login);
 						user.setPassword(password);
 						user.setEmail(email == null ? "n@email" : email);
@@ -65,12 +67,14 @@ public class SignUpServlet extends HttpServlet {
 						if (UserRegistrator.registrate(user)){
 						log.info("Create not existing user, push him into db and to the "
 								+ "HttpSession"
-								+ ".");
+								+ " - registrationSession - " + registrationSession.toString());
 
 						HttpSession registrationSession = request.getSession();
-						postgresUserDAO.createNew(user);
+						
+              postgresUserDAO.createNew(user);
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
+							log.info("New created User with ID return from DB - " + user.toString());
 							registrationSession.setAttribute("user", optionalUser.get());
 							response.sendRedirect("/price_list");
 						} else {

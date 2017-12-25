@@ -1,6 +1,7 @@
 package servlets;
 
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 import services.AdminService;
 import services.ChangeStatusService;
 import services.UserStatus;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+@Log4j2
 @WebServlet(name = "Admin", value = "/adminpage")
 public class AdminServlet extends HttpServlet {
 
@@ -25,19 +27,22 @@ public class AdminServlet extends HttpServlet {
         UserStatus status;
         User user = (User) session.getAttribute("user");
         if (user == null) {
+            log.info("User null detected, redirect to start page.");
             resp.sendRedirect("/");
         } else {
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case ACTIVE:
+                    log.info("User " + user.toString() + "\ndetected, redirect to start page.");
                     resp.sendRedirect("/");
                     break;
                 case ADMIN:
                     try {
+                        log.info("User " + user.toString() + "\ndetected, redirect to admin page.");
                         req.setAttribute("users", userList);
                         req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
                     } catch (RuntimeException e) {
-                        e.printStackTrace();
+                        log.debug("Servlet dropped down because of \n" + e.getMessage());
                     }
                     break;
             }
@@ -47,7 +52,8 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = Integer.valueOf(req.getParameter("userId"));
+        log.info("User going to adminpage.");
         ChangeStatusService.getInstance().changeStatusById(id);
-        resp.sendRedirect("adminpage");
+        resp.sendRedirect("/adminpage");
     }
 }

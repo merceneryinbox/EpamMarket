@@ -15,13 +15,14 @@ import java.util.Optional;
 @Log4j2
 public class PostgresCartDAO implements CartDAO {
 
-    //--------------------------------SINGLETON------------------------------------------
+    //--------------------------------SINGLETON-----------------------------------------
 
     private static PostgresCartDAO instance = null;
 
     synchronized public static PostgresCartDAO getInstance() {
         if (instance == null)
             instance = new PostgresCartDAO(DataSourceInit.getPostgres());
+        log.info("Instance of PostgresCartDAO got.");
         return instance;
     }
 
@@ -70,9 +71,10 @@ public class PostgresCartDAO implements CartDAO {
                 );
                 reserveList.add(reserve);
             }
+            log.info("Resrve list got by login " + userId);
             return Optional.ofNullable(reserveList);
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -99,10 +101,12 @@ public class PostgresCartDAO implements CartDAO {
                         resultSet.getInt("amount"),
                         resultSet.getTimestamp("reserve_time")
                 );
+                log.info("Reserve got.");
+
                 return Optional.ofNullable(reserve);
             }
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
         return Optional.empty();
@@ -129,8 +133,10 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodID);
             preparedStatement.execute();
+            log.info("Reserve deleted.");
+
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -143,8 +149,9 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, amount);
             preparedStatement.setTimestamp(4, timestamp);
             preparedStatement.execute();
+            log.info("Reserve created.");
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
@@ -158,8 +165,9 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, userId);
             preparedStatement.setInt(4, goodId);
             preparedStatement.execute();
+            log.info("Reserve updated.");
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage());
         }
     }
