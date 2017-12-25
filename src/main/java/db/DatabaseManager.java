@@ -18,7 +18,7 @@ public class DatabaseManager {
                 .prepareStatement(getInitQuery())) {
             ps.execute();
         } catch (SQLException e) {
-            log.error("Droped down at DatabaseManager public static void init(DataSource "
+            log.debug("Droped down at DatabaseManager public static void init(DataSource "
                     + "dataSource because of \n" + e
                     .getMessage());
         }
@@ -34,7 +34,7 @@ public class DatabaseManager {
             return query;
 
         } catch (IOException e) {
-            log.error(
+            log.debug(
                     "Droped down at private static String getInitQuery() in DatabaseManager "
                             + "because of \n"
                             + e
@@ -65,8 +65,8 @@ public class DatabaseManager {
                 .prepareStatement(getDropQuery())) {
             ps.execute();
         } catch (SQLException e) {
-            log.error(
-                    "Droped down at public static void drop(DataSource dataSource) in "
+            log.debug(
+                    "Dropped down at public static void drop(DataSource dataSource) in "
                             + "DatabaseManager because of \n"
                             + e
                             .getMessage());
