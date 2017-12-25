@@ -113,7 +113,8 @@ public class ReserveService {
             reserves = optionalReserve.get();
             for (Reserve reserve: reserves) {
                 b = reserve.getReserveTime().getTime();
-                if (a-b>3600000) {
+                long hour = 3600000;
+                if (a-b>hour) {
                     deleteGoods(reserve.getUserId(),reserve.getGoodId());
                 }
             }
