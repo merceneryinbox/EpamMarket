@@ -18,27 +18,4 @@ public class Reserve {
     private Integer amount;
     private Timestamp reserveTime;
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Reserve)) {
-            return false;
-        }
-        Reserve other = (Reserve) object;
-        if ((this.id == null && other.getId() != null) || (this.id != null && !this.id.equals(other.getId()))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Reserve[ id = " + id + " userId " + userId + " goodId " + goodId + " amount " + amount + " reserveTime " + reserveTime + " ] ";
-    }
 }
