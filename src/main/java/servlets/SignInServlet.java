@@ -25,19 +25,24 @@ public class SignInServlet extends HttpServlet {
         UserStatus status;
         User user;
         user = (User) session.getAttribute("user");
+
         if (user != null) {
+            log.info("User " + user.toString() + " got from session\n" + session.toString() + ".\n");
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case ACTIVE:
                     session.setAttribute("user", user);
+                    log.info("User " + user.toString() + " redirected to pricelist.jsp.");
                     resp.sendRedirect("/price_list");
                     break;
                 case ADMIN:
                     session.setAttribute("user", user);
+                    log.info("User " + user.toString() + " redirected to adminpage.jsp.");
                     req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
                     break;
             }
         } else {
+            log.info("User are not present at the DB.\nRedirection to signIn.jsp page.");
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         }
     }
@@ -54,23 +59,27 @@ public class SignInServlet extends HttpServlet {
         User user;
         user = UserCheckPasswordService.getInstance().checkPassword(login, password);
         if (user == null) {
+            log.info("User null, redirect to signIn.jsp page.");
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
+            log.info("User " + user.toString() + " got from session " + session.toString() + ".");
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case BANNED:
+                    log.info("User " + user.toString() + " is Banned.\nRedirect to banneduser.jsp page.");
                     req.getRequestDispatcher("/banneduser.jsp").forward(req, resp);
                     break;
                 case ACTIVE:
                     session.setAttribute("user", user);
+                    log.info("User " + user.toString() + " is Active.\nRedirect to priceList.jsp page." + "\nIn session " + session.toString());
                     resp.sendRedirect("/price_list");
                     break;
                 case ADMIN:
                     session.setAttribute("user", user);
+                    log.info("User " + user.toString() + " is Admin.\nRedirect to adminpage.jsp page." + "\nIn session " + session.toString());
                     resp.sendRedirect("/adminpage");
                     break;
             }
         }
     }
-
 }

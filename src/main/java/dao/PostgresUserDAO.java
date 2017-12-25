@@ -24,7 +24,7 @@ public class PostgresUserDAO implements UserDAO {
     synchronized public static PostgresUserDAO getInstance() {
         if (instance == null)
             instance = new PostgresUserDAO(DataSourceInit.getPostgres());
-
+        log.info("Instance of PostgresUserDAO got " + instance.toString());
         return instance;
 
     }
@@ -75,7 +75,9 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getStatus());
             preparedStatement.execute();
+
             log.info("Successfully creating public boolean addUser(User user) in PostgresUserDAO");
+            log.info("New User " + user.toString() + "successfully created ");
             return true;
         } catch (SQLException e) {
             log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
@@ -99,6 +101,7 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("phone"),
                         resultSet.getString("status")
                 );
+                log.info("GetUserById success.");
                 return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
@@ -122,6 +125,7 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("phone"),
                         resultSet.getString("status")
                 );
+                log.info("GetUserByLogin success.");
                 return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
@@ -142,9 +146,10 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(5, newUser.getLogin());
             preparedStatement.execute();
             log.info("User successfully updated by updateUser method in PostgresUserDao !");
+            log.info("Update user success.");
             return true;
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
             return false;
         }
     }
@@ -155,11 +160,10 @@ public class PostgresUserDAO implements UserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_LOGIN)) {
             preparedStatement.setString(1, login);
             preparedStatement.execute();
-            //TODO info in log4j
             log.info("User successfully delete by deleteUserByLogin method in PostgresUserDao !");
             return true;
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
             return false;
         }
     }
@@ -184,6 +188,7 @@ public class PostgresUserDAO implements UserDAO {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery()) {
+
             while (resultSet.next()) {
                 users.add(new User(
                         resultSet.getInt("user_id"),
@@ -194,9 +199,10 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("status")
                 ));
             }
-
+            log.info("All users got.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
         }
         return users;
     }

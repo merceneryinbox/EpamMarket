@@ -17,6 +17,7 @@ public class GoodsService {
     synchronized public static GoodsService getInstance() {
         if (instance == null)
             instance = new GoodsService(PostgresGoodDAO.getInstance());
+        log.info("GoodService instance " + instance.toString() + " got.");
         return instance;
     }
 
@@ -39,6 +40,7 @@ public class GoodsService {
     synchronized public List<Good> getPriceList() {
         List<Good> goods = goodDAO.getAllGoods();
         goods.sort(null);
+        log.info("PriceList created " + goods.toString());
         return goods;
     }
 }

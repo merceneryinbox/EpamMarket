@@ -28,5 +28,4 @@ public class User implements Comparable {
         return this.getLogin().compareTo(user.getLogin());
     }
 
-
 }

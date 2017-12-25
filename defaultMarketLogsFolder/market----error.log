@@ -1,0 +1,46 @@
+2017-12-25T20:20:16,712 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:20:16,718 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Vasya, password=82426896, email=Vasya@email.com, phone=+78242689600, status=Active)successfully created 
+2017-12-25T20:20:16,729 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.
+2017-12-25T20:20:16,733 INFO  [Sample][main|PostgresUserDAO] 104 getUserById GetUserById success.
+2017-12-25T20:20:16,737 INFO  [Sample][main|PostgresUserDAO] 177 deleteUserById User successfully deleted by deleteUserById method in PostgresUserDao
+2017-12-25T20:20:16,760 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:20:16,760 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Vasya, password=82426896, email=Vasya@email.com, phone=+78242689600, status=Active)successfully created 
+2017-12-25T20:20:16,761 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.
+2017-12-25T20:20:16,762 INFO  [Sample][main|PostgresUserDAO] 163 deleteUserByLogin User successfully delete by deleteUserByLogin method in PostgresUserDao !
+2017-12-25T20:20:16,778 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:20:16,779 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Vasya, password=82426896, email=Vasya@email.com, phone=+78242689600, status=Active)successfully created 
+2017-12-25T20:20:16,780 INFO  [Sample][main|PostgresUserDAO] 148 updateUser User successfully updated by updateUser method in PostgresUserDao !
+2017-12-25T20:20:16,781 INFO  [Sample][main|PostgresUserDAO] 149 updateUser Update user success.
+2017-12-25T20:20:16,781 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.
+2017-12-25T20:21:15,964 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:21:15,974 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Nikita, password=-1961631578, email=Nikita@email.com, phone=+7-196163157, status=Active)successfully created 
+2017-12-25T20:21:15,990 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.
+2017-12-25T20:21:15,991 INFO  [Sample][main|PostgresCartDAOTest] 48 testReserveDao Test Log info into console 
+2017-12-25T20:21:15,993 INFO  [Sample][main|PostgresGoodDAO] 150 addGood Good entities.Good[ id = 0 name Mersedes price -59627.46 amount -46 ]  added
+2017-12-25T20:21:15,994 INFO  [Sample][main|PostgresGoodDAO] 107 getGoodByName Good entities.Good[ id = 1 name Mersedes price -59627.4609375 amount -46 ]  got by name Mersedes
+2017-12-25T20:21:16,000 INFO  [Sample][main|PostgresCartDAO] 153 createReserve Reserve created.
+2017-12-25T20:21:16,001 INFO  [Sample][main|PostgresCartDAO] 105 getReserve Reserve got.
+2017-12-25T20:21:16,005 INFO  [Sample][main|PostgresCartDAO] 105 getReserve Reserve got.
+2017-12-25T20:21:16,007 INFO  [Sample][main|PostgresCartDAO] 169 updateReserve Reserve updated.
+2017-12-25T20:21:16,008 INFO  [Sample][main|PostgresCartDAO] 105 getReserve Reserve got.
+2017-12-25T20:21:16,011 INFO  [Sample][main|PostgresCartDAO] 105 getReserve Reserve got.
+2017-12-25T20:21:16,012 INFO  [Sample][main|PostgresCartDAO] 137 deleteReserve Reserve deleted.
+2017-12-25T20:21:16,061 INFO  [Sample][main|PostgresGoodDAO] 150 addGood Good entities.Good[ id = 0 name Mersedes price -59627.46 amount -46 ]  added
+2017-12-25T20:21:16,061 INFO  [Sample][main|PostgresGoodDAO] 107 getGoodByName Good entities.Good[ id = 1 name Mersedes price -59627.4609375 amount -46 ]  got by name Mersedes
+2017-12-25T20:21:16,062 INFO  [Sample][main|PostgresGoodDAO] 181 updateGood Good entities.Good[ id = 0 name Mersedes price -59627.46 amount -46 ]  updated
+2017-12-25T20:21:16,063 INFO  [Sample][main|PostgresGoodDAO] 107 getGoodByName Good entities.Good[ id = 1 name Mersedes price -59627.4609375 amount -46 ]  got by name Mersedes
+2017-12-25T20:21:16,066 INFO  [Sample][main|PostgresGoodDAO] 164 deleteGoodByName Good with Mersedes deleted
+2017-12-25T20:21:16,098 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:21:16,098 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Vasya, password=82426896, email=Vasya@email.com, phone=+78242689600, status=Active)successfully created 
+2017-12-25T20:21:16,099 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.
+2017-12-25T20:21:16,100 INFO  [Sample][main|PostgresUserDAO] 104 getUserById GetUserById success.
+2017-12-25T20:21:16,101 INFO  [Sample][main|PostgresUserDAO] 177 deleteUserById User successfully deleted by deleteUserById method in PostgresUserDao
+2017-12-25T20:21:16,119 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:21:16,119 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Vasya, password=82426896, email=Vasya@email.com, phone=+78242689600, status=Active)successfully created 
+2017-12-25T20:21:16,120 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.
+2017-12-25T20:21:16,121 INFO  [Sample][main|PostgresUserDAO] 163 deleteUserByLogin User successfully delete by deleteUserByLogin method in PostgresUserDao !
+2017-12-25T20:21:16,134 INFO  [Sample][main|PostgresUserDAO] 79 addUser Successfully creating public boolean addUser(User user) in PostgresUserDAO
+2017-12-25T20:21:16,135 INFO  [Sample][main|PostgresUserDAO] 80 addUser New User User(id=0, login=Vasya, password=82426896, email=Vasya@email.com, phone=+78242689600, status=Active)successfully created 
+2017-12-25T20:21:16,136 INFO  [Sample][main|PostgresUserDAO] 148 updateUser User successfully updated by updateUser method in PostgresUserDao !
+2017-12-25T20:21:16,136 INFO  [Sample][main|PostgresUserDAO] 149 updateUser Update user success.
+2017-12-25T20:21:16,137 INFO  [Sample][main|PostgresUserDAO] 128 getUserByLogin GetUserByLogin success.

@@ -3,6 +3,7 @@ package servlets;
 import dao.PostgresUserDAO;
 import entities.User;
 import lombok.extern.log4j.Log4j2;
+import services.UserRegistrator;
 import services.UserStatus;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			log.info("Redirect for registratio user");
+			log.info("Redirect user for registration.");
 			request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		} else {
 			log.info("Approve existing user and redirect him to index.jsp");
@@ -34,7 +35,7 @@ public class SignUpServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		log.info("test info in SignUpServlet ", getClass().getName());
+		log.info("Test info in SignUpServlet ", getClass().getName());
 		String login;
 		String password;
 		String email;
@@ -43,6 +44,7 @@ public class SignUpServlet extends HttpServlet {
 		User user = new User();
 		Optional<User> optionalUser;
 		PostgresUserDAO postgresUserDAO = PostgresUserDAO.getInstance();
+
 		try {
 			if (request != null) {
 				login =  request.getParameter("login");
@@ -52,30 +54,36 @@ public class SignUpServlet extends HttpServlet {
 				statusDefault = UserStatus.ACTIVE.name();
 
 				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
-
+					log.info("Positive answer from request with user's fields got " + login);
 					if (login != null && password != null) {
+						log.info("Not null login and password detected.");
+
 						user.setLogin(login);
 						user.setPassword(password);
 						user.setEmail(email == null ? "n@email" : email);
 						user.setPhone(phone == null ? "no phone" : phone);
 						user.setStatus(statusDefault);
 
+						if (UserRegistrator.registrate(user)){
+							HttpSession registrationSession = request.getSession();
 						log.info("Create not existing user, push him into db and to the "
 								+ "HttpSession"
-								+ ".");
-
-						HttpSession registrationSession = request.getSession();
+								+ " - registrationSession - " + registrationSession.toString());
 
 						postgresUserDAO.addUser(user);
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
+							log.info("New created User with ID return from DB - " + user.toString());
 							registrationSession.setAttribute("user", optionalUser.get());
+							response.sendRedirect("/price_list");
 						} else {
 							log.info("Redirect user" + user.getClass().getSimpleName()
 									+ " to registration page.");
 							request.getRequestDispatcher("/signup.jsp").forward(request,response);
+						    }
+						} else {
+							request.getRequestDispatcher("/signup.jsp").forward(request,response);
 						}
-						response.sendRedirect("/price_list");
 					} else {
 						log.info("Redirect user" + user.getClass().getSimpleName()
 								+ " to registration page.");

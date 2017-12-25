@@ -7,11 +7,13 @@ import dao.PostgresGoodDAO;
 import entities.CartCase;
 import entities.Good;
 import entities.Reserve;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public class ReserveService {
 
     //--------------------------------SINGLETON------------------------------------------
@@ -21,6 +23,7 @@ public class ReserveService {
     synchronized public static ReserveService getInstance() {
         if (instance == null)
             instance = new ReserveService(PostgresCartDAO.getInstance(), PostgresGoodDAO.getInstance());
+        log.info("Instance " + instance.toString() + " got.");
         return instance;
     }
 
@@ -49,9 +52,11 @@ public class ReserveService {
         Good good;
         if (optionalGood.isPresent()) {
             good = optionalGood.get();
+            log.info("Goog " + good.toString() + " reserved.");
             if (good.getAmount()>= amount) {
                 if (optionalReserve.isPresent()) {
                     amountForSet += optionalReserve.get().getAmount();
+                    log.info("It's amountForSet " + amountForSet + " gathered.");
                 }
                 good.setAmount(good.getAmount()-amount);
                 goodDAO.updateGood(good);
@@ -65,7 +70,9 @@ public class ReserveService {
         List<CartCase> listForCart = new ArrayList<>();
         Optional<List<Reserve>> optionalReserve = cartDAO.getReserveListByLogin(userId);
         if (optionalReserve.isPresent()) {
+            log.info("optionalReserve is Present.");
             cart = optionalReserve.get();
+            log.info("Cart " + cart.toString() + " got.");
             for (Reserve reserve : cart) {
                 CartCase cartCase = new CartCase();
                 cartCase.setGoodId(reserve.getGoodId());
@@ -73,6 +80,7 @@ public class ReserveService {
                 cartCase.setAmount(reserve.getAmount());
                 cartCase.setPrice(goodDAO.getGoodById(reserve.getGoodId()).get().getPrice());
                 listForCart.add(cartCase);
+                log.info("cartCase " + cartCase.toString() + " got.\nListForCart " + listForCart.toString() + " got.");
             }
         }
         listForCart.sort(null);
@@ -90,6 +98,7 @@ public class ReserveService {
             good.setAmount(good.getAmount() + reserve.getAmount());
             goodDAO.updateGood(good);
             cartDAO.deleteReserve(userId, goodsId);
+            log.info("Good " + good.toString() + " deleted from reserve " + reserve.toString());
         }
     }
 }

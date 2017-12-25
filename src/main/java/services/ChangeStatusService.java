@@ -3,7 +3,9 @@ package services;
 import dao.PostgresUserDAO;
 import dao.UserDAO;
 import entities.User;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class ChangeStatusService {
 
     //--------------------------------SINGLETON------------------------------------------
@@ -13,6 +15,7 @@ public class ChangeStatusService {
     synchronized public static ChangeStatusService getInstance() {
         if (instance == null)
             instance = new ChangeStatusService(PostgresUserDAO.getInstance());
+        log.info("ChangeStatusService instance got " + instance.toString());
         return instance;
     }
 
@@ -43,11 +46,14 @@ public class ChangeStatusService {
             switch (status) {
                 case BANNED:
                     newUser.setStatus("ACTIVE");
+                    log.info("User status changed from " + oldUser.getStatus() + " to " + newUser.getStatus());
                     break;
                 case ACTIVE:
                     newUser.setStatus("BANNED");
+                    log.info("User status changed from " + oldUser.getStatus() + " to " + newUser.getStatus());
                     break;
                 case ADMIN:
+                    log.info("User status changed from " + oldUser.getStatus() + " to " + newUser.getStatus());
                     break;
             }
             userDao.updateUser(newUser, oldUser);
