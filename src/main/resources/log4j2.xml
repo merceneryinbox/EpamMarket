@@ -81,7 +81,6 @@
 </Configuration>
 
         <!--<Filters>-->
-
         <!--&lt;!&ndash; First deny error and fatal messages &ndash;&gt;-->
         <!--<ThresholdFilter level="error" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
         <!--<ThresholdFilter level="fatal" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
