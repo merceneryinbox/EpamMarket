@@ -173,7 +173,7 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.execute();
             log.info("Reserve created. + " + getClass().getName());
         } catch (SQLException e) {
-            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+            log.debug("Dropped down " +  this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage() + " + " + getClass().getName());
         }
     }
