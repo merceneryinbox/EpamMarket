@@ -33,7 +33,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <input class="form-control" type="number" name="amount" value="1" min="1"
-                                       max="${product.amout}" required>
+                                       max="${product.amount}" required>
                                 <input type="hidden" name="goodsId" value="${product.id}">
                             </div>
                             <div class="col-sm-8">
