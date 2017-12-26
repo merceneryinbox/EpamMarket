@@ -19,11 +19,11 @@
         <h2 class="form-signin-heading">Registration Form</h2>
         <p><strong>Login:</strong></p>
         <input class="form-control" type="text" name="login" value="" placeholder="Login" required autofocus/><br>
-        <p><strong>Password:</strong></p>
+        <p><strong>Password:</strong>must be 8-18 symbols in length with numbers and characters.</p>
         <input class="form-control" type="password" name="password" value="" placeholder="Password" required/><br>
-        <p><strong>Phone:</strong></p>
+        <p><strong>Phone:</strong>pattern:+71234567899</p>
         <input class="form-control" type="text" name="phone" value="" placeholder="+19992345678" required/><br>
-        <p><strong>Email:</strong></p>
+        <p><strong>Email:</strong>pattern:email@email.dom</p>
         <input class="form-control" type="text" name="email" value="" placeholder="email@smth.com" required/>
         <br>
         <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Up"/> <br/>
