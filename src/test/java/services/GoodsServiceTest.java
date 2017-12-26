@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoodsServiceTest {
@@ -36,15 +38,17 @@ class GoodsServiceTest {
         goodsDAO.addGood(product1);
         goodsDAO.addGood(product2);
         goodsDAO.addGood(product3);
-        val testFromGetPriceList = GoodsService.getTestInstance().getPriceList();
-        val testList = new ArrayList();
-        testList.add(product2);
-        testList.add(product1);
-        testList.add(product3);
+        val actualList = GoodsService.getTestInstance().getPriceList();
+        val expectedList = new ArrayList<Good>();
+        expectedList.add(product2);
+        expectedList.add(product1);
+        expectedList.add(product3);
+
+//        assertThat(expectedList, is(actualList));
 
         int i=0;
-        for(Good g : testFromGetPriceList){
-            val good = (Good)testList.get(i);
+        for(Good g : actualList){
+            val good = (Good)expectedList.get(i);
             assertEquals(g.getName(),good.getName());
             i++;
         }
