@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" name="XMLConfigTest" package="main" monitorInterval="30">
+<Configuration status="debug" strict="true" name="XMLConfigTest" packages="main" monitorInterval="30">
 
     <!--ROLLING INTO %TOMCAT_HOME%\bin\defaultMarketLogsFolder/-->
 
     <Properties>
         <Property name="log-path">defaultMarketLogsFolder</Property>
-        <Property name="log-project-name">market</Property>
+        <Property name="log-project-name">epamMarket</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">10</Property>
         <Property name="rolling-size-based">500 kB</Property>
         <Property name="rolling-time-based">6</Property>
         <Property name="modulate-time">true</Property>
-        <Property name="consoleLevel">trace</Property>
+        <Property name="rootLevel">trace</Property>
     </Properties>
 
     <Appenders>
@@ -34,31 +34,6 @@
             <param name="Encoding" value="UTF-8"/>
         </RollingFile>
 
-        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}----ERROR.log"
-                     filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip" append="true"
-                     immediateFlush="true">
-            <PatternLayout>
-                <pattern>${log-pattern}</pattern>
-            </PatternLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <!--<Filters>-->
-
-            <!--&lt;!&ndash; First deny error and fatal messages &ndash;&gt;-->
-            <!--<ThresholdFilter level="error" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
-            <!--<ThresholdFilter level="fatal" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
-
-            <!--&lt;!&ndash; Then accept info, warn, error, fatal and deny debug/trace &ndash;&gt;-->
-            <!--<ThresholdFilter level="warn"  onMatch="ACCEPT" onMismatch="NEUTRAL"/>-->
-            <!--<ThresholdFilter level="info"  onMatch="ACCEPT" onMismatch="DENY"/>-->
-            <!--</Filters>-->
-            <param name="Encoding" value="UTF-8"/>
-
-        </RollingFile>
-
         <RollingFile name="WARN-ROLLING" fileName="${log-path}/${log-project-name}----WARN.log"
                      filePattern="${log-path}/info-${log-project-name}-%d-%i.log.zip" append="true"
                      immediateFlush="true">
@@ -70,15 +45,22 @@
                 <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <!--<Filters>-->
-            <!--&lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;-->
-            <!--<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-            <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-            <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
 
-            <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
-            <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
-            <!--</Filters>-->
+            <param name="Encoding" value="UTF-8"/>
+
+        </RollingFile>
+
+        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}----ERROR.log"
+                     filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip" append="true"
+                     immediateFlush="true">
+            <PatternLayout>
+                <pattern>${log-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
             <param name="Encoding" value="UTF-8"/>
 
         </RollingFile>
@@ -91,11 +73,29 @@
         <Logger name="main.java.servlets" level="warn" additivity="false">
             <AppenderRef ref="WARN-ROLLING"/>
         </Logger>
-        <Root level="${consoleLevel}">
+        <Root level="${rootLevel}">
             <AppenderRef ref="ROOT_CONSOLE"/>
-            <!--<AppenderRef ref="ERROR-ROLLING"/>-->
-            <!--<AppenderRef ref="WARN-ROLLING"/>-->
-            <!--<AppenderRef ref="DEBUG-ROLLING"/>-->
+            <AppenderRef ref="ERROR-ROLLING"/>
         </Root>
     </Loggers>
 </Configuration>
+
+        <!--<Filters>-->
+
+        <!--&lt;!&ndash; First deny error and fatal messages &ndash;&gt;-->
+        <!--<ThresholdFilter level="error" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
+        <!--<ThresholdFilter level="fatal" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
+
+        <!--&lt;!&ndash; Then accept info, warn, error, fatal and deny debug/trace &ndash;&gt;-->
+        <!--<ThresholdFilter level="warn"  onMatch="ACCEPT" onMismatch="NEUTRAL"/>-->
+        <!--<ThresholdFilter level="info"  onMatch="ACCEPT" onMismatch="DENY"/>-->
+        <!--</Filters>-->
+        <!--<Filters>-->
+        <!--&lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;-->
+        <!--<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+        <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+        <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+
+        <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
+        <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
+        <!--</Filters>-->
