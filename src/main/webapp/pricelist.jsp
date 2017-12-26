@@ -37,7 +37,7 @@
                                 <input type="hidden" name="goodsId" value="${product.id}">
                             </div>
                             <div class="col-sm-8">
-                               <c:choose>
+                                <c:choose>
                                     <c:when test="${product.amount<1}">
                                         <input class="btn-info btn" type="submit" value="Add in cart" disabled>
                                     </c:when>
@@ -75,8 +75,10 @@
             </c:if>
         </div>
         <div class="col-sm-4">
-            <div>If you want to buy something without log in:</div>
-            <div>Call: +7-999-9999</div>
+            <c:if test="${sessionScope.user==null}">
+                <div>If you want to buy something without log in:</div>
+                <div>Call: +7-999-9999</div>
+            </c:if>
         </div>
     </div>
 </div>
