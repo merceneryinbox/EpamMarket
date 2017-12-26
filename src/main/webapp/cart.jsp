@@ -39,7 +39,7 @@
     </table>
 </div>
 <p> Total:<c:out value='${total}'/> </p>
-<form action="payment.jsp" method="get">
+<form action="cartwithdelete" method="get">
 <c:if test="${!empty userCart}">
     <input class="btn-info btn" type="submit"  value="Confirm payment"/>
 </c:if>
