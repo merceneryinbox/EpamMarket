@@ -61,11 +61,6 @@ public class SignInServlet extends HttpServlet {
         user = UserCheckPasswordService.getInstance().checkPassword(login, password);
         if (user == null) {
             log.info("User null, redirect to signIn.jsp page.");
-            try {
-                throw new HTTPException(1);
-            }catch (HTTPException e){
-                log.debug("================================", new HTTPException(1));
-            }
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
             log.info("User " + user.toString() + " got from session " + session.toString() + ".");
