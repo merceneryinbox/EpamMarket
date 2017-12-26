@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="ON" name="market" packages="/src/main/java">
     <Properties>
-        <Property name="log-path">/logs</Property>
+        <Property name="log-path">MMMMMMMMMMM</Property>
         <Property name="log-project-name">market</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">7</Property>

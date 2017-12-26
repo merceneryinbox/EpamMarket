@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 
 @Log4j2
@@ -60,6 +61,11 @@ public class SignInServlet extends HttpServlet {
         user = UserCheckPasswordService.getInstance().checkPassword(login, password);
         if (user == null) {
             log.info("User null, redirect to signIn.jsp page.");
+            try {
+                throw new HTTPException(1);
+            }catch (HTTPException e){
+                log.debug("================================", new HTTPException(1));
+            }
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
             log.info("User " + user.toString() + " got from session " + session.toString() + ".");

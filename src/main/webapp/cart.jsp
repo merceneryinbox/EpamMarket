@@ -21,21 +21,27 @@
             <th>Price for all</th>
             <th>Remove from cart</th>
         </tr>
+        <c:set var="total" value="${0}"/>
         <c:forEach var="cart" items="${userCart}">
             <tr>
                 <td><c:out value='${cart.goodName}'/></td>
                 <td><c:out value='${cart.amount}'/></td>
                 <td><c:out value='${cart.price}'/></td>
                 <td><c:out value='${cart.price * cart.amount}'/></td>
+                <c:set var="total" value="${total + cart.price*cart.amount}" />
                 <td>
                     <form action="cartwithdelete" method="post">
                     <input type="hidden" name="goodsId" value="${cart.goodId}">
-                    <input class="btn-info btn" type="submit" value="Remove">
-                </form></td>
+                    <input class="btn-info btn" type="submit" value="Remove"></form>
+                </td>
             </tr>
         </c:forEach>
     </table>
 </div>
+<p> Total:<c:out value='${total}'/> </p>
+<form action="payment.jsp" method="get">
+    <input class="btn-info btn" type="submit" value="Confirm payment"/>
+</form>
 
 <form action="price_list" method="get">
     <input class="btn btn-primary btn-block" type="submit" value="Go back to price list"/>
