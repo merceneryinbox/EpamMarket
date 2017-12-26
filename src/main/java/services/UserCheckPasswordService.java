@@ -41,10 +41,10 @@ public class UserCheckPasswordService {
         Optional<User> user = userDao.getUserByLogin(login);
         if (user.isPresent() && (user.get().getPassword().equals(password))) {
             User user1 = user.get();
-            log.info("Legal user " + user1.toString() + " detected");
+            log.info("Legal user " + user1.toString() + " detected + " + getClass().getName());
             return user1;
         }
-        log.error("No user with such login = " + login + " and password " + password + " in the DB detected.");
+        log.error("No user with such login = " + login + " and password " + password + " in the DB detected. + " + getClass().getName());
         return null;
     }
 }

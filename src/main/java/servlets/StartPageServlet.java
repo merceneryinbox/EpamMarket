@@ -21,10 +21,10 @@ public class StartPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            log.info("User redirected to index.jsp page.");
+            log.info("User redirected to index.jsp page. ++ " + getClass().getName());
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
-            log.error("Dropped down at " + this.getClass() + " because of \n" + e.getMessage());
+            log.debug("Dropped down at " + this.getClass() + " because of \n" + getClass().getName() + " - " + e.getMessage());
         }
     }
 }

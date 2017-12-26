@@ -27,12 +27,12 @@ public class PriceListServlet extends HttpServlet {
         try {
 
             req.setAttribute("priceList", priceList);
-            log.info("Pricelist object " + priceList.toString() + " set into request.\nRedirection to pricelist.jsp.");
+            log.info("Pricelist object " + priceList.toString() + " set into request.\nRedirection to pricelist.jsp. + " + getClass().getName());
             req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
         } catch (ServletException e) {
-            log.debug("Servlet dropped down because of " + e.getMessage());
+            log.debug("Servlet dropped down because of " + e.getMessage() + " + " +  getClass().getName());
         } catch (IOException e) {
-            log.debug("Servlet dropped down because of " + e.getMessage());
+            log.debug("Servlet dropped down because of " + e.getMessage() + " + " + getClass().getName());
         }
 
     }
@@ -51,9 +51,9 @@ public class PriceListServlet extends HttpServlet {
                 resp.sendRedirect("price_list");
             }
         } catch (ServletException e) {
-            log.debug("Servlet dropped down because of " + e.getMessage());
+            log.debug("Servlet dropped down because of " + e.getMessage() + " + " + getClass().getName());
         } catch (IOException e) {
-            log.debug("Servlet dropped down because of " + e.getMessage());
+            log.debug("Servlet dropped down because of " + e.getMessage() + " + " + getClass().getName());
         }
     }
 }

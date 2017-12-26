@@ -23,11 +23,11 @@ public class CartServletWithDelete extends HttpServlet {
         int goodsId;
         user = (User) session.getAttribute("user");
         if (user != null) {
-            log.info("User " + user.toString() + " got from session " + session.toString());
+            log.info("User " + user.toString() + " got from session " + session.toString() + " + " + getClass().getName());
             userId = user.getId();
             goodsId = Integer.valueOf(request.getParameter("goodsId"));
             reserveService.deleteGoods(userId,goodsId);
         }
-        log.info("Goods deleted from user cart.");
+        log.info("Goods deleted from user cart. + " + getClass().getName());
         response.sendRedirect("cart");}
 }

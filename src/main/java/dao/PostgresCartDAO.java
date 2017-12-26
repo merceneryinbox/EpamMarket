@@ -140,10 +140,10 @@ public class PostgresCartDAO implements CartDAO {
                 );
                 allReserves.add(reserve);
             }
-            log.info("Received all reserves");
+            log.info("Received all reserves + " + getClass().getName());
             return Optional.ofNullable(allReserves);
         } catch (SQLException e) {
-            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage() + " + " + getClass().getName());
         }
         return Optional.empty();
     }
@@ -155,11 +155,11 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodID);
             preparedStatement.execute();
-            log.info("Reserve deleted.");
+            log.info("Reserve deleted. + " + getClass().getName());
 
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+                    .getMessage() + " + " + getClass().getName());
         }
     }
 
@@ -171,10 +171,10 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, amount);
             preparedStatement.setTimestamp(4, timestamp);
             preparedStatement.execute();
-            log.info("Reserve created.");
+            log.info("Reserve created. + " + getClass().getName());
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+                    .getMessage() + " + " + getClass().getName());
         }
     }
 
@@ -187,10 +187,10 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, userId);
             preparedStatement.setInt(4, goodId);
             preparedStatement.execute();
-            log.info("Reserve updated.");
+            log.info("Reserve updated. + " + getClass().getName());
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+                    .getMessage() + " + " + getClass().getName());
         }
     }
 }

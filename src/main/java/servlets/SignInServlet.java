@@ -59,24 +59,24 @@ public class SignInServlet extends HttpServlet {
         User user;
         user = UserCheckPasswordService.getInstance().checkPassword(login, password);
         if (user == null) {
-            log.info("User null, redirect to signIn.jsp page.");
+            log.info("User null, redirect to signIn.jsp page. + " + getClass().getName());
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
-            log.info("User " + user.toString() + " got from session " + session.toString() + ".");
+            log.info("User " + user.toString() + " got from session " + session.toString() + " + " + getClass().getName());
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case BANNED:
-                    log.info("User " + user.toString() + " is Banned.\nRedirect to banneduser.jsp page.");
+                    log.info("User " + user.toString() + " is Banned.\nRedirect to banneduser.jsp page. + " + getClass().getName());
                     req.getRequestDispatcher("/banneduser.jsp").forward(req, resp);
                     break;
                 case ACTIVE:
                     session.setAttribute("user", user);
-                    log.info("User " + user.toString() + " is Active.\nRedirect to priceList.jsp page." + "\nIn session " + session.toString());
+                    log.info("User " + user.toString() + " is Active.\nRedirect to priceList.jsp page." + "\nIn session " + session.toString() + " + " + getClass().getName());
                     resp.sendRedirect("/price_list");
                     break;
                 case ADMIN:
                     session.setAttribute("user", user);
-                    log.info("User " + user.toString() + " is Admin.\nRedirect to adminpage.jsp page." + "\nIn session " + session.toString());
+                    log.info("User " + user.toString() + " is Admin.\nRedirect to adminpage.jsp page." + "\nIn session " + session.toString() + " + " + getClass().getName());
                     resp.sendRedirect("/adminpage");
                     break;
             }

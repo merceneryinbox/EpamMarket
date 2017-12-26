@@ -18,7 +18,7 @@ public class SignOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.setAttribute("user", null);
-        log.info("User destroyed.\nConnection redirected to / ");
+        log.info(getClass().getName() + " User destroyed.\nConnection redirected to / " );
         resp.sendRedirect("/");
     }
 }

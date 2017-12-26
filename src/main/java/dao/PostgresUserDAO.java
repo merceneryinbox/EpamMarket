@@ -174,10 +174,10 @@ public class PostgresUserDAO implements UserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY_BY_ID)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
-            log.info("User successfully deleted by deleteUserById method in PostgresUserDao");
+            log.info("User successfully deleted by deleteUserById method in PostgresUserDao + " + getClass().getName());
             return true;
         } catch (SQLException e) {
-            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+            log.error("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage() + " + " + getClass().getName());
             return false;
         }
     }
@@ -199,10 +199,10 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("status")
                 ));
             }
-            log.info("All users got.");
+            log.info("All users got. + " + getClass().getName());
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+                    .getMessage() + " + " + getClass().getName());
         }
         return users;
     }
