@@ -164,7 +164,7 @@ public class PostgresCartDAO implements CartDAO {
     }
 
     @Override
-    public void deleteAllReservesByUserId(Integer userId) {
+    synchronized public void deleteAllReservesByUserId(Integer userId) {
         try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALL_BY_ID_QUERY)) {
             preparedStatement.setInt(1, userId);
