@@ -56,7 +56,7 @@ public class PostgresCartDAO implements CartDAO {
     @Override
     synchronized public Optional<List<Reserve>> getReserveListByUserId(Integer userId) {
         try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_BY_ID_QUERY)) {
             preparedStatement.setInt(1, userId);
             try (val resultSet = preparedStatement.executeQuery()) {
                 List<Reserve> reserveList = new ArrayList<>();
