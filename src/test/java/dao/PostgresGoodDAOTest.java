@@ -1,6 +1,7 @@
 package dao;
 
 import db.DataSourceInit;
+import entities.EntityGenerator;
 import entities.Good;
 import db.DatabaseManager;
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +34,7 @@ public class PostgresGoodDAOTest {
 
         // ADD GOOD
         final String name = "Mersedes";
-        Good good = Good.testGoodForName(name);
+        Good good = EntityGenerator.testGoodForName(name);
         GOOD_DAO.addGood(good);
 
         // GET GOOD

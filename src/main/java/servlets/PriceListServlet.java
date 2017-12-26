@@ -3,6 +3,7 @@ package servlets;
 import entities.Good;
 import lombok.extern.log4j.Log4j2;
 import services.GoodsService;
+import services.ReserveService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,12 +18,14 @@ import java.util.List;
 @WebServlet(name = "PriceList", value = "/price_list")
 public class PriceListServlet extends HttpServlet {
     private static GoodsService goodsService = GoodsService.getInstance();
+    private static ReserveService reserveService = ReserveService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        reserveService.deleteAllOverdueReserves();
         List<Good> priceList = new ArrayList<>(goodsService.getPriceList());
-
         try {
+
             req.setAttribute("priceList", priceList);
             log.info("Pricelist object " + priceList.toString() + " set into request.\nRedirection to pricelist.jsp.");
             req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);

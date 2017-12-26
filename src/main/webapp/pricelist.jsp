@@ -32,11 +32,25 @@
                         <p> Amount: </p>
                         <div class="row">
                             <div class="col-sm-4">
-                                <input class="form-control" type="number" name="amount" value="1" required>
+                                <input class="form-control" type="number" name="amount" value="1" min="1"
+                                       max="${product.amout}" required>
                                 <input type="hidden" name="goodsId" value="${product.id}">
                             </div>
                             <div class="col-sm-8">
-                                <input class="btn-info btn" type="submit" value="Add in cart">
+                                <c:if test="${product.amount<1}">
+                                    <input class="btn-info btn" type="submit" value="Add in cart" disabled>
+                                </c:if>
+                                <c:if test="${product.amount>0}">
+                                    <input class="btn-info btn" type="submit" value="Add in cart">
+                                </c:if>
+                               <%-- <c:choose>
+                                    <c:when test="${product.amount<1}">
+                                        <input class="btn-info btn" type="submit" value="Add in cart" disabled>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input class="btn-info btn" type="submit" value="Add in cart">
+                                    </c:otherwise>
+                                </c:choose>--%>
                             </div>
                         </div>
                     </form>

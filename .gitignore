@@ -12,3 +12,4 @@ gradlew.bat
 *.iml
 *.ipr
 logs/
+*.log
