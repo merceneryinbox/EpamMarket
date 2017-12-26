@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <c:choose>
-                                    <c:when test="${product.amount<1}">
+                                    <c:when test="${product.amount<1||sessionScope.user==null}">
                                         <input class="btn-info btn" type="submit" value="Add in cart" disabled>
                                     </c:when>
                                     <c:otherwise>
