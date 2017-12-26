@@ -18,7 +18,7 @@
             <th>Name</th>
             <th>In stock</th>
             <th>Description</th>
-            <th>Price</th>
+            <th>Price,$</th>
             <th>Add this goods!</th>
         </tr>
         <c:forEach var="product" items="${priceList}">
