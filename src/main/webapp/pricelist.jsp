@@ -33,24 +33,18 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <input class="form-control" type="number" name="amount" value="1" min="1"
-                                       max="${product.amout}" required>
+                                       max="${product.amount}" required>
                                 <input type="hidden" name="goodsId" value="${product.id}">
                             </div>
                             <div class="col-sm-8">
-                                <c:if test="${product.amount<1}">
-                                    <input class="btn-info btn" type="submit" value="Add in cart" disabled>
-                                </c:if>
-                                <c:if test="${product.amount>0}">
-                                    <input class="btn-info btn" type="submit" value="Add in cart">
-                                </c:if>
-                               <%-- <c:choose>
+                                <c:choose>
                                     <c:when test="${product.amount<1}">
                                         <input class="btn-info btn" type="submit" value="Add in cart" disabled>
                                     </c:when>
                                     <c:otherwise>
                                         <input class="btn-info btn" type="submit" value="Add in cart">
                                     </c:otherwise>
-                                </c:choose>--%>
+                                </c:choose>
                             </div>
                         </div>
                     </form>
@@ -81,8 +75,10 @@
             </c:if>
         </div>
         <div class="col-sm-4">
-            <div>If you want to buy something without log in:</div>
-            <div>Call: +7-999-9999</div>
+            <c:if test="${sessionScope.user==null}">
+                <div>If you want to buy something without log in:</div>
+                <div>Call: +7-999-9999</div>
+            </c:if>
         </div>
     </div>
 </div>

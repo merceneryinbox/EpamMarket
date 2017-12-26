@@ -17,7 +17,7 @@ public class EntityGenerator {
                 name,
                 name.hashCode() + "",
                 name + "@email.com",
-                "+7" + (+name.hashCode() + "0000000000").substring(0, 10), "Active");
+                "+7" + (+name.hashCode() + "0000000000").substring(0, 10), "ACTIVE");
     }
 
     public static Good clone(Good good) {

@@ -6,10 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +56,7 @@ public class PostgresCartDAO implements CartDAO {
     @Override
     synchronized public Optional<List<Reserve>> getReserveListByUserId(Integer userId) {
         try (Connection connection = DATA_SOURCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_BY_ID_QUERY)) {
             preparedStatement.setInt(1, userId);
             try (val resultSet = preparedStatement.executeQuery()) {
                 List<Reserve> reserveList = new ArrayList<>();
