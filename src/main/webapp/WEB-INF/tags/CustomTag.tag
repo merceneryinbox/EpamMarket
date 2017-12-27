@@ -1,4 +1,4 @@
-<%@ attribute name="cell1" required="true" type="java.lang.String" description="This login is present yet" %>
+<%@ attribute name="cell1" required="false" type="java.lang.String" description="This login is present yet" %>
 <%@ attribute name="cell2" required="false" type="java.lang.String" description="Please, type another one" %>
 
 <table>
