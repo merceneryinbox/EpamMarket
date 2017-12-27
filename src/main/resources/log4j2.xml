@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" name="EpamMarketXMLLoggerConfig" monitorInterval="10">
+<Configuration status="all" strict="true" name="EpamMarketXMLLoggerConfig" monitorInterval="10">
 
     <!--ROLLING INTO INTO %TOMCAT_HOME%\bin\EpamMarketLogsFolder/-->
 
@@ -19,7 +19,7 @@
             <Layout type="PatternLayout" pattern="${log_pattern"/>
         </Appender>
 
-        <Appender type="RollingFile" name="SERVICES-DEBUG-ROLLING"
+        <Appender type="RollingFile" name="SERVICES_DEBUG_ROLLING"
                   fileName="${log-path}/${log-project-name}SERVICE-DEBUG.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
                   immediateFlush="true">
@@ -33,7 +33,7 @@
             <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="SERVLETS-DEBUG-ROLLING"
+        <Appender type="RollingFile" name="SERVLETS_DEBUG_ROLLING"
                   fileName="${log-path}/${log-project-name}SERVLETS-DEBUG.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
                   immediateFlush="true">
@@ -46,7 +46,7 @@
             <DefaultRolloverStrategy max="5"/>
             <param name="Encoding" value="UTF-8"/>
         </Appender>
-        <Appender type="RollingFile" name="DAO-DEBUG-ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
+        <Appender type="RollingFile" name="DAO_DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
@@ -59,7 +59,24 @@
             <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}-ERROR.log"
+
+
+
+
+        <Appender type="RollingFile" name="DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  immediateFlush="true">
+            <Layout type="PatternLayout" pattern="${log-pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
+            <DefaultRolloverStrategy max="5"/>
+            <param name="Encoding" value="UTF-8"/>
+        </Appender>
+
+        <Appender type="RollingFile" name="ERROR_ROLLING" fileName="${log-path}/${log-project-name}-ERROR.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
@@ -71,7 +88,7 @@
             <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="INFO-ROLLING" fileName="${log-path}/${log-project-name}-INFO.log"
+        <Appender type="RollingFile" name="INFO_ROLLING" fileName="${log-path}/${log-project-name}-INFO.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
@@ -83,7 +100,7 @@
             <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="FATAL-ROLLING" fileName="${log-path}/${log-project-name}-FATAL.log"
+        <Appender type="RollingFile" name="FATAL_ROLLING" fileName="${log-path}/${log-project-name}-FATAL.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
@@ -97,22 +114,24 @@
 
     </Appenders>
 
+
+
     <Loggers>
         <Logger name="main.java.services" level="debug" additivity="false">
-            <AppenderRef ref="SERVICES-DEBUG-ROLLING"/>
+            <AppenderRef ref="SERVICES_DEBUG_ROLLING"/>
         </Logger>
         <Logger name="main.java.servlets" level="warn" additivity="false">
-            <AppenderRef ref="SERVLETS-DEBUG-ROLLING"/>
+            <AppenderRef ref="SERVLETS_DEBUG_ROLLING"/>
         </Logger>
         <Logger name="main.java.dao" level="warn" additivity="false">
-            <AppenderRef ref="DAO-DEBUG-ROLLING"/>
+            <AppenderRef ref="DAO_DEBUG_ROLLING"/>
         </Logger>
         <Logger name="main.java" level="debug" additivity="false">
-            <AppenderRef ref="DEBUG-ROLLING"/>
+            <AppenderRef ref="DEBUG_ROLLING"/>
         </Logger>
-        <Root level="${rootLevel}">
+        <Root level="info">
             <AppenderRef ref="ROOT_CONSOLE"/>
-            <AppenderRef ref="INFO-ROLLING"/>
+            <AppenderRef ref="INFO_ROLLING"/>
         </Root>
     </Loggers>
 </Configuration>
