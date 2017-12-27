@@ -54,9 +54,9 @@ public class SignUpServlet extends HttpServlet {
 				statusDefault = UserStatus.ACTIVE.name();
 
 				if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
-					log.info("Positive answer from request with user's fields got " + login);
+					log.info("Positive answer from request with user's fields got " + login + "\n" + getClass().getName());
 					if (login != null && password != null) {
-						log.info("Not null login and password detected.");
+						log.info("Not null login and password detected. ++ " + getClass().getName());
 
 						user.setLogin(login);
 						user.setPassword(password);
@@ -68,17 +68,17 @@ public class SignUpServlet extends HttpServlet {
 							HttpSession registrationSession = request.getSession();
 						log.info("Create not existing user, push him into db and to the "
 								+ "HttpSession"
-								+ " - registrationSession - " + registrationSession.toString());
+								+ " - registrationSession - " + registrationSession.toString() + getClass().getName());
 
 						postgresUserDAO.addUser(user);
 						optionalUser = postgresUserDAO.getUserByLogin(login);
 						if (optionalUser.isPresent()) {
-							log.info("New created User with ID return from DB - " + user.toString());
+							log.info("New created User with ID return from DB - " + user.toString() + " + " + getClass().getName());
 							registrationSession.setAttribute("user", optionalUser.get());
 							response.sendRedirect("/price_list");
 						} else {
 							log.info("Redirect user" + user.getClass().getSimpleName()
-									+ " to registration page.");
+									+ " to registration page. + " + getClass().getName());
 							request.getRequestDispatcher("/signup.jsp").forward(request,response);
 						    }
 						} else {
@@ -86,7 +86,7 @@ public class SignUpServlet extends HttpServlet {
 						}
 					} else {
 						log.info("Redirect user" + user.getClass().getSimpleName()
-								+ " to registration page.");
+								+ " to registration page. + " + getClass().getName());
 						request.getRequestDispatcher("/signup.jsp").forward(request, response);
 					}
 				} else {
@@ -96,7 +96,7 @@ public class SignUpServlet extends HttpServlet {
 			}
 		} catch (ServletException | IOException serve) {
 			log.error("Droped down at " + getClass().getSimpleName() + " because of \n"
-					+ serve.getMessage());
+					+ serve.getMessage() + " + " + getClass().getName());
 		}
 	}
 }

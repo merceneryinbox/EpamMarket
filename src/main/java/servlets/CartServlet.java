@@ -28,10 +28,10 @@ public class CartServlet extends HttpServlet {
         if (user != null) {
             List<CartCase> cart = reserveService.getCart(user.getId());
             req.setAttribute("userCart", cart);
-            log.info("userCart " + cart.toString() + " created and set to request.\nUser " + user.toString() + "\nredirected to cart.jsp page.");
+            log.info("userCart " + cart.toString() + " created and set to request.\nUser " + user.toString() + "\nredirected to cart.jsp page. + " + getClass().getName());
             req.getRequestDispatcher("/cart.jsp").forward(req, resp);
         } else {
-            log.info("User null Redirected to signIn.jsp");
+            log.info("User null Redirected to signIn.jsp + " + getClass().getName());
             resp.sendRedirect("sign_in");
         }
     }
@@ -50,9 +50,9 @@ public class CartServlet extends HttpServlet {
             goodsId = Integer.valueOf(request.getParameter("goodsId"));
             amount = Integer.valueOf(request.getParameter("amount"));
             reserveService.reserveGoods(userId, goodsId, amount);
-            log.info("reserveGoods with userId, goodsId, amount\n" + userId + "\n" + goodsId + "\n" + amount + "\n created.");
+            log.info("reserveGoods with userId, goodsId, amount\n" + userId + "\n" + goodsId + "\n" + amount + "\n created. + " + getClass().getName());
         }
-        log.info("User null Redirected to priceList.jsp");
+        log.info("User null Redirected to priceList.jsp + " + getClass().getName());
         response.sendRedirect("price_list");
     }
 }

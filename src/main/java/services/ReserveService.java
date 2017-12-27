@@ -82,7 +82,7 @@ public class ReserveService {
                 cartCase.setAmount(reserve.getAmount());
                 cartCase.setPrice(goodDAO.getGoodById(reserve.getGoodId()).get().getPrice());
                 listForCart.add(cartCase);
-                log.info("cartCase " + cartCase.toString() + " got.\nListForCart " + listForCart.toString() + " got.");
+                log.info("cartCase " + cartCase.toString() + " got.\nListForCart " + listForCart.toString() + " got." );
             }
         }
         listForCart.sort(null);

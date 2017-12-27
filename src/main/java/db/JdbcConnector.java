@@ -18,7 +18,7 @@ public class JdbcConnector {
         } catch (IOException e) {
             log.debug(
                     "Droped down at private void getConnection() in JdbcConnector because of \n" + e
-                            .getMessage());
+                            .getMessage() + " + " + getClass().getName());
         }
 
         try {
@@ -27,7 +27,7 @@ public class JdbcConnector {
         } catch (Exception e) {
             log.debug(
                     "Droped down at private void getConnection() in JdbcConnector because of \n" + e
-                            .getMessage());
+                            .getMessage() + " + " + getClass().getName());
         }
     }
 }
