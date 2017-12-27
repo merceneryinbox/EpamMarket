@@ -13,3 +13,5 @@ gradlew.bat
 *.ipr
 logs/
 *.log
+classes/
+.gitignore

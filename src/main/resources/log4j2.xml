@@ -16,7 +16,7 @@
 
     <Appenders>
         <Appender type="Console" name="ROOT_CONSOLE">
-            <Layout type="PatternLayout" pattern="${log_pattern}"/>
+            <Layout type="PatternLayout" pattern="${log-pattern}"/>
         </Appender>
 
         <Appender type="RollingFile" name="SERVICES_DEBUG_ROLLING"
