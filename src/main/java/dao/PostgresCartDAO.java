@@ -41,7 +41,7 @@ public class PostgresCartDAO implements CartDAO {
     public static final String CREATE_QUERY = "INSERT INTO cart (user_id, goods_id, amount, reserve_time) VALUES (?,?,?,?)";
     public static final String UPDATE_QUERY = "UPDATE cart SET amount = ?, reserve_time = ? WHERE user_id = ? AND goods_id = ?";
     public static final String DELETE_QUERY = "DELETE FROM cart WHERE user_id = ? AND goods_id = ?";
-
+    public static final String DELETE_ALL_BY_ID_QUERY = "DELETE FROM cart WHERE user_id = ?";
 
     public final DataSource DATA_SOURCE;
 
@@ -160,6 +160,20 @@ public class PostgresCartDAO implements CartDAO {
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
                     .getMessage() + " + " + getClass().getName());
+        }
+    }
+
+    @Override
+    public void deleteAllReservesByUserId(Integer userId) {
+        try (Connection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALL_BY_ID_QUERY)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.execute();
+            log.info("All user's reserves are deleted.");
+
+        } catch (SQLException e) {
+            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
+                    .getMessage());
         }
     }
 

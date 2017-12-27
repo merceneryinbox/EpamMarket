@@ -121,4 +121,8 @@ public class ReserveService {
         }
     }
 
+    synchronized public void deleteUserReservesAfterPayment(int userId) {
+        cartDAO.deleteAllReservesByUserId(userId);
+    }
+
 }

@@ -39,8 +39,10 @@
     </table>
 </div>
 <p> Total:<c:out value='${total}'/> </p>
-<form action="payment.jsp" method="get">
-    <input class="btn-info btn" type="submit" value="Confirm payment"/>
+<form action="cartwithdelete" method="get">
+<c:if test="${!empty userCart}">
+    <input class="btn-info btn" type="submit"  value="Confirm payment"/>
+</c:if>
 </form>
 
 <form action="price_list" method="get">
