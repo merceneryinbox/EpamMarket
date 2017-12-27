@@ -19,8 +19,8 @@ public class DatabaseManager {
             ps.execute();
         } catch (SQLException e) {
             log.debug("Droped down at DatabaseManager public static void init(DataSource "
-                    + "dataSource because of \n" + e
-                    .getMessage());
+                      + "dataSource because of \n" + e
+                              .getMessage());
         }
     }
 
@@ -35,10 +35,13 @@ public class DatabaseManager {
 
         } catch (IOException e) {
             log.debug(
-                    "Droped down at private static String getInitQuery() in DatabaseManager "
-                            + "because of \n"
-                            + e
-                            .getMessage());
+                    " CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    + " \n"
+                    + "and ThreadName = " + Thread.currentThread().getName()
+                    + "\nmessage is\nDroped down at private static String getInitQuery() in "
+                    + "DatabaseManager "
+                    + "because of \n"
+                    + e.getMessage());
         }
         return null;
     }
@@ -50,9 +53,9 @@ public class DatabaseManager {
     private static String getQueryFromInputStreams(InputStream... streams) throws IOException {
         StringBuffer strBuff = new StringBuffer();
         for (InputStream stream : streams) {
-            InputStreamReader isr = new InputStreamReader(stream);
-            BufferedReader buff = new BufferedReader(isr);
-            int c;
+            InputStreamReader isr  = new InputStreamReader(stream);
+            BufferedReader    buff = new BufferedReader(isr);
+            int               c;
             while ((c = buff.read()) != -1) {
                 strBuff.append((char) c);
             }
@@ -66,10 +69,13 @@ public class DatabaseManager {
             ps.execute();
         } catch (SQLException e) {
             log.debug(
-                    "Dropped down at public static void drop(DataSource dataSource) in "
-                            + "DatabaseManager because of \n"
-                            + e
-                            .getMessage());
+                    " CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    + " \n"
+                    + "and ThreadName = " + Thread.currentThread().getName()
+                    + "\nmessage is\nDropped down at public static void drop(DataSource "
+                    + "dataSource) in "
+                    + "DatabaseManager because of \n"
+                    + e.getMessage());
         }
     }
 

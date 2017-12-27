@@ -18,26 +18,44 @@ public class CartServletWithDelete extends HttpServlet {
     private static ReserveService reserveService = ReserveService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse responce)
+    throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User        user    = (User) session.getAttribute("user");
         reserveService.deleteUserReservesAfterPayment(user.getId());
-        request.getRequestDispatcher("/payment.jsp").forward(request,responce);
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nreserveGoods deleted after it was payed by user = \n" + user
+                         .toString() +
+                 "\n"
+                 + " Class info --- " + getClass().getName());
+        request.getRequestDispatcher("/payment.jsp").forward(request, responce);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws IOException {
         HttpSession session = request.getSession();
-        User user;
-        int userId;
-        int goodsId;
+        User        user;
+        int         userId;
+        int         goodsId;
         user = (User) session.getAttribute("user");
         if (user != null) {
-            log.info("User " + user.toString() + " got from session " + session.toString() + " + " + getClass().getName());
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nUser " + user.toString() + " got from session "
+                     + session.toString() + " + Class info "
+                     + getClass().getName());
             userId = user.getId();
             goodsId = Integer.valueOf(request.getParameter("goodsId"));
-            reserveService.deleteGoods(userId,goodsId);
+            reserveService.deleteGoods(userId, goodsId);
         }
-        log.info("Goods deleted from user cart. + " + getClass().getName());
-        response.sendRedirect("cart");}
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nGoods deleted from user cart. + " + getClass().getName());
+        response.sendRedirect("cart");
+    }
 }

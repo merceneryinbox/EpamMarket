@@ -21,38 +21,61 @@ public class CartServlet extends HttpServlet {
     private static ReserveService reserveService = ReserveService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException {
         HttpSession session = req.getSession();
-        User user;
+        User        user;
         user = (User) session.getAttribute("user");
         if (user != null) {
             List<CartCase> cart = reserveService.getCart(user.getId());
             req.setAttribute("userCart", cart);
-            log.info("userCart " + cart.toString() + " created and set to request.\nUser " + user.toString() + "\nredirected to cart.jsp page. + " + getClass().getName());
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nuserCart " + cart.toString()
+                     + " created and set to request.\nUser " + user.toString()
+                     + "\nredirected to cart.jsp page. + " + getClass().getName());
             req.getRequestDispatcher("/cart.jsp").forward(req, resp);
         } else {
-            log.info("User null Redirected to signIn.jsp + " + getClass().getName());
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nUser null Redirected to signIn.jsp + "
+                     + getClass().getName());
             resp.sendRedirect("sign_in");
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws IOException {
         HttpSession session = request.getSession();
-        User user;
-        int userId;
-        int goodsId;
-        int amount;
+        User        user;
+        int         userId;
+        int         goodsId;
+        int         amount;
         user = (User) session.getAttribute("user");
         if (user != null) {
-            log.info("User " + user.toString() + " got in session " + session.toString());
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nUser " + user.toString() + " got in session "
+                     + session.toString());
             userId = user.getId();
             goodsId = Integer.valueOf(request.getParameter("goodsId"));
             amount = Integer.valueOf(request.getParameter("amount"));
             reserveService.reserveGoods(userId, goodsId, amount);
-            log.info("reserveGoods with userId, goodsId, amount\n" + userId + "\n" + goodsId + "\n" + amount + "\n created. + " + getClass().getName());
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nreserveGoods with userId, goodsId, amount\n" + userId + "\n"
+                     + goodsId + "\n"
+                     + amount + "\n created. + " + getClass().getName());
         }
-        log.info("User null Redirected to priceList.jsp + " + getClass().getName());
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nUser null Redirected to priceList.jsp + " + getClass().getName());
         response.sendRedirect("price_list");
     }
 }

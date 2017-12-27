@@ -17,17 +17,25 @@ public class JdbcConnector {
             properties.load(resourceAsStream);
         } catch (IOException e) {
             log.debug(
-                    "Droped down at private void getConnection() in JdbcConnector because of \n" + e
+                    " CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    + " \n"
+                    + "and ThreadName = " + Thread.currentThread().getName()
+                    + "\nmessage is\nDropped down at private void getConnection() in "
+                    + "JdbcConnector because of \n" + e
                             .getMessage() + " + " + getClass().getName());
         }
 
         try {
             Class.forName(properties.getProperty("driver"), true,
-                    ComboPooledDataSource.class.getClassLoader());
+                          ComboPooledDataSource.class.getClassLoader());
         } catch (Exception e) {
             log.debug(
-                    "Droped down at private void getConnection() in JdbcConnector because of \n" + e
-                            .getMessage() + " + " + getClass().getName());
+                    " CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    + " \n"
+                    + "and ThreadName = " + Thread.currentThread().getName()
+                    + "\nmessage is\nDroped down at private void getConnection() in JdbcConnector"
+                    + " because of \n"
+                    + e.getMessage() + " + " + getClass().getName());
         }
     }
 }

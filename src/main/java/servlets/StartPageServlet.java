@@ -14,17 +14,28 @@ import java.io.IOException;
 public class StartPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        log.info("doPost() method redirect request to doGet() method.");
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\ndoPost() method redirect request to doGet() method.");
         doGet(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            log.info("User redirected to index.jsp page. ++ " + getClass().getName());
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nUser redirected to index.jsp page. ++ "
+                     + getClass().getName());
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
-            log.debug("Dropped down at " + this.getClass() + " because of \n" + getClass().getName() + " - " + e.getMessage());
+            log.debug(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nDropped down at " + this.getClass() + " because of \n"
+                      + getClass().getName() + " - " + e.getMessage());
         }
     }
 }

@@ -13,34 +13,42 @@ public class AdminService {
     //--------------------------------SINGLETON------------------------------------------
 
     private static AdminService instance = null;
-
-    synchronized public static AdminService getInstance() {
-        if (instance == null)
-            instance = new AdminService(PostgresUserDAO.getInstance());
-        log.info("AdminService got " + instance.toString());
-        return instance;
-    }
-
     private static AdminService testInstance;
-
-    synchronized public static AdminService getTestInstance() {
-        if (testInstance == null)
-            testInstance = new AdminService(PostgresUserDAO.getTestInstance());
-        return testInstance;
-    }
+    private UserDAO userDao;
 
     private AdminService(UserDAO userDAO) {
         this.userDao = userDAO;
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nAdminService instance created.");
+    }
+
+    synchronized public static AdminService getInstance() {
+        if (instance == null) { instance = new AdminService(PostgresUserDAO.getInstance()); }
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nAdminService got " + instance.toString());
+        return instance;
     }
 
     //--------------------------------------------------------------------------
 
-    private UserDAO userDao;
+    synchronized public static AdminService getTestInstance() {
+        if (testInstance == null) {
+            testInstance = new AdminService(PostgresUserDAO.getTestInstance());
+        }
+        return testInstance;
+    }
 
     synchronized public List<User> getUserList() {
         List<User> users = userDao.getAllUsers();
         users.sort(null);
-        log.info("Users list got " + users.toString());
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nUsers list got " + users.toString());
         return users;
     }
 

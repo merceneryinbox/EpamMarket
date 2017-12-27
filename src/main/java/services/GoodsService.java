@@ -17,7 +17,10 @@ public class GoodsService {
     synchronized public static GoodsService getInstance() {
         if (instance == null)
             instance = new GoodsService(PostgresGoodDAO.getInstance());
-        log.info("GoodService instance " + instance.toString() + " got.");
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nGoodService instance " + instance.toString() + " got.");
         return instance;
     }
 
@@ -31,6 +34,11 @@ public class GoodsService {
 
     private GoodsService(GoodDAO GoodDAO) {
         this.goodDAO = GoodDAO;
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nGoodsService instance created with goodDAO = " + goodDAO.toString
+                ());
     }
 
     //-------------------------------------------------------------------------------
@@ -40,7 +48,10 @@ public class GoodsService {
     synchronized public List<Good> getPriceList() {
         List<Good> goods = goodDAO.getAllGoods();
         goods.sort(null);
-        log.info("PriceList created " + goods.toString());
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nPriceList created " + goods.toString());
         return goods;
     }
 }
