@@ -18,7 +18,7 @@
             <th>Name</th>
             <th>In stock</th>
             <th>Description</th>
-            <th>Price,$</th>
+            <th>Price</th>
             <th>Add this goods!</th>
         </tr>
         <c:forEach var="product" items="${priceList}">
@@ -26,7 +26,7 @@
                 <td><c:out value='${product.name}'/></td>
                 <td><c:out value='${product.amount}'/></td>
                 <td><c:out value='${product.description}'/></td>
-                <td><c:out value='${product.price}'/></td>
+                <td><c:out value='${product.price}'/> $</td>
                 <td>
                     <form action="price_list" method="post">
                         <p> Amount: </p>
