@@ -15,10 +15,15 @@ import java.io.IOException;
 public class SignOutServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.setAttribute("user", null);
-        log.info("User destroyed.\nConnection redirected to / ");
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nUser destroyed.\nConnection redirected by response to index.jsp"
+                 + getClass().getName());
         resp.sendRedirect("/");
     }
 }

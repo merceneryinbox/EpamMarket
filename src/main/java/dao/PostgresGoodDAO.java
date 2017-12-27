@@ -18,48 +18,46 @@ public class PostgresGoodDAO implements GoodDAO {
 
     //--------------------------------SINGLETON------------------------------------------
 
-    private static PostgresGoodDAO instance = null;
-
-    synchronized public static PostgresGoodDAO getInstance() {
-        if (instance == null)
-            instance = new PostgresGoodDAO(DataSourceInit.getPostgres());
-
-        return instance;
-    }
-
-    private static PostgresGoodDAO testInstance;
-
-    synchronized public static PostgresGoodDAO getTestInstance() {
-        if (testInstance == null)
-            testInstance = new PostgresGoodDAO(DataSourceInit.getH2());
-        // TODO: 25.12.2017 Why this produces exception? @OFedulov
-//        log.info("Instance of PostgresGoodDAO got " + instance.toString());
-        return testInstance;
-    }
-
-    //--------------------------------DATA-SOURCE---------------------------------------------
-
-    final DataSource DATA_SOURCE;
-
-    //--------------------------------QUERIES---------------------------------------------
-
-    public static final String GET_QUERY =
+    public static final String GET_QUERY       =
             "SELECT * FROM goods WHERE name = ?";
-    public static final String GET_ALL_QUERY =
+    public static final String GET_ALL_QUERY   =
             "SELECT * FROM goods";
     public static final String GET_BY_ID_QUERY =
             "SELECT * FROM goods WHERE goods_id = ?";
-    public static final String ADD_QUERY =
+    public static final String ADD_QUERY       =
             "INSERT INTO goods (name, price, amount, description) VALUES (?,?,?,?)";
+
+    //--------------------------------DATA-SOURCE---------------------------------------------
     public static final String UPDATE_QUERY =
             "UPDATE goods SET price = ?, amount = ?, description = ? WHERE name = ?";
-    public static final String DELETE_QUERY =
-            "DELETE FROM goods WHERE name = ?";
 
-    //--------------------------------CONSTRUCTOR---------------------------------------------
+    //--------------------------------QUERIES---------------------------------------------
+    public static final String          DELETE_QUERY =
+            "DELETE FROM goods WHERE name = ?";
+    private static      PostgresGoodDAO instance     = null;
+    private static PostgresGoodDAO testInstance;
+    final          DataSource      DATA_SOURCE;
 
     private PostgresGoodDAO(DataSource dataSource) {
         DATA_SOURCE = dataSource;
+    }
+
+    synchronized public static PostgresGoodDAO getInstance() {
+        if (instance == null) { instance = new PostgresGoodDAO(DataSourceInit.getPostgres()); }
+        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\ninstance of PostgresGoodDAO created.");
+        return instance;
+    }
+
+    //--------------------------------CONSTRUCTOR---------------------------------------------
+
+    synchronized public static PostgresGoodDAO getTestInstance() {
+        if (testInstance == null) { testInstance = new PostgresGoodDAO(DataSourceInit.getH2()); }
+        // TODO: 25.12.2017 Why this produces exception? @OFedulov
+//        log.info("Instance of PostgresGoodDAO got " + instance.toString());
+        return testInstance;
     }
 
     //----------------------------------------------------------------------------------
@@ -78,13 +76,21 @@ public class PostgresGoodDAO implements GoodDAO {
                             resultSet.getInt("amount"),
                             resultSet.getString("description")
                     );
-                    log.info("Good " + good.toString() + " got by ID " + id);
+                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                             + " \n"
+                             + "and ThreadName = " + Thread.currentThread().getName()
+                             + "\nmessage is\nGood " + good.toString() + " got by ID = " + id
+                             + " + " + getClass().getName());
                     return Optional.ofNullable(good);
                 }
             }
         } catch (SQLException e) {
-            log.debug("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
+                      + " because of \n" + e
+                              .getMessage() + " + " + getClass().getName());
         }
         return Optional.empty();
     }
@@ -98,20 +104,23 @@ public class PostgresGoodDAO implements GoodDAO {
                 while (resultSet.next()) {
                     val good = new Good(
                             resultSet.getInt("goods_id"),
-                            // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in SQL and should be escaped
-                            // TODO Updated - no troubles have been detected while testing, so mb its ok
+                            // TODO Shefer 19.12 : Im not sure but `name` can be kinda keyword in
+                            // SQL and should be escaped
+                            // TODO Updated - no troubles have been detected while testing, so mb
+                            // its ok
                             resultSet.getString("name"),
                             resultSet.getDouble("price"),
                             resultSet.getInt("amount"),
                             resultSet.getString("description")
                     );
-                    log.info("Good " + good.toString() + " got by name " + name);
+                    log.info("Good " + good.toString() + " got by name " + name + " + " + getClass()
+                            .getName());
                     return Optional.ofNullable(good);
                 }
             }
         } catch (SQLException e) {
             log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+                    .getMessage() + " + " + getClass().getName());
         }
         return Optional.empty();
     }
@@ -131,9 +140,17 @@ public class PostgresGoodDAO implements GoodDAO {
                         resultSet.getString("description")
                 ));
             }
-            log.info("All Goods List got");
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nAll Goods List got + " + getClass().getName());
         } catch (SQLException e) {
-            log.error("Droped down " + this.getClass().getCanonicalName() + " because of \n" + e.getMessage());
+            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nDroped down " + this.getClass().getCanonicalName()
+                      + " because of \n"
+                      + e.getMessage() + " + " + getClass().getName());
         }
         return goods;
     }
@@ -148,10 +165,17 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setInt(3, good.getAmount());
             preparedStatement.setString(4, good.getDescription());
             preparedStatement.execute();
-            log.info("Good " + good.toString() + " added");
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nGood " + good.toString() + " added");
         } catch (SQLException e) {
-            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
+                      + " because of \n" + e
+                              .getMessage() + " + " + getClass().getName());
         }
     }
 
@@ -162,10 +186,17 @@ public class PostgresGoodDAO implements GoodDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY)) {
             preparedStatement.setString(1, name);
             preparedStatement.execute();
-            log.info("Good with " + name + " deleted");
+            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nGood with " + name + " deleted + " + getClass().getName());
         } catch (SQLException e) {
-            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+            log.debug(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
+                      + " because of \n" + e
+                              .getMessage() + " + " + getClass().getName());
         }
     }
 
@@ -179,10 +210,18 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setString(3, good.getDescription());
             preparedStatement.setString(4, good.getName());
             preparedStatement.execute();
-            log.info("Good " + good.toString() + " updated");
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nGood " + good.toString() + " updated + "
+                     + getClass().getName());
         } catch (SQLException e) {
-            log.debug("Dropped down " + this.getClass().getCanonicalName() + " because of \n" + e
-                    .getMessage());
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
+                      + " because of \n" + e
+                              .getMessage() + " + " + getClass().getName());
         }
     }
 

@@ -20,29 +20,55 @@ import java.util.List;
 public class AdminServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException {
 
-        List<User> userList = AdminService.getInstance().getUserList();
-        HttpSession session = req.getSession();
-        UserStatus status;
-        User user = (User) session.getAttribute("user");
+        List<User>  userList = AdminService.getInstance().getUserList();
+        HttpSession session  = req.getSession();
+        UserStatus  status;
+        User        user     = (User) session.getAttribute("user");
         if (user == null) {
-            log.info("User null detected, redirect to start page.");
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nUser null detected, redirect to start page. + "
+                     + getClass().getName());
             resp.sendRedirect("/");
         } else {
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case ACTIVE:
-                    log.info("User " + user.toString() + "\ndetected, redirect to start page.");
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                             + " \n"
+                             + "and ThreadName" + Thread.currentThread().getName()
+                             + "\nmessage is\nUser " +
+                             user.toString()
+                             + "\ndetected, "
+                             + "redirect to "
+                             + "start "
+                             + "page. + " + getClass().getName());
                     resp.sendRedirect("/");
                     break;
                 case ADMIN:
                     try {
-                        log.info("User " + user.toString() + "\ndetected, redirect to admin page.");
+                        log.info(
+                                "\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                                + ""
+                                + " \n"
+                                + "and ThreadName = " + Thread.currentThread().getName()
+                                + "\nmessage is\nUser " + user.toString()
+                                + "\ndetected, redirect to admin page. + "
+                                + getClass().getName());
                         req.setAttribute("users", userList);
                         req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
                     } catch (RuntimeException e) {
-                        log.debug("Servlet dropped down because of \n" + e.getMessage());
+                        log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId()
+                                  + ""
+                                  + " \n"
+                                  + "and ThreadName = " + Thread.currentThread().getName()
+                                  + "\nmessage is\nServlet dropped down because of \n"
+                                  + e.getMessage() + " + "
+                                  + getClass().getName());
                     }
                     break;
             }
@@ -52,7 +78,10 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = Integer.valueOf(req.getParameter("userId"));
-        log.info("User going to adminpage.");
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                 + " \n"
+                 + "and ThreadName = " + Thread.currentThread().getName()
+                 + "\nmessage is\nUser going to adminpage. + " + getClass().getName());
         ChangeStatusService.getInstance().changeStatusById(id);
         resp.sendRedirect("/adminpage");
     }

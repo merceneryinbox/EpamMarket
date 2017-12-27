@@ -21,21 +21,9 @@ public class ReserveService {
     //--------------------------------SINGLETON------------------------------------------
 
     private static ReserveService instance;
-
-    synchronized public static ReserveService getInstance() {
-        if (instance == null)
-            instance = new ReserveService(PostgresCartDAO.getInstance(), PostgresGoodDAO.getInstance());
-        log.info("Instance " + instance.toString() + " got.");
-        return instance;
-    }
-
     private static ReserveService testInstance;
-
-    synchronized public static ReserveService getTestInstance() {
-        if (testInstance == null)
-            testInstance = new ReserveService(PostgresCartDAO.getTestInstance(), PostgresGoodDAO.getTestInstance());
-        return testInstance;
-    }
+    private        CartDAO        cartDAO;
+    private        GoodDAO        goodDAO;
 
     private ReserveService(CartDAO cartDAO, GoodDAO goodDAO) {
         this.cartDAO = cartDAO;
@@ -44,23 +32,43 @@ public class ReserveService {
 
     //--------------------------------------------------------------------------
 
-    private CartDAO cartDAO;
-    private GoodDAO goodDAO;
+    synchronized public static ReserveService getInstance() {
+        if (instance == null) {
+            instance = new ReserveService(PostgresCartDAO.getInstance(),
+                                          PostgresGoodDAO.getInstance());
+        }
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                 + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                 + "message is\nInstance" + instance.toString() + " got.");
+        return instance;
+    }
+
+    synchronized public static ReserveService getTestInstance() {
+        if (testInstance == null) {
+            testInstance = new ReserveService(PostgresCartDAO.getTestInstance(),
+                                              PostgresGoodDAO.getTestInstance());
+        }
+        return testInstance;
+    }
 
     synchronized public void reserveGoods(int userId, int goodsId, int amount) {
         Optional<Reserve> optionalReserve = cartDAO.getReserve(userId, goodsId);
-        int amountForSet = amount;
-        Optional<Good> optionalGood = goodDAO.getGoodById(goodsId);
-        Good good;
+        int               amountForSet    = amount;
+        Optional<Good>    optionalGood    = goodDAO.getGoodById(goodsId);
+        Good              good;
         if (optionalGood.isPresent()) {
             good = optionalGood.get();
-            log.info("Goog " + good.toString() + " reserved.");
-            if (good.getAmount()>= amount) {
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                     + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                     + "message is\nGoog " + good.toString() + " reserved.");
+            if (good.getAmount() >= amount) {
                 if (optionalReserve.isPresent()) {
                     amountForSet += optionalReserve.get().getAmount();
-                    log.info("It's amountForSet " + amountForSet + " gathered.");
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                             + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                             + "message is\nIt's amountForSet " + amountForSet + " gathered.");
                 }
-                good.setAmount(good.getAmount()-amount);
+                good.setAmount(good.getAmount() - amount);
                 goodDAO.updateGood(good);
                 cartDAO.setAmountByLoginAndGoodId(userId, goodsId, amountForSet);
             }
@@ -68,13 +76,17 @@ public class ReserveService {
     }
 
     synchronized public List<CartCase> getCart(int userId) {
-        List<Reserve> cart;
-        List<CartCase> listForCart = new ArrayList<>();
+        List<Reserve>           cart;
+        List<CartCase>          listForCart     = new ArrayList<>();
         Optional<List<Reserve>> optionalReserve = cartDAO.getReserveListByUserId(userId);
         if (optionalReserve.isPresent()) {
-            log.info("optionalReserve is Present.");
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                     + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                     + "message is\noptionalReserve is Present.");
             cart = optionalReserve.get();
-            log.info("Cart " + cart.toString() + " got.");
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                     + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                     + "message is\nCart " + cart.toString() + " got.");
             for (Reserve reserve : cart) {
                 CartCase cartCase = new CartCase();
                 cartCase.setGoodId(reserve.getGoodId());
@@ -82,7 +94,10 @@ public class ReserveService {
                 cartCase.setAmount(reserve.getAmount());
                 cartCase.setPrice(goodDAO.getGoodById(reserve.getGoodId()).get().getPrice());
                 listForCart.add(cartCase);
-                log.info("cartCase " + cartCase.toString() + " got.\nListForCart " + listForCart.toString() + " got.");
+                log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                         + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                         + "message is\ncartCase " + cartCase.toString() + " got.\nListForCart "
+                         + listForCart.toString() + " got.");
             }
         }
         listForCart.sort(null);
@@ -90,32 +105,38 @@ public class ReserveService {
     }
 
     synchronized public void deleteGoods(int userId, int goodsId) {
-        Good good;
-        Optional<Good> optionalGood = goodDAO.getGoodById(goodsId);
-        Optional<Reserve> optionalReserve = cartDAO.getReserve(userId,goodsId);
-        Reserve reserve;
+        Good              good;
+        Optional<Good>    optionalGood    = goodDAO.getGoodById(goodsId);
+        Optional<Reserve> optionalReserve = cartDAO.getReserve(userId, goodsId);
+        Reserve           reserve;
         if (optionalGood.isPresent() && optionalReserve.isPresent()) {
             good = optionalGood.get();
             reserve = optionalReserve.get();
             good.setAmount(good.getAmount() + reserve.getAmount());
             goodDAO.updateGood(good);
             cartDAO.deleteReserve(userId, goodsId);
-            log.info("Good " + good.toString() + " deleted from reserve " + reserve.toString());
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                     + "\nand ThreadName = " + Thread.currentThread().getName() + "\n "
+                     + "message is\nGood " + good.toString() + " deleted from reserve "
+                     + reserve.toString());
         }
     }
 
     synchronized public void deleteAllOverdueReserves() {
         Optional<List<Reserve>> optionalReserve = cartDAO.getAllReserves();
-        List<Reserve> reserves;
-        long a = Timestamp.from(Instant.now()).getTime();
-        long b;
+        List<Reserve>           reserves;
+        long                    a               = Timestamp.from(Instant.now()).getTime();
+        long                    b;
         if (optionalReserve.isPresent()) {
             reserves = optionalReserve.get();
-            for (Reserve reserve: reserves) {
+            for (Reserve reserve : reserves) {
                 b = reserve.getReserveTime().getTime();
                 long hour = 3600000;
-                if (a-b>hour) {
-                    deleteGoods(reserve.getUserId(),reserve.getGoodId());
+                if (a - b > hour) {
+                    deleteGoods(reserve.getUserId(), reserve.getGoodId());
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                             + "\nand ThreadName = " + Thread.currentThread().getName() + "\n " +
+                             "message is\nThe cart was deleted because of time expired.");
                 }
             }
         }
@@ -123,6 +144,10 @@ public class ReserveService {
 
     synchronized public void deleteUserReservesAfterPayment(int userId) {
         cartDAO.deleteAllReservesByUserId(userId);
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                 + "\nand ThreadName = " + Thread.currentThread().getName() + "\n " +
+                 "message is\nThe cart was deleted because of time expired  for User ID = " +
+                 userId);
     }
 
 }
