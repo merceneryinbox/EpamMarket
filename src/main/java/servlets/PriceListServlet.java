@@ -27,7 +27,7 @@ public class PriceListServlet extends HttpServlet {
         try {
 
             req.setAttribute("priceList", priceList);
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nPricelist object " + priceList.toString()
@@ -35,13 +35,13 @@ public class PriceListServlet extends HttpServlet {
                      + getClass().getName());
             req.getRequestDispatcher("/pricelist.jsp").forward(req, resp);
         } catch (ServletException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nServlet dropped down because of " + e.getMessage() + " + "
                       + getClass().getName());
         } catch (IOException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nServlet dropped down because of " + e.getMessage() + " + "
@@ -55,19 +55,34 @@ public class PriceListServlet extends HttpServlet {
         int amount;
         try {
             amount = Integer.valueOf(req.getParameter("amount"));
-            log.info("Trigger block for amount = " + amount + " check starts.\n");
+            log.info("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                     + " \n"
+                     + "and ThreadName = " + Thread.currentThread().getName()
+                     + "\nmessage is\nTrigger block for amount = " + amount + " check starts.\n");
             if (amount >= 0) {
-                log.info("Amount = " + amount + " >=0.\nRedirect to cart.jsp.\n");
+                log.info("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                         + " \n"
+                         + "and ThreadName = " + Thread.currentThread().getName()
+                         + "\nmessage is\nAmount = " + amount + " >=0.\nRedirect to cart.jsp.\n");
                 req.getRequestDispatcher("cart").forward(req, resp);
             } else {
-                log.info("Amount = " + amount + " <0.\nRedirect to priceList.jsp.\n");
+                log.info("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                         + " \n"
+                         + "and ThreadName = " + Thread.currentThread().getName()
+                         + "\nmessage is\nAmount = " + amount + " <0.\nRedirect to priceList.jsp.\n");
                 resp.sendRedirect("price_list");
             }
         } catch (ServletException e) {
-            log.debug("Servlet dropped down because of " + e.getMessage() + " + "
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nServlet dropped down because of " + e.getMessage() + " + "
                       + getClass().getName());
         } catch (IOException e) {
-            log.debug("Servlet dropped down because of " + e.getMessage() + " + "
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                      + " \n"
+                      + "and ThreadName = " + Thread.currentThread().getName()
+                      + "\nmessage is\nServlet dropped down because of " + e.getMessage() + " + "
                       + getClass().getName());
         }
     }

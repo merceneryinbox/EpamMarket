@@ -210,13 +210,13 @@ public class PostgresGoodDAO implements GoodDAO {
             preparedStatement.setString(3, good.getDescription());
             preparedStatement.setString(4, good.getName());
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nGood " + good.toString() + " updated + "
                      + getClass().getName());
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()

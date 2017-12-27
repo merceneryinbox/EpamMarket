@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" name="XMLConfigTest" packages="main" monitorInterval="30">
+<Configuration status="debug" strict="true" name="XMLLoggerConfigTest" packages="main" monitorInterval="10">
 
-    <!--ROLLING INTO %TOMCAT_HOME%\bin\defaultMarketLogsFolder/-->
+    <!--ROLLING INTO INTO %TOMCAT_HOME%\bin\EpamMarketLogsFolder/-->
 
     <Properties>
-        <Property name="log-path">defaultMarketLogsFolder</Property>
+        <Property name="log-path">EpamMarketLogs</Property>
         <Property name="log-project-name">epamMarket</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">10</Property>
@@ -34,48 +34,48 @@
             <param name="Encoding" value="UTF-8"/>
         </RollingFile>
 
-        <RollingFile name="WARN-ROLLING" fileName="${log-path}/${log-project-name}----WARN.log"
-                     filePattern="${log-path}/info-${log-project-name}-%d-%i.log.zip" append="true"
-                     immediateFlush="true">
-            <PatternLayout>
-                <pattern>${log-pattern}</pattern>
-            </PatternLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
+        <!--<RollingFile name="WARN-ROLLING" fileName="${log-path}/${log-project-name}&#45;&#45;&#45;&#45;WARN.log"-->
+                     <!--filePattern="${log-path}/info-${log-project-name}-%d-%i.log.zip" append="true"-->
+                     <!--immediateFlush="true">-->
+            <!--<PatternLayout>-->
+                <!--<pattern>${log-pattern}</pattern>-->
+            <!--</PatternLayout>-->
+            <!--<Policies>-->
+                <!--<SizeBasedTriggeringPolicy size="${rolling-size-based}"/>-->
+                <!--<TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>-->
+            <!--</Policies>-->
+            <!--<DefaultRolloverStrategy max="${rollover-strategy-max}"/>-->
 
-            <param name="Encoding" value="UTF-8"/>
+            <!--<param name="Encoding" value="UTF-8"/>-->
 
-        </RollingFile>
+        <!--</RollingFile>-->
 
-        <RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}----ERROR.log"
-                     filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip" append="true"
-                     immediateFlush="true">
-            <PatternLayout>
-                <pattern>${log-pattern}</pattern>
-            </PatternLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <param name="Encoding" value="UTF-8"/>
+        <!--<RollingFile name="ERROR-ROLLING" fileName="${log-path}/${log-project-name}&#45;&#45;&#45;&#45;ERROR.log"-->
+                     <!--filePattern="${log-path}/error-${log-project-name}-%d-%i.log.zip" append="true"-->
+                     <!--immediateFlush="true">-->
+            <!--<PatternLayout>-->
+                <!--<pattern>${log-pattern}</pattern>-->
+            <!--</PatternLayout>-->
+            <!--<Policies>-->
+                <!--<SizeBasedTriggeringPolicy size="${rolling-size-based}"/>-->
+                <!--<TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>-->
+            <!--</Policies>-->
+            <!--<DefaultRolloverStrategy max="${rollover-strategy-max}"/>-->
+            <!--<param name="Encoding" value="UTF-8"/>-->
 
-        </RollingFile>
+        <!--</RollingFile>-->
 
     </Appenders>
     <Loggers>
         <Logger name="main.java.services" level="DEBUG" additivity="false">
             <AppenderRef ref="DEBUG-ROLLING"/>
         </Logger>
-        <Logger name="main.java.servlets" level="warn" additivity="false">
-            <AppenderRef ref="WARN-ROLLING"/>
-        </Logger>
+        <!--<Logger name="main.java.servlets" level="warn" additivity="false">-->
+            <!--<AppenderRef ref="WARN-ROLLING"/>-->
+        <!--</Logger>-->
         <Root level="${rootLevel}">
             <AppenderRef ref="ROOT_CONSOLE"/>
-            <AppenderRef ref="ERROR-ROLLING"/>
+            <!--<AppenderRef ref="ERROR-ROLLING"/>-->
         </Root>
     </Loggers>
 </Configuration>

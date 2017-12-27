@@ -18,7 +18,7 @@ public class AdminService {
 
     private AdminService(UserDAO userDAO) {
         this.userDao = userDAO;
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nAdminService instance created.");
@@ -26,7 +26,7 @@ public class AdminService {
 
     synchronized public static AdminService getInstance() {
         if (instance == null) { instance = new AdminService(PostgresUserDAO.getInstance()); }
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nAdminService got " + instance.toString());
@@ -45,7 +45,7 @@ public class AdminService {
     synchronized public List<User> getUserList() {
         List<User> users = userDao.getAllUsers();
         users.sort(null);
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nUsers list got " + users.toString());

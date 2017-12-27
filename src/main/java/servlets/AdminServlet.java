@@ -28,7 +28,7 @@ public class AdminServlet extends HttpServlet {
         UserStatus  status;
         User        user     = (User) session.getAttribute("user");
         if (user == null) {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser null detected, redirect to start page. + "
@@ -38,12 +38,11 @@ public class AdminServlet extends HttpServlet {
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case ACTIVE:
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName" + Thread.currentThread().getName()
                              + "\nmessage is\nUser " +
-                             user
-                                     .toString()
+                             user.toString()
                              + "\ndetected, "
                              + "redirect to "
                              + "start "
@@ -53,7 +52,7 @@ public class AdminServlet extends HttpServlet {
                 case ADMIN:
                     try {
                         log.info(
-                                " CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                                "\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                                 + ""
                                 + " \n"
                                 + "and ThreadName = " + Thread.currentThread().getName()
@@ -63,7 +62,7 @@ public class AdminServlet extends HttpServlet {
                         req.setAttribute("users", userList);
                         req.getRequestDispatcher("/adminpage.jsp").forward(req, resp);
                     } catch (RuntimeException e) {
-                        log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId()
+                        log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId()
                                   + ""
                                   + " \n"
                                   + "and ThreadName = " + Thread.currentThread().getName()
@@ -79,7 +78,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = Integer.valueOf(req.getParameter("userId"));
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nUser going to adminpage. + " + getClass().getName());

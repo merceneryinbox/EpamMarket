@@ -17,7 +17,7 @@ public class JdbcConnector {
             properties.load(resourceAsStream);
         } catch (IOException e) {
             log.debug(
-                    " CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    "\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                     + " \n"
                     + "and ThreadName = " + Thread.currentThread().getName()
                     + "\nmessage is\nDropped down at private void getConnection() in "
@@ -30,7 +30,7 @@ public class JdbcConnector {
                           ComboPooledDataSource.class.getClassLoader());
         } catch (Exception e) {
             log.debug(
-                    " CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    "\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                     + " \n"
                     + "and ThreadName = " + Thread.currentThread().getName()
                     + "\nmessage is\nDroped down at private void getConnection() in JdbcConnector"

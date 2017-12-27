@@ -35,7 +35,7 @@ public class DatabaseManager {
 
         } catch (IOException e) {
             log.debug(
-                    " CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    "\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                     + " \n"
                     + "and ThreadName = " + Thread.currentThread().getName()
                     + "\nmessage is\nDroped down at private static String getInitQuery() in "
@@ -69,7 +69,7 @@ public class DatabaseManager {
             ps.execute();
         } catch (SQLException e) {
             log.debug(
-                    " CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    "\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                     + " \n"
                     + "and ThreadName = " + Thread.currentThread().getName()
                     + "\nmessage is\nDropped down at public static void drop(DataSource "

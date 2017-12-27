@@ -20,7 +20,7 @@ public class ChangeStatusService {
 
     synchronized public static ChangeStatusService getInstance() {
         if (instance == null) { instance = new ChangeStatusService(PostgresUserDAO.getInstance()); }
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nChangeStatusService instance got " + instance.toString());
@@ -48,7 +48,7 @@ public class ChangeStatusService {
             switch (status) {
                 case BANNED:
                     newUser.setStatus("ACTIVE");
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser status changed from " + oldUser.getStatus()
@@ -56,14 +56,14 @@ public class ChangeStatusService {
                     break;
                 case ACTIVE:
                     newUser.setStatus("BANNED");
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser status changed from " + oldUser.getStatus()
                              + " to " + newUser.getStatus());
                     break;
                 case ADMIN:
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser status changed from " + oldUser.getStatus()

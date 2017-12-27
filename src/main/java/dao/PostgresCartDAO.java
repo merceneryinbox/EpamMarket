@@ -192,13 +192,13 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, goodID);
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\n CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nReserve deleted. + " + getClass().getName());
 
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\n CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -213,13 +213,13 @@ public class PostgresCartDAO implements CartDAO {
                      DELETE_ALL_BY_ID_QUERY)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\n CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nAll user's reserves are deleted.");
 
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\n CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -236,12 +236,12 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, amount);
             preparedStatement.setTimestamp(4, timestamp);
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nReserve created. + " + getClass().getName());
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -259,12 +259,12 @@ public class PostgresCartDAO implements CartDAO {
             preparedStatement.setInt(3, userId);
             preparedStatement.setInt(4, goodId);
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nReserve updated. + " + getClass().getName());
         } catch (SQLException e) {
-            log.debug(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()

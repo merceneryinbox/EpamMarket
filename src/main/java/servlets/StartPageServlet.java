@@ -14,7 +14,7 @@ import java.io.IOException;
 public class StartPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\ndoPost() method redirect request to doGet() method.");
@@ -24,14 +24,14 @@ public class StartPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser redirected to index.jsp page. ++ "
                      + getClass().getName());
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
-            log.debug(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down at " + this.getClass() + " because of \n"

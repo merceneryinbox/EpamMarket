@@ -29,7 +29,7 @@ public class CartServlet extends HttpServlet {
         if (user != null) {
             List<CartCase> cart = reserveService.getCart(user.getId());
             req.setAttribute("userCart", cart);
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nuserCart " + cart.toString()
@@ -37,7 +37,7 @@ public class CartServlet extends HttpServlet {
                      + "\nredirected to cart.jsp page. + " + getClass().getName());
             req.getRequestDispatcher("/cart.jsp").forward(req, resp);
         } else {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser null Redirected to signIn.jsp + "
@@ -56,7 +56,7 @@ public class CartServlet extends HttpServlet {
         int         amount;
         user = (User) session.getAttribute("user");
         if (user != null) {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser " + user.toString() + " got in session "
@@ -65,14 +65,14 @@ public class CartServlet extends HttpServlet {
             goodsId = Integer.valueOf(request.getParameter("goodsId"));
             amount = Integer.valueOf(request.getParameter("amount"));
             reserveService.reserveGoods(userId, goodsId, amount);
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nreserveGoods with userId, goodsId, amount\n" + userId + "\n"
                      + goodsId + "\n"
                      + amount + "\n created. + " + getClass().getName());
         }
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nUser null Redirected to priceList.jsp + " + getClass().getName());

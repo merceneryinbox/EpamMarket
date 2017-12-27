@@ -19,7 +19,7 @@ public class SignOutServlet extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.setAttribute("user", null);
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                  + " \n"
                  + "and ThreadName = " + Thread.currentThread().getName()
                  + "\nmessage is\nUser destroyed.\nConnection redirected by response to index.jsp"

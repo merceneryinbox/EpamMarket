@@ -25,13 +25,13 @@ public class SignUpServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User        user    = (User) session.getAttribute("user");
         if (user == null) {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nRedirect user for registration.");
             request.getRequestDispatcher("/signup.jsp").forward(request, response);
         } else {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nApprove existing user and redirect him to index.jsp");
@@ -60,13 +60,13 @@ public class SignUpServlet extends HttpServlet {
                 statusDefault = UserStatus.ACTIVE.name();
 
                 if (!postgresUserDAO.getUserByLogin(login).isPresent()) {
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nPositive answer from request with user's fields got "
                              + login + "\n" + getClass().getName());
                     if (login != null && password != null) {
-                        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                                  + ""
                                  + " \n"
                                  + "and ThreadName = " + Thread.currentThread().getName()
@@ -82,12 +82,13 @@ public class SignUpServlet extends HttpServlet {
                         if (UserRegistrator.registrate(user)) {
                             HttpSession registrationSession = request.getSession();
                             log.info(
-                                    " CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                                    "\nCUSTOM-INFO-IN-ThreadID = \n"
+                                    + Thread.currentThread().getId()
                                     + ""
                                     + " \n"
                                     + "and ThreadName = " + Thread.currentThread().getName()
                                     + "\nmessage is\nCreate not existing user, push him into db "
-									+ "and to the "
+                                    + "and to the "
                                     + "HttpSession"
                                     + " - registrationSession - " + registrationSession.toString()
                                     + getClass().getName());
@@ -95,18 +96,18 @@ public class SignUpServlet extends HttpServlet {
                             postgresUserDAO.addUser(user);
                             optionalUser = postgresUserDAO.getUserByLogin(login);
                             if (optionalUser.isPresent()) {
-                                log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread()
-                                                                                 .getId() + ""
+                                log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread()
+                                                                                  .getId() + ""
                                          + " \n"
                                          + "and ThreadName = " + Thread.currentThread().getName()
                                          + "\nmessage is\nNew created User with ID return from DB"
-										 + " - "
+                                         + " - "
                                          + user.toString() + " + " + getClass().getName());
                                 registrationSession.setAttribute("user", optionalUser.get());
                                 response.sendRedirect("/price_list");
                             } else {
-                                log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread()
-                                                                                 .getId() + ""
+                                log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread()
+                                                                                  .getId() + ""
                                          + " \n"
                                          + "and ThreadName = " + Thread.currentThread().getName()
                                          + "\nmessage is\nRedirect user" + user.getClass()
@@ -119,7 +120,7 @@ public class SignUpServlet extends HttpServlet {
                             request.getRequestDispatcher("/signup.jsp").forward(request, response);
                         }
                     } else {
-                        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+                        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                                  + ""
                                  + " \n"
                                  + "and ThreadName = " + Thread.currentThread().getName()
@@ -133,7 +134,7 @@ public class SignUpServlet extends HttpServlet {
                 }
             }
         } catch (ServletException | IOException serve) {
-            log.error(" CUSTOM-ERROR-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.error("\nCUSTOM-ERROR-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDroped down at " + getClass().getSimpleName()

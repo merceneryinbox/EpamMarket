@@ -24,12 +24,12 @@ public class UserRegistrator {
         if (UserRegistrator.validateEmail(user, user.getEmail()) && UserRegistrator.validatePhone(
                 user, user.getPhone()) &&
             UserRegistrator.validatePassword(user, user.getPassword())) {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                      + "\n ThreadName = " + Thread.currentThread().getName() + "\n " +
                      "message is\nUser " + user.toString() + " successfully registered.");
             return true;
         } else {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                      + "\n ThreadName = " + Thread.currentThread().getName() + "\n " +
                      "message is\nUser not registered.");
             return false;
@@ -39,7 +39,7 @@ public class UserRegistrator {
     public static boolean validateEmail(User user, String emailStr) {
         emailStr = user.getEmail();
         Matcher matcher1 = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                  + "\nand ThreadName = " + Thread.currentThread().getName() + "\n " +
                  "message is\nUser validation email returned.");
         return matcher1.find();
@@ -48,7 +48,7 @@ public class UserRegistrator {
     public static boolean validatePhone(User user, String phone) {
         phone = user.getPhone();
         Matcher matcher2 = VALID_PHONE_NUMBER_REGEX.matcher(phone);
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                  + "\nand ThreadName = " + Thread.currentThread().getName() + "\n " +
                  "message is\nUser validation phone returned.");
         return matcher2.find();
@@ -57,7 +57,7 @@ public class UserRegistrator {
     public static boolean validatePassword(User user, String password) {
         password = user.getPassword();
         Matcher matcher3 = VALID_PASSWORD_REGEX.matcher(password);
-        log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
+        log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId()
                  + "\nand ThreadName = " + Thread.currentThread().getName() + "\n " +
                  "message is\nUser validation password returned.");
         return matcher3.find();

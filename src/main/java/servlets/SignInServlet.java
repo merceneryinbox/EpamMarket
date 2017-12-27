@@ -27,7 +27,7 @@ public class SignInServlet extends HttpServlet {
         user = (User) session.getAttribute("user");
 
         if (user != null) {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser " + user.toString() + " got from session\n"
@@ -36,7 +36,7 @@ public class SignInServlet extends HttpServlet {
             switch (status) {
                 case ACTIVE:
                     session.setAttribute("user", user);
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser " + user.toString()
@@ -45,7 +45,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ADMIN:
                     session.setAttribute("user", user);
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser " + user.toString()
@@ -54,7 +54,7 @@ public class SignInServlet extends HttpServlet {
                     break;
             }
         } else {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser are not present at the DB.\nRedirection to signIn.jsp "
@@ -75,14 +75,14 @@ public class SignInServlet extends HttpServlet {
         User user;
         user = UserCheckPasswordService.getInstance().checkPassword(login, password);
         if (user == null) {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser null, redirect to signIn.jsp page. + "
                      + getClass().getName());
             req.getRequestDispatcher("/signin.jsp").forward(req, resp);
         } else {
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser " + user.toString() + " got from session "
@@ -90,7 +90,7 @@ public class SignInServlet extends HttpServlet {
             status = UserStatus.valueOf(user.getStatus());
             switch (status) {
                 case BANNED:
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser " + user.toString()
@@ -100,7 +100,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ACTIVE:
                     session.setAttribute("user", user);
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser " + user.toString()
@@ -110,7 +110,7 @@ public class SignInServlet extends HttpServlet {
                     break;
                 case ADMIN:
                     session.setAttribute("user", user);
-                    log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                    log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                              + " \n"
                              + "and ThreadName = " + Thread.currentThread().getName()
                              + "\nmessage is\nUser " + user.toString()

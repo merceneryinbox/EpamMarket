@@ -76,18 +76,14 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(5, user.getStatus());
             preparedStatement.execute();
 
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nSuccessfully creating public boolean addUser(User user) in "
                      + "PostgresUserDAO");
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
-                     + " \n"
-                     + "and ThreadName = " + Thread.currentThread().getName()
-                     + "\nmessage is\nNew User " + user.toString() + "successfully created ");
             return true;
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -113,14 +109,14 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("phone"),
                         resultSet.getString("status")
                 );
-                log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                          + " \n"
                          + "and ThreadName = " + Thread.currentThread().getName()
                          + "\nmessage is\nGetUserById success.");
                 return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDroped down " + this.getClass().getCanonicalName()
@@ -146,14 +142,14 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("phone"),
                         resultSet.getString("status")
                 );
-                log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+                log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                          + " \n"
                          + "and ThreadName = " + Thread.currentThread().getName()
                          + "\nmessage is\nGetUserByLogin success.");
                 return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -173,18 +169,18 @@ public class PostgresUserDAO implements UserDAO {
             preparedStatement.setString(4, newUser.getStatus());
             preparedStatement.setString(5, newUser.getLogin());
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser successfully updated by updateUser method in "
                      + "PostgresUserDao !");
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUpdate user success.");
             return true;
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -200,14 +196,14 @@ public class PostgresUserDAO implements UserDAO {
                      DELETE_QUERY_BY_LOGIN)) {
             preparedStatement.setString(1, login);
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser successfully delete by deleteUserByLogin method in "
                      + "PostgresUserDao !");
             return true;
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -223,7 +219,7 @@ public class PostgresUserDAO implements UserDAO {
                      DELETE_QUERY_BY_ID)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nUser successfully deleted by deleteUserById method in "
@@ -231,7 +227,7 @@ public class PostgresUserDAO implements UserDAO {
                      + getClass().getName());
             return true;
         } catch (SQLException e) {
-            log.error(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.error("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
@@ -257,12 +253,12 @@ public class PostgresUserDAO implements UserDAO {
                         resultSet.getString("status")
                 ));
             }
-            log.info(" CUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.info("\nCUSTOM-INFO-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                      + " \n"
                      + "and ThreadName = " + Thread.currentThread().getName()
                      + "\nmessage is\nAll users got. + " + getClass().getName());
         } catch (SQLException e) {
-            log.debug(" CUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
+            log.debug("\nCUSTOM-DEBUG-IN-ThreadID = \n" + Thread.currentThread().getId() + ""
                       + " \n"
                       + "and ThreadName = " + Thread.currentThread().getName()
                       + "\nmessage is\nDropped down " + this.getClass().getCanonicalName()
