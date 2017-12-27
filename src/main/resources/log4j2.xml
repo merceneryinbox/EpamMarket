@@ -16,12 +16,12 @@
 
     <Appenders>
         <Appender type="Console" name="ROOT_CONSOLE">
-            <Layout type="PatternLayout" pattern="${log_pattern"/>
+            <Layout type="PatternLayout" pattern="${log-pattern}"/>
         </Appender>
 
         <Appender type="RollingFile" name="SERVICES_DEBUG_ROLLING"
                   fileName="${log-path}/${log-project-name}SERVICE-DEBUG.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
@@ -35,7 +35,7 @@
 
         <Appender type="RollingFile" name="SERVLETS_DEBUG_ROLLING"
                   fileName="${log-path}/${log-project-name}SERVLETS-DEBUG.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
@@ -47,7 +47,7 @@
             <param name="Encoding" value="UTF-8"/>
         </Appender>
         <Appender type="RollingFile" name="DAO_DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
@@ -64,7 +64,7 @@
 
 
         <Appender type="RollingFile" name="DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
@@ -77,7 +77,7 @@
         </Appender>
 
         <Appender type="RollingFile" name="ERROR_ROLLING" fileName="${log-path}/${log-project-name}-ERROR.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
@@ -89,7 +89,7 @@
         </Appender>
 
         <Appender type="RollingFile" name="INFO_ROLLING" fileName="${log-path}/${log-project-name}-INFO.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
@@ -101,7 +101,7 @@
         </Appender>
 
         <Appender type="RollingFile" name="FATAL_ROLLING" fileName="${log-path}/${log-project-name}-FATAL.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i++++++.log.zip" append="true"
+                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>

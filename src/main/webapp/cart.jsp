@@ -26,8 +26,8 @@
             <tr>
                 <td><c:out value='${cart.goodName}'/></td>
                 <td><c:out value='${cart.amount}'/></td>
-                <td><c:out value='${cart.price}'/></td>
-                <td><c:out value='${cart.price * cart.amount}'/></td>
+                <td><c:out value='${cart.price}'/> $</td>
+                <td><c:out value='${cart.price * cart.amount}'/> $</td>
                 <c:set var="total" value="${total + cart.price*cart.amount}" />
                 <td>
                     <form action="cartwithdelete" method="post">
@@ -38,7 +38,7 @@
         </c:forEach>
     </table>
 </div>
-<p> Total:<c:out value='${total}'/> </p>
+<p> Total:<c:out value='${total}'/> $ </p>
 <form action="cartwithdelete" method="get">
 <c:if test="${!empty userCart}">
     <input class="btn-info btn" type="submit"  value="Confirm payment"/>
