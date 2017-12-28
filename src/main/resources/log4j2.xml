@@ -59,10 +59,6 @@
             <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-
-
-
-
         <Appender type="RollingFile" name="DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
@@ -114,9 +110,8 @@
 
     </Appenders>
 
-
-
     <Loggers>
+
         <Logger name="main.java.services" level="debug" additivity="false">
             <AppenderRef ref="SERVICES_DEBUG_ROLLING"/>
         </Logger>
@@ -133,8 +128,12 @@
             <AppenderRef ref="ROOT_CONSOLE"/>
             <AppenderRef ref="INFO_ROLLING"/>
         </Root>
+
     </Loggers>
+
+
 </Configuration>
+
         <!--<Filters>-->
         <!--&lt;!&ndash; First deny error and fatal messages &ndash;&gt;-->
         <!--<ThresholdFilter level="error" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
