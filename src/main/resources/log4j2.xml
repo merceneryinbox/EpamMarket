@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="all" strict="true" name="EpamMarketXMLLoggerConfig" monitorInterval="10">
-
-    <!--ROLLING INTO INTO %TOMCAT_HOME%\bin\EpamMarketLogsFolder/-->
+<Configuration strict="true" name="spring-lab-XMLLoggerConfig" monitorInterval="10" status="WARN">
 
     <Properties>
-        <Property name="log-path">EpamMarketLogs</Property>
-        <Property name="log-project-name">epamMarketLogLevel</Property>
+        <Property name="log-path">spring-lab-Logs</Property>
+        <Property name="log-project-name">spring-lab-Log</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">10</Property>
-        <Property name="rolling-size-based">5 kB</Property>
+        <Property name="rolling-size-based">500 kB</Property>
         <Property name="rolling-time-based">6</Property>
         <Property name="modulate-time">true</Property>
-        <Property name="rootLevel">info</Property>
+        <Property name="rootLevel">WARN</Property>
     </Properties>
 
     <Appenders>
@@ -19,135 +17,68 @@
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
         </Appender>
 
-        <Appender type="RollingFile" name="SERVICES_DEBUG_ROLLING"
-                  fileName="${log-path}/${log-project-name}SERVICE-DEBUG.log"
+        <Appender type="RollingFile" name="DEBUG_ROLLING"
+                  fileName="${log-path}/${log-project-name}DEBUG_ROLLING.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}"
+                                           modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <DefaultRolloverStrategy max="5"/>
-            <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="SERVLETS_DEBUG_ROLLING"
-                  fileName="${log-path}/${log-project-name}SERVLETS-DEBUG.log"
+
+        <Appender type="RollingFile" name="ERROR_ROLLING"
+                  fileName="${log-path}/${log-project-name}-ERROR.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}"
+                                           modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <DefaultRolloverStrategy max="5"/>
-            <param name="Encoding" value="UTF-8"/>
-        </Appender>
-        <Appender type="RollingFile" name="DAO_DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
-                  immediateFlush="true">
-            <Layout type="PatternLayout" pattern="${log-pattern}"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <DefaultRolloverStrategy max="5"/>
-            <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="DEBUG_ROLLING" fileName="${log-path}/${log-project-name}DAO-DEBUG.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
+        <Appender type="RollingFile" name="INFO_ROLLING"
+                  fileName="${log-path}/${log-project-name}-INFO.log"
+                  filePattern="${log-path}/INFO-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}"
+                                           modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <DefaultRolloverStrategy max="5"/>
-            <param name="Encoding" value="UTF-8"/>
         </Appender>
 
-        <Appender type="RollingFile" name="ERROR_ROLLING" fileName="${log-path}/${log-project-name}-ERROR.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
+        <Appender type="RollingFile" name="FATAL_ROLLING"
+                  fileName="${log-path}/${log-project-name}-FATAL.log"
+                  filePattern="${log-path}/FATAL-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
+                <TimeBasedTriggeringPolicy interval="${rolling-time-based}"
+                                           modulate="${modulate-time}"/>
             </Policies>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <param name="Encoding" value="UTF-8"/>
-        </Appender>
-
-        <Appender type="RollingFile" name="INFO_ROLLING" fileName="${log-path}/${log-project-name}-INFO.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
-                  immediateFlush="true">
-            <Layout type="PatternLayout" pattern="${log-pattern}"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <param name="Encoding" value="UTF-8"/>
-        </Appender>
-
-        <Appender type="RollingFile" name="FATAL_ROLLING" fileName="${log-path}/${log-project-name}-FATAL.log"
-                  filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
-                  immediateFlush="true">
-            <Layout type="PatternLayout" pattern="${log-pattern}"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
-                <TimeBasedTriggeringPolicy interval="${rolling-time-based}" modulate="${modulate-time}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
-            <param name="Encoding" value="UTF-8"/>
         </Appender>
 
     </Appenders>
 
     <Loggers>
-
-        <Logger name="main.java.services" level="debug" additivity="false">
-            <AppenderRef ref="SERVICES_DEBUG_ROLLING"/>
-        </Logger>
-        <Logger name="main.java.servlets" level="warn" additivity="false">
-            <AppenderRef ref="SERVLETS_DEBUG_ROLLING"/>
-        </Logger>
-        <Logger name="main.java.dao" level="warn" additivity="false">
-            <AppenderRef ref="DAO_DEBUG_ROLLING"/>
-        </Logger>
-        <Logger name="main.java" level="debug" additivity="false">
-            <AppenderRef ref="DEBUG_ROLLING"/>
-        </Logger>
-        <Root level="info">
+        <Root level="warn">
+        <!--<Root level="trace">-->
             <AppenderRef ref="ROOT_CONSOLE"/>
-            <AppenderRef ref="INFO_ROLLING"/>
+            <AppenderRef ref="DEBUG_ROLLING" level="DEBUG"/>
+            <AppenderRef ref="ERROR_ROLLING" level="ERROR"/>
+            <AppenderRef ref="INFO_ROLLING" level="INFO"/>
         </Root>
-
     </Loggers>
-
-
 </Configuration>
-
-        <!--<Filters>-->
-        <!--&lt;!&ndash; First deny error and fatal messages &ndash;&gt;-->
-        <!--<ThresholdFilter level="error" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
-        <!--<ThresholdFilter level="fatal" onMatch="DENY"   onMismatch="NEUTRAL"/>-->
-        <!--&lt;!&ndash; Then accept info, warn, error, fatal and deny debug/trace &ndash;&gt;-->
-        <!--<ThresholdFilter level="warn"  onMatch="ACCEPT" onMismatch="NEUTRAL"/>-->
-        <!--<ThresholdFilter level="info"  onMatch="ACCEPT" onMismatch="DENY"/>-->
-        <!--</Filters>-->
-
-        <!--<Filters>-->
-        <!--&lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;-->
-        <!--<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-        <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-        <!--<ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-        <!--&lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;-->
-        <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
-        <!--</Filters>-->
