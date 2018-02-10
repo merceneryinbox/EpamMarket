@@ -6,10 +6,10 @@
         <Property name="log-project-name">spring-lab-Log</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">10</Property>
-        <Property name="rolling-size-based">500 kB</Property>
+        <Property name="rolling-size-based">1 kB</Property>
         <Property name="rolling-time-based">6</Property>
         <Property name="modulate-time">true</Property>
-        <Property name="rootLevel">WARN</Property>
+        <Property name="rootLevel">debug</Property>
     </Properties>
 
     <Appenders>
@@ -27,6 +27,7 @@
                 <TimeBasedTriggeringPolicy interval="${rolling-time-based}"
                                            modulate="${modulate-time}"/>
             </Policies>
+            <DefaultRolloverStrategy>"${rollover-strategy-max}"</DefaultRolloverStrategy>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </Appender>
 
@@ -74,8 +75,8 @@
 
     <Loggers>
         <Root level="warn">
-        <!--<Root level="trace">-->
-            <AppenderRef ref="ROOT_CONSOLE"/>
+            <!--<Root level="trace">-->
+            <AppenderRef ref="ROOT_CONSOLE" level="${rootLevel}"/>
             <AppenderRef ref="DEBUG_ROLLING" level="DEBUG"/>
             <AppenderRef ref="ERROR_ROLLING" level="ERROR"/>
             <AppenderRef ref="INFO_ROLLING" level="INFO"/>
