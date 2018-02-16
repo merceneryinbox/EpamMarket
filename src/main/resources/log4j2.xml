@@ -27,7 +27,7 @@
                   fileName="${log-path}/${log-project-name}DEBUG_ROLLING.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
-            <!--log4g2 will archive files into gz format to parsimony disk space and  output stream will be flushed at the end of each append operation-->
+            <!--log4g2 will archive files into zip format to parsimony disk space and  output stream will be flushed at the end of each append operation-->
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
