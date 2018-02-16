@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration strict="true" name="spring-lab-XMLLoggerConfig" monitorInterval="10" status="WARN">
-
+<!--monitorInterval="10" give us hot swapping log configuration changing, log4g2 will scan config changes every 10 minutes-->
     <Properties>
         <Property name="log-path">spring-lab-Logs</Property>
         <Property name="log-project-name">spring-lab-Log</Property>
         <Property name="log-pattern">%d{ISO8601} %-5p [Sample][%t|%c{1}] %L %M %m\n</Property>
         <Property name="rollover-strategy-max">10</Property>
-        <Property name="rolling-size-based">1 kB</Property>
+        <!--10 - is number of storing files before they start to overriting from first to last tenth-->
+            
+        <Property name="rolling-size-based">500 kB</Property>
+        <!--maximum single file size after log4g2 will create new one with i++ number at the end of namestring-->    
+            
         <Property name="rolling-time-based">6</Property>
+        <!--log4g2 will create next log file every 6 minutes if modulate-time will = true-->    
+            
         <Property name="modulate-time">true</Property>
-        <Property name="rootLevel">debug</Property>
+        <Property name="rootLevel">WARN</Property>
     </Properties>
 
     <Appenders>
@@ -21,13 +27,13 @@
                   fileName="${log-path}/${log-project-name}DEBUG_ROLLING.log"
                   filePattern="${log-path}/debug-${log-project-name}-%d-%i.log.zip" append="true"
                   immediateFlush="true">
+            <!--log4g2 will archive files into gz format to parsimony disk space and  output stream will be flushed at the end of each append operation-->
             <Layout type="PatternLayout" pattern="${log-pattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="${rolling-size-based}"/>
                 <TimeBasedTriggeringPolicy interval="${rolling-time-based}"
                                            modulate="${modulate-time}"/>
             </Policies>
-            <DefaultRolloverStrategy>"${rollover-strategy-max}"</DefaultRolloverStrategy>
             <DefaultRolloverStrategy max="${rollover-strategy-max}"/>
         </Appender>
 
@@ -76,7 +82,7 @@
     <Loggers>
         <Root level="warn">
             <!--<Root level="trace">-->
-            <AppenderRef ref="ROOT_CONSOLE" level="${rootLevel}"/>
+            <AppenderRef ref="ROOT_CONSOLE"/>
             <AppenderRef ref="DEBUG_ROLLING" level="DEBUG"/>
             <AppenderRef ref="ERROR_ROLLING" level="ERROR"/>
             <AppenderRef ref="INFO_ROLLING" level="INFO"/>
